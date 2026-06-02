@@ -1178,7 +1178,7 @@ function renderDYProjetivo(d){
   const totalGap=Math.max(0,META_TOTAL-totalMes);
   const consolEl=document.getElementById("dyConsol"); if(!consolEl)return;
   consolEl.innerHTML=[
-    {l:"Renda Total/mês",v:fmt(totalMes),s:"FIIs "+fmt(fii6)+" + Ações "+fmt(acao6),c:"var(--roxo)"},
+    {l:"Renda Total/mês",v:fmt(totalMes),s:"FIIs "+fmt(fiiTotMes)+"/mês · Ações "+fmt(acaoTotMes)+"/mês",c:"var(--roxo)"},
     {l:"% da Meta R$1.500/mês",v:pct(totalPct),s:pct(fiiPct)+" FIIs · "+pct(acaoPct)+" Ações",c:totalPct>=100?"var(--verde)":"var(--ambar)"},
     {l:"Gap",v:totalGap<=0?"✓ Meta atingida":fmt(totalGap)+"/mês",s:totalGap<=0?"Independência de renda alcançada":"falta para R$ 1.500/mês",c:totalGap<=0?"var(--verde)":"var(--vermelho)"},
   ].map(k=>`<div class="card" style="padding:28px 24px">
