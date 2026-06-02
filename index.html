@@ -264,7 +264,7 @@
     <div class="card" style="overflow-x:auto;margin-bottom:28px"><table id="dyAcaoTable"></table></div>
     <div class="sec-title">Seção 3 — Consolidado</div>
     <div class="grid" id="dyConsol" style="grid-template-columns:repeat(3,1fr);gap:20px"></div>
-    <p class="note" style="margin-top:18px">Dados de Div/cota (FIIs) e DPA26 (Ações) pesquisados em Investidor10, Suno, Infomoney e AGF em 02/06/2026. DY% = div/cota ÷ preço atual; YoC% = div/cota ÷ PM. AURE3 sem previsão de dividendos em 2026 (alavancagem 5,2× após aquisição AES Brasil, prejuízo R$601mi no 1T26). Valores informativos — não constituem recomendação de investimento.</p>
+    <p class="note" style="margin-top:18px">Dados de Div/cota (FIIs) e DPA26 (Ações) pesquisados em Investidor10, Suno, fiis.com.br e Infomoney em 02/06/2026. DY% = div/cota ÷ preço atual; YoC% = div/cota ÷ PM. AURE3 sem previsão de dividendos em 2026 (alavancagem 5,2× após aquisição AES Brasil, prejuízo R$601mi no 1T26). Valores informativos — não constituem recomendação de investimento.</p>
   </section>
 
   <p class="note" id="footnote"></p>
@@ -282,35 +282,35 @@ const SHEET_TABS = { FIIS:"FIIS", ACOES:"AÇÕES", PROVENTOS:"PROVENTO$", PATRIM
 /* ===== retrato de segurança (atualizado pela tarefa das 11h; não editar manualmente entre os marcadores) ===== */
 /* SNAPSHOT_START */
 const SNAPSHOT = {
-  updated:"retrato salvo · 01/06/2026", patrimonio:81029.53, dyHolding:6.87, proventosTotal:5567.02,
+  updated:"retrato salvo · 02/06/2026", patrimonio:81731.31, dyHolding:6.81, proventosTotal:5567.02,
   alloc:[
-    {nome:"Ações BR", valor:49904.93, atual:62, ideal:55, delta:-5338.69, cor:"var(--acoes)"},
-    {nome:"FIIs", valor:31124.60, atual:38, ideal:25, delta:-10867.22, cor:"var(--fiis)"},
-    {nome:"Renda Fixa", valor:0, atual:0, ideal:15, delta:12154.43, cor:"var(--rf)"},
-    {nome:"Caixa", valor:0, atual:0, ideal:5, delta:4051.48, cor:"var(--caixa)"},
+    {nome:"Ações BR", valor:49904.93, atual:61, ideal:55, delta:-4952.71, cor:"var(--acoes)"},
+    {nome:"FIIs", valor:31826.38, atual:39, ideal:25, delta:-11393.55, cor:"var(--fiis)"},
+    {nome:"Renda Fixa", valor:0, atual:0, ideal:15, delta:12259.70, cor:"var(--rf)"},
+    {nome:"Caixa", valor:0, atual:0, ideal:5, delta:4086.57, cor:"var(--caixa)"},
     {nome:"Ações US$", valor:0, atual:0, ideal:0, delta:0, cor:"var(--us)"},
   ],
   fiis:[
-    {ativo:"XPML11",setor:"Shopping",preco:106.42,pm:109.56,teto:121.00,rent:-2.87,ms:13.70,qtd:55,valor:5853.10,part:18.81,holding:7.22,aporte:0},
-    {ativo:"HGCR11",setor:"Shopping",preco:95.63,pm:93.94,teto:114.00,rent:1.80,ms:19.21,qtd:47,valor:4494.61,part:14.44,holding:5.55,aporte:0},
-    {ativo:"BTLG11",setor:"Logistico",preco:103.92,pm:101.10,teto:102.00,rent:2.79,ms:-1.85,qtd:20,valor:2078.40,part:6.68,holding:2.56,aporte:0},
-    {ativo:"RBRR11",setor:"Logistico",preco:83.00,pm:85.85,teto:118.00,rent:-3.32,ms:42.17,qtd:46,valor:3818.00,part:12.27,holding:4.71,aporte:11},
-    {ativo:"TRXF11",setor:"Hibrido",preco:90.63,pm:102.11,teto:133.00,rent:-11.24,ms:46.75,qtd:102,valor:9244.26,part:29.70,holding:11.41,aporte:11},
-    {ativo:"HGRU11",setor:"Hibrido",preco:128.50,pm:115.96,teto:128.00,rent:10.81,ms:-0.39,qtd:10,valor:1285.00,part:4.13,holding:1.59,aporte:0},
-    {ativo:"VGIR11",setor:"Papel",preco:9.63,pm:9.58,teto:9.90,rent:0.52,ms:2.80,qtd:177,valor:1704.51,part:5.48,holding:2.10,aporte:5},
-    {ativo:"RECR11",setor:"Papel",preco:82.71,pm:77.09,teto:98.00,rent:7.29,ms:18.49,qtd:32,valor:2646.72,part:8.50,holding:3.27,aporte:0},
+    {ativo:"XPML11",setor:"Shopping",preco:106.42,pm:109.56,teto:121.00,rent:-2.87,ms:13.70,qtd:58,valor:6172.36,part:19.39,holding:7.55,vuc:106.42,duc:"01/06/2026",aporte:3},
+    {ativo:"HGCR11",setor:"Shopping",preco:95.63,pm:93.94,teto:114.00,rent:1.80,ms:19.21,qtd:51,valor:4877.13,part:15.32,holding:5.97,vuc:95.38,duc:"01/06/2026",aporte:4},
+    {ativo:"BTLG11",setor:"Logistico",preco:103.92,pm:101.10,teto:102.00,rent:2.79,ms:-1.85,qtd:20,valor:2078.40,part:6.53,holding:2.54,vuc:102.63,duc:"",aporte:0},
+    {ativo:"RBRR11",setor:"Logistico",preco:83.00,pm:85.85,teto:118.00,rent:-3.32,ms:42.17,qtd:46,valor:3818.00,part:12.00,holding:4.67,vuc:83.45,duc:"01/06/2026",aporte:11},
+    {ativo:"TRXF11",setor:"Hibrido",preco:90.63,pm:102.11,teto:133.00,rent:-11.24,ms:46.75,qtd:102,valor:9244.26,part:29.05,holding:11.31,vuc:90.64,duc:"01/06/2026",aporte:11},
+    {ativo:"HGRU11",setor:"Hibrido",preco:128.50,pm:115.96,teto:128.00,rent:10.81,ms:-0.39,qtd:10,valor:1285.00,part:4.04,holding:1.57,vuc:119.26,duc:"02/04/2025",aporte:0},
+    {ativo:"VGIR11",setor:"Papel",preco:9.63,pm:9.58,teto:9.90,rent:0.52,ms:2.80,qtd:177,valor:1704.51,part:5.36,holding:2.09,vuc:9.67,duc:"",aporte:5},
+    {ativo:"RECR11",setor:"Papel",preco:82.71,pm:77.09,teto:98.00,rent:7.29,ms:18.49,qtd:32,valor:2646.72,part:8.32,holding:3.24,vuc:83.66,duc:"02/04/2025",aporte:0},
   ],
   acoes:[
-    {ativo:"VALE3",setor:"Mineração",preco:81.70,pm:55.32,teto:78.00,rent:47.69,ms:-4.53,qtd:62,valor:5065.40,part:10.15,holding:6.25,aporte:0},
-    {ativo:"BBAS3",setor:"Bancos",preco:20.08,pm:25.18,teto:25.00,rent:-20.25,ms:24.50,qtd:493,valor:9899.44,part:19.84,holding:12.22,aporte:148},
-    {ativo:"TAEE11",setor:"Elétrico",preco:38.90,pm:39.30,teto:47.58,rent:-1.02,ms:22.31,qtd:198,valor:7702.20,part:15.43,holding:9.51,aporte:64},
-    {ativo:"ISAE4",setor:"Elétrico",preco:26.86,pm:26.13,teto:31.27,rent:2.79,ms:16.42,qtd:324,valor:8702.64,part:17.44,holding:10.74,aporte:73},
-    {ativo:"AURE3",setor:"Elétrico",preco:12.06,pm:11.44,teto:11.66,rent:5.42,ms:-3.32,qtd:195,valor:2351.70,part:4.71,holding:2.90,aporte:0},
-    {ativo:"BBSE3",setor:"Seguridade",preco:35.03,pm:34.62,teto:35.50,rent:1.18,ms:1.34,qtd:253,valor:8862.59,part:17.76,holding:10.94,aporte:5},
-    {ativo:"ITUB4",setor:"Bancos",preco:39.36,pm:40.18,teto:47.92,rent:-2.04,ms:21.75,qtd:186,valor:7320.96,part:14.67,holding:9.03,aporte:68},
+    {ativo:"VALE3",setor:"Mineração",preco:81.70,pm:55.32,teto:78.00,rent:47.69,ms:-4.53,qtd:62,valor:5065.40,part:10.15,holding:6.20,vuc:50.06,duc:"08/04/2025",aporte:0},
+    {ativo:"BBAS3",setor:"Bancos",preco:20.08,pm:25.18,teto:25.00,rent:-20.25,ms:24.50,qtd:493,valor:9899.44,part:19.84,holding:12.11,vuc:20.17,duc:"01/06/2026",aporte:148},
+    {ativo:"TAEE11",setor:"Elétrico",preco:38.90,pm:39.30,teto:47.58,rent:-1.02,ms:22.31,qtd:198,valor:7702.20,part:15.43,holding:9.42,vuc:38.78,duc:"01/06/2026",aporte:64},
+    {ativo:"ISAE4",setor:"Elétrico",preco:26.86,pm:26.13,teto:31.27,rent:2.79,ms:16.42,qtd:324,valor:8702.64,part:17.44,holding:10.65,vuc:26.63,duc:"01/06/2026",aporte:73},
+    {ativo:"AURE3",setor:"Elétrico",preco:12.06,pm:11.44,teto:11.66,rent:5.42,ms:-3.32,qtd:195,valor:2351.70,part:4.71,holding:2.88,vuc:10.12,duc:"",aporte:0},
+    {ativo:"BBSE3",setor:"Seguridade",preco:35.03,pm:34.62,teto:35.50,rent:1.18,ms:1.34,qtd:253,valor:8862.59,part:17.76,holding:10.84,vuc:34.96,duc:"",aporte:5},
+    {ativo:"ITUB4",setor:"Bancos",preco:39.36,pm:40.18,teto:47.92,rent:-2.04,ms:21.75,qtd:186,valor:7320.96,part:14.67,holding:8.96,vuc:39.33,duc:"01/06/2026",aporte:68},
   ],
   acaoSetorIdeal:{ "Elétrico":25, "Bancos":25, "Mineração":10, "Seguridade":15 },
-  equity:[{mes:"Jan",valor:62300.10},{mes:"Fev",valor:62960.70},{mes:"Mar",valor:65353.29},{mes:"Abr",valor:78593.53},{mes:"Mai",valor:69759.54},{mes:"Jun",valor:81029.53}],
+  equity:[{mes:"Jan",valor:62300.10},{mes:"Fev",valor:62960.70},{mes:"Mar",valor:65353.29},{mes:"Abr",valor:78593.53},{mes:"Mai",valor:69759.54},{mes:"Jun",valor:81731.31}],
   prov:[
     {mes:"Abr/25",fii:190.91,acao:0},{mes:"Mai/25",fii:203.26,acao:124.16},{mes:"Jun/25",fii:203.32,acao:73.90},
     {mes:"Jul/25",fii:249.20,acao:0.44},{mes:"Ago/25",fii:220.18,acao:299.12},{mes:"Set/25",fii:213.49,acao:117.95},
@@ -320,10 +320,23 @@ const SNAPSHOT = {
   provAnos:[
     {ano:"2024",fii:0,acao:0,total:0,media:0,dia:0,varAA:null},
     {ano:"2025",fii:1998.54,acao:972.01,total:2970.55,media:247.55,dia:8.13,varAA:null},
-    {ano:"2026",fii:1453.70,acao:1142.77,total:2596.47,media:216.37,dia:17.08,varAA:-12.59},
+    {ano:"2026",fii:1453.70,acao:1142.77,total:2596.47,media:216.37,dia:16.97,varAA:-12.59},
   ],
 };
 /* SNAPSHOT_END */
+
+/* FATOS_START */
+const FATOS = {
+  updated: "02/06/2026 · 11:00",
+  itens: [
+    {cat:"provento", ticker:"BBAS3", titulo:"BBAS3 paga JCP de R$ 0,05/ação em junho", corpo:"Banco do Brasil aprovou <b>R$ 0,05/ação</b> em JCP (1T26). Data-com: <b>01/06/2026</b>. Pagamento: <b>11/06/2026</b>.", data:"01/06/2026", fonte:"https://investidor10.com.br/noticias/banco-do-brasil-bbas3-pagara-r-0-05-por-acao-em-junho-de-2026-120499/"},
+    {cat:"alerta", ticker:"BBAS3", titulo:"BB revisa guidance de lucro 2026 para baixo", corpo:"Banco do Brasil reduziu projeção de lucro ajustado 2026 para <b>R$ 18–22 bilhões</b> (antes: R$ 22–26 bi), pressionado por risco de crédito no agronegócio.", data:"13/05/2026", fonte:"https://statusinvest.com.br/acoes/bbas3"},
+    {cat:"provento", ticker:"HGRU11", titulo:"HGRU11 paga R$ 0,95/cota em junho", corpo:"HGRU11 mantém rendimento de <b>R$ 0,95/cota</b> (competência maio/26). Pagamento: <b>15/06/2026</b>. Data-base: 29/05/2026. DY mensal ~0,73%.", data:"29/05/2026", fonte:"https://fiis.com.br/noticias/fundo-imobiliario-dividendos-hgru11-confira-quanto-fundo-vai-pagar-junho-2026-jj/"},
+    {cat:"fii", ticker:"TRXF11", titulo:"TRXF11 mantém guidance R$ 0,90–0,93/cota até dez/26", corpo:"TRX Investimentos prorrogou guidance de dividendos no intervalo de <b>R$ 0,90–0,93/cota</b> até dezembro de 2026.", data:"22/05/2026", fonte:"https://fiis.com.br/noticias/fii-trxf11-divulga-dividendos-yield-acima-veja-valores/"},
+    {cat:"resultado", ticker:"HGRU11", titulo:"HGRU11 lucra R$ 18,5 mi com vacância de 0,8%", corpo:"Resultado de abril: receita <b>R$ 1,05/cota</b>, distribuível <b>R$ 0,80/cota</b>. Vacância física em <b>0,8%</b>. Portfólio: 100 ativos em 16 estados.", data:"29/05/2026", fonte:"https://fiis.com.br/noticias/fundo-imobiliario-hgru11-lucra-milhoes-abril-2026-mantem-vacancia-zerada-jj/"},
+  ]
+};
+/* FATOS_END */
 
 /* ===== helpers ===== */
 const BRL=new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
@@ -1051,17 +1064,17 @@ function drawRealizadosCharts(){
   }
 }
 
-/* ===== DY DATA (pesquisado em Investidor10 / Suno / Infomoney / AGF · 02/06/2026) ===== */
+/* ===== DY DATA (atualizado em Investidor10 / Suno / Infomoney / fiis.com.br · 02/06/2026) ===== */
 const DY_DATA = {
   fiis: {
     XPML11: {divCota:0.92, dyMens:0.86, yocMens:0.84, proximoPgto:null, fonte:"Investidor10"},
-    HGCR11: {divCota:1.00, dyMens:1.05, yocMens:1.06, proximoPgto:null, fonte:"Investidor10"},
-    BTLG11: {divCota:0.79, dyMens:0.76, yocMens:0.78, proximoPgto:null, fonte:"Investidor10"},
-    RBRR11: {divCota:0.83, dyMens:1.00, yocMens:0.97, proximoPgto:null, fonte:"Investidor10"},
-    TRXF11: {divCota:1.00, dyMens:1.10, yocMens:0.98, proximoPgto:null, fonte:"Investidor10"},
-    HGRU11: {divCota:1.04, dyMens:0.81, yocMens:0.90, proximoPgto:null, fonte:"Investidor10"},
-    VGIR11: {divCota:0.13, dyMens:1.35, yocMens:1.36, proximoPgto:null, fonte:"Investidor10"},
-    RECR11: {divCota:0.88, dyMens:1.06, yocMens:1.14, proximoPgto:null, fonte:"Investidor10"},
+    HGCR11: {divCota:0.95, dyMens:0.99, yocMens:1.01, proximoPgto:null, fonte:"Investidor10"},
+    BTLG11: {divCota:0.81, dyMens:0.78, yocMens:0.80, proximoPgto:null, fonte:"Investidor10"},
+    RBRR11: {divCota:0.90, dyMens:1.08, yocMens:1.05, proximoPgto:null, fonte:"Investidor10"},
+    TRXF11: {divCota:0.93, dyMens:1.03, yocMens:0.91, proximoPgto:null, fonte:"Investidor10"},
+    HGRU11: {divCota:0.95, dyMens:0.74, yocMens:0.82, proximoPgto:"15/06/2026", fonte:"fiis.com.br"},
+    VGIR11: {divCota:0.12, dyMens:1.25, yocMens:1.25, proximoPgto:null, fonte:"Investidor10"},
+    RECR11: {divCota:1.05, dyMens:1.27, yocMens:1.36, proximoPgto:null, fonte:"Investidor10"},
   },
   acoes: {
     VALE3: {dpa26:6.00, dy26:7.34, yoc26:10.85, proximoPgto:null, proximoValor:null, freq:"Semestral", fonte:"Investidor10/arevista"},
