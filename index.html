@@ -264,7 +264,7 @@
     <div class="card" style="overflow-x:auto;margin-bottom:28px"><table id="dyAcaoTable"></table></div>
     <div class="sec-title">Seção 3 — Consolidado</div>
     <div class="grid" id="dyConsol" style="grid-template-columns:repeat(3,1fr);gap:20px"></div>
-    <p class="note" style="margin-top:18px">Renda mensal estimada com base na média dos últimos 6 meses de proventos recebidos, distribuída proporcionalmente ao valor de cada posição. Div/cota e DPA são derivados da renda estimada ÷ cotas — use como referência de planejamento, não como cotação oficial. Valores informativos — não constituem recomendação de investimento.</p>
+    <p class="note" style="margin-top:18px">Dados de Div/cota (FIIs) e DPA26 (Ações) pesquisados em Investidor10, Suno, Infomoney e AGF em 02/06/2026. DY% = div/cota ÷ preço atual; YoC% = div/cota ÷ PM. AURE3 sem previsão de dividendos em 2026 (alavancagem 5,2× após aquisição AES Brasil, prejuízo R$601mi no 1T26). Valores informativos — não constituem recomendação de investimento.</p>
   </section>
 
   <p class="note" id="footnote"></p>
@@ -1051,89 +1051,116 @@ function drawRealizadosCharts(){
   }
 }
 
+/* ===== DY DATA (pesquisado em Investidor10 / Suno / Infomoney / AGF · 02/06/2026) ===== */
+const DY_DATA = {
+  fiis: {
+    XPML11: {divCota:0.92, dyMens:0.86, yocMens:0.84, proximoPgto:null, fonte:"Investidor10"},
+    HGCR11: {divCota:1.00, dyMens:1.05, yocMens:1.06, proximoPgto:null, fonte:"Investidor10"},
+    BTLG11: {divCota:0.79, dyMens:0.76, yocMens:0.78, proximoPgto:null, fonte:"Investidor10"},
+    RBRR11: {divCota:0.83, dyMens:1.00, yocMens:0.97, proximoPgto:null, fonte:"Investidor10"},
+    TRXF11: {divCota:1.00, dyMens:1.10, yocMens:0.98, proximoPgto:null, fonte:"Investidor10"},
+    HGRU11: {divCota:1.04, dyMens:0.81, yocMens:0.90, proximoPgto:null, fonte:"Investidor10"},
+    VGIR11: {divCota:0.13, dyMens:1.35, yocMens:1.36, proximoPgto:null, fonte:"Investidor10"},
+    RECR11: {divCota:0.88, dyMens:1.06, yocMens:1.14, proximoPgto:null, fonte:"Investidor10"},
+  },
+  acoes: {
+    VALE3: {dpa26:6.00, dy26:7.34, yoc26:10.85, proximoPgto:null, proximoValor:null, freq:"Semestral", fonte:"Investidor10/arevista"},
+    BBAS3: {dpa26:1.10, dy26:5.48, yoc26:4.37, proximoPgto:"Jun/26", proximoValor:0.05, freq:"Trimestral", fonte:"Investidor10"},
+    TAEE11:{dpa26:3.60, dy26:9.25, yoc26:9.16, proximoPgto:null, proximoValor:null, freq:"Trimestral", fonte:"Investidor10"},
+    ISAE4: {dpa26:2.80, dy26:10.42, yoc26:10.71, proximoPgto:null, proximoValor:null, freq:"Trimestral", fonte:"Investidor10"},
+    AURE3: {dpa26:0.00, dy26:0.00, yoc26:0.00, proximoPgto:"2027+", proximoValor:null, freq:"—", fonte:"Investidor10"},
+    BBSE3: {dpa26:4.20, dy26:11.99, yoc26:12.13, proximoPgto:null, proximoValor:null, freq:"Semestral", fonte:"Investidor10/Suno"},
+    ITUB4: {dpa26:3.50, dy26:8.89, yoc26:8.71, proximoPgto:"Ago/26", proximoValor:0.35, freq:"Mensal+JCP", fonte:"Investidor10/seudinheiro"},
+  }
+};
+
 /* ===== DY PROJETIVO ===== */
 function renderDYProjetivo(d){
   const META_FII=500,META_ACAO=1000,META_TOTAL=1500;
-  const fii6=avg6(d.prov,"fii"),acao6=avg6(d.prov,"acao");
-  const totalFiiValor=d.fiis.reduce((s,x)=>s+x.valor,0)||1;
-  const totalAcaoValor=d.acoes.reduce((s,x)=>s+x.valor,0)||1;
   const money=v=>(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
 
+  /* ── SEÇÃO 1: FII TABLE (dados reais pesquisados) ── */
+  const fiiRows=d.fiis.map(x=>{
+    const dd=DY_DATA.fiis[x.ativo]||{};
+    const divcota=dd.divCota||0;
+    const dyMes=dd.dyMens||0;
+    const yocMes=dd.yocMens||0;
+    const rendaMes=divcota*x.qtd;
+    return {ativo:x.ativo,qtd:x.qtd,divcota,dyMes,yocMes,dpa12:divcota*12,rendaMes,rendaAno:rendaMes*12,fonte:dd.fonte||"—"};
+  });
+  const fiiTotMes=fiiRows.reduce((s,x)=>s+x.rendaMes,0);
+  const fiiTotAno=fiiRows.reduce((s,x)=>s+x.rendaAno,0);
+
   /* ── SEÇÃO 1: FII CARDS ── */
-  const fiiGap=Math.max(0,META_FII-fii6);
-  const fiiPct=Math.min(100,META_FII?100*fii6/META_FII:0);
+  const fiiGap=Math.max(0,META_FII-fiiTotMes);
+  const fiiPct=Math.min(100,META_FII?100*fiiTotMes/META_FII:0);
   const elFC=document.getElementById("dyFiiCards"); if(!elFC)return;
   elFC.innerHTML=[
-    {l:"Renda FIIs/mês",v:fmt(fii6),s:"média últimos 6 meses",c:"var(--fiis)"},
-    {l:"Renda FIIs/ano",v:fmt(fii6*12),s:"projetado (× 12)",c:"var(--fiis)"},
+    {l:"Renda FIIs/mês",v:fmt(fiiTotMes),s:"div/cota × cotas (Investidor10)",c:"var(--fiis)"},
+    {l:"Renda FIIs/ano",v:fmt(fiiTotAno),s:"projetado (× 12)",c:"var(--fiis)"},
     {l:"Meta FIIs",v:"R$ 500/mês",s:"independência de renda",c:"var(--ink)"},
     {l:"% Atingido",v:pct(fiiPct),s:"da meta FIIs",c:fiiPct>=100?"var(--verde)":"var(--ambar)"},
     {l:"Gap",v:fiiGap<=0?"✓ Atingida":fmt(fiiGap)+"/mês",s:"falta para a meta",c:fiiGap<=0?"var(--verde)":"var(--vermelho)"},
   ].map(k=>`<div class="card kpi"><div class="label">${k.l}</div><div class="value" style="color:${colVar(k.c)};font-size:17px">${k.v}</div><div class="sub">${k.s}</div></div>`).join("");
 
-  /* ── SEÇÃO 1: FII TABLE ── */
-  const fiiRows=d.fiis.map(x=>{
-    const rendaMes=(x.valor/totalFiiValor)*fii6;
-    const divcota=x.qtd>0?rendaMes/x.qtd:0;
-    const dyMes=x.preco>0?divcota/x.preco*100:0;
-    const yocMes=x.pm>0?divcota/x.pm*100:0;
-    return {ativo:x.ativo,qtd:x.qtd,divcota,dyMes,yocMes,dpa12:divcota*12,rendaMes,rendaAno:rendaMes*12};
-  });
-  const fiiTotMes=fiiRows.reduce((s,x)=>s+x.rendaMes,0);
-  const fiiTotAno=fiiRows.reduce((s,x)=>s+x.rendaAno,0);
-  const fiiHead=`<thead><tr><th>Ticker</th><th>Cotas</th><th>Div/cota *</th><th>Renda Mensal</th><th>DY Mens.%</th><th>YoC Mens.%</th><th>DPA 12m Proj.</th><th>Renda Anual Proj.</th><th>Frequência</th></tr></thead>`;
+  const fiiHead=`<thead><tr><th>Ticker</th><th>Cotas</th><th>Div/cota</th><th>Renda Mensal</th><th>DY Mens.%</th><th>YoC Mens.%</th><th>DPA 12m</th><th>Renda Anual</th><th>Frequência</th></tr></thead>`;
   const fiiBod=fiiRows.map(x=>`<tr>
     <td class="tk">${x.ativo}</td>
     <td>${x.qtd.toLocaleString("pt-BR")}</td>
-    <td style="color:var(--muted)">R$ ${money(x.divcota)}</td>
+    <td>R$ ${money(x.divcota)}</td>
     <td style="font-weight:600">${fmt(x.rendaMes)}</td>
-    <td class="${x.dyMes>=0.8?'pos':''}">${money(x.dyMes)}%</td>
-    <td class="${x.yocMes>=0.8?'pos':''}">${money(x.yocMes)}%</td>
-    <td style="color:var(--muted)">R$ ${money(x.dpa12)}</td>
+    <td class="${x.dyMes>=1?'pos':x.dyMes>=0.7?'ms-a':'neg'}">${money(x.dyMes)}%</td>
+    <td class="${x.yocMes>=1?'pos':x.yocMes>=0.7?'ms-a':'neg'}">${money(x.yocMes)}%</td>
+    <td>R$ ${money(x.dpa12)}</td>
     <td>${fmt(x.rendaAno)}</td>
     <td><span class="tag">Mensal</span></td>
   </tr>`).join("");
   const fiiTotRow=`<tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td></td><td></td><td>${fmt(fiiTotMes)}</td><td></td><td></td><td></td><td>${fmt(fiiTotAno)}</td><td></td></tr>`;
   document.getElementById("dyFiiTable").innerHTML=fiiHead+"<tbody>"+fiiBod+fiiTotRow+"</tbody>";
 
+  /* ── SEÇÃO 2: AÇÕES TABLE (dados reais pesquisados) ── */
+  const acaoRows=d.acoes.map(x=>{
+    const dd=DY_DATA.acoes[x.ativo]||{};
+    const dpa26=dd.dpa26||0;
+    const dy26=dd.dy26||0;
+    const yoc26=dd.yoc26||0;
+    const rendaAno=dpa26*x.qtd;
+    const prox=dd.proximoPgto||"—";
+    const proxV=dd.proximoValor?`R$ ${money(dd.proximoValor)}`:"—";
+    const proxLabel=prox!=="—"&&dd.proximoValor?`${prox} · ${proxV}`:prox;
+    return {ativo:x.ativo,qtd:x.qtd,dpa26,dy26,yoc26,rendaAno,freq:dd.freq||"—",proxLabel,fonte:dd.fonte||"—"};
+  });
+  const acaoTotAno=acaoRows.reduce((s,x)=>s+x.rendaAno,0);
+  const acaoTotMes=acaoTotAno/12;
+
   /* ── SEÇÃO 2: AÇÃO CARDS ── */
-  const acaoGap=Math.max(0,META_ACAO-acao6);
-  const acaoPct=Math.min(100,META_ACAO?100*acao6/META_ACAO:0);
+  const acaoGap=Math.max(0,META_ACAO-acaoTotMes);
+  const acaoPct=Math.min(100,META_ACAO?100*acaoTotMes/META_ACAO:0);
   const elAC=document.getElementById("dyAcaoCards"); if(!elAC)return;
   elAC.innerHTML=[
-    {l:"Renda Ações/mês est.",v:fmt(acao6),s:"média últimos 6 meses",c:"var(--acoes)"},
-    {l:"Renda Ações/ano",v:fmt(acao6*12),s:"projetado (× 12)",c:"var(--acoes)"},
+    {l:"Renda Ações/mês est.",v:fmt(acaoTotMes),s:"DPA26 × cotas ÷ 12 (Suno/Investidor10)",c:"var(--acoes)"},
+    {l:"Renda Ações/ano",v:fmt(acaoTotAno),s:"projetado 2026",c:"var(--acoes)"},
     {l:"Meta Ações",v:"R$ 1.000/mês",s:"independência de renda",c:"var(--ink)"},
     {l:"% Atingido",v:pct(acaoPct),s:"da meta ações",c:acaoPct>=100?"var(--verde)":"var(--ambar)"},
     {l:"Gap",v:acaoGap<=0?"✓ Atingida":fmt(acaoGap)+"/mês",s:"falta para a meta",c:acaoGap<=0?"var(--verde)":"var(--vermelho)"},
   ].map(k=>`<div class="card kpi"><div class="label">${k.l}</div><div class="value" style="color:${colVar(k.c)};font-size:17px">${k.v}</div><div class="sub">${k.s}</div></div>`).join("");
 
-  /* ── SEÇÃO 2: AÇÕES TABLE ── */
-  const FREQ={TAEE11:"Trimestral",ISAE4:"Trimestral",ITUB4:"Trimestral",BBAS3:"Semestral",BBSE3:"Semestral",VALE3:"Semestral",AURE3:"Semestral"};
-  const acaoRows=d.acoes.map(x=>{
-    const rendaAno=(x.valor/totalAcaoValor)*acao6*12;
-    const dpa26=x.qtd>0?rendaAno/x.qtd:0;
-    const dy26=x.preco>0?dpa26/x.preco*100:0;
-    const yoc26=x.pm>0?dpa26/x.pm*100:0;
-    return {ativo:x.ativo,qtd:x.qtd,dpa26,dy26,yoc26,rendaAno,freq:FREQ[x.ativo]||"Semestral"};
-  });
-  const acaoTotAno=acaoRows.reduce((s,x)=>s+x.rendaAno,0);
-  const acaoHead=`<thead><tr><th>Ticker</th><th>Cotas</th><th>DPA26 Proj. *</th><th>DY26%</th><th>YoC26%</th><th>Renda 2026</th><th>Frequência</th><th>Próx. Pgto Est.</th></tr></thead>`;
+  const acaoHead=`<thead><tr><th>Ticker</th><th>Cotas</th><th>DPA26 Proj.</th><th>DY26%</th><th>YoC26%</th><th>Renda 2026</th><th>Frequência</th><th>Próx. Pgto Est.</th></tr></thead>`;
   const acaoBod=acaoRows.map(x=>`<tr>
     <td class="tk">${x.ativo}</td>
     <td>${x.qtd.toLocaleString("pt-BR")}</td>
-    <td style="color:var(--muted)">R$ ${money(x.dpa26)}</td>
-    <td class="${x.dy26>=4?'pos':x.dy26>=2?'':'neg'}">${money(x.dy26)}%</td>
-    <td class="${x.yoc26>=4?'pos':x.yoc26>=2?'':'neg'}">${money(x.yoc26)}%</td>
+    <td>R$ ${money(x.dpa26)}</td>
+    <td class="${x.dy26>=8?'pos':x.dy26>=4?'ms-a':x.dy26>0?'':'neg'}">${money(x.dy26)}%</td>
+    <td class="${x.yoc26>=8?'pos':x.yoc26>=4?'ms-a':x.yoc26>0?'':'neg'}">${money(x.yoc26)}%</td>
     <td style="font-weight:600">${fmt(x.rendaAno)}</td>
     <td><span class="tag">${x.freq}</span></td>
-    <td style="color:var(--muted)">—</td>
+    <td style="color:var(--muted);font-size:11.5px">${x.proxLabel}</td>
   </tr>`).join("");
   const acaoTotRow=`<tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td></td><td></td><td></td><td></td><td>${fmt(acaoTotAno)}</td><td></td><td></td></tr>`;
   document.getElementById("dyAcaoTable").innerHTML=acaoHead+"<tbody>"+acaoBod+acaoTotRow+"</tbody>";
 
   /* ── SEÇÃO 3: CONSOLIDADO ── */
-  const totalMes=fii6+acao6;
+  const totalMes=fiiTotMes+acaoTotMes;
   const totalPct=Math.min(100,META_TOTAL?100*totalMes/META_TOTAL:0);
   const totalGap=Math.max(0,META_TOTAL-totalMes);
   const consolEl=document.getElementById("dyConsol"); if(!consolEl)return;
