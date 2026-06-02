@@ -2,7 +2,7 @@
 {
   "name": "Tonetto Holding",
   "schemaVersion": 1,
-  "description": "Painel ao vivo \"TONETTO HOLDING\" no padrão CVENOM, com 6 abas. Relê a planilha do Google Drive a cada abertura: Carteira (5 KPIs + 5 mini-cards de alocação + donut + setores + evolução patrimonial), FIIs e Ações (tabelas com preço/PM/rent/M.S. e filtros), Proventos (independência financeira, evolução anual, últimos 12 meses, projeções 17% a.a., histórico mensal), Pontos de Atenção (alertas automáticos por M.S. e setor) e Aportes (ativos com M.S.>0). Retrato de 21/05/2026 embutido como fallback.",
+  "description": "Painel ao vivo \"TONETTO HOLDING\" no padrão CVENOM, com 6 abas. Relê a planilha do Google Drive a cada abertura: Carteira (5 KPIs + 5 mini-cards de alocação + donut + setores + evolução patrimonial), FIIs e Ações (tabelas com preço/PM/rent/M.S. e filtros), Proventos (KPIs, projeções 17% a.a., histórico mensal), Aportes (ativos com M.S.>0). Retrato de 21/05/2026 embutido como fallback.",
   "mcpTools": [
     "mcp__fcfb38a8-9339-4ca8-b68b-70783af4a15e__read_file_content"
   ],
@@ -90,13 +90,6 @@
   .prog .bar > i{display:block;height:100%;border-radius:7px}
   .mini-bar{height:7px;border-radius:4px;background:#EEF1F5;overflow:hidden;margin-top:5px}
   .mini-bar > i{display:block;height:100%;border-radius:4px}
-  /* alerts */
-  .alert{display:flex;gap:11px;align-items:flex-start;padding:12px 14px;border-radius:9px;margin-bottom:10px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-  .alert .ic{font-size:16px;line-height:1.3}
-  .alert .bd{flex:1}
-  .alert .ti{font-weight:700;font-size:13.5px}
-  .alert .ds{font-size:12.5px;color:var(--muted);margin-top:2px}
-  .alert .pin{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;align-self:center}
   .legendrow{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:12px;color:var(--muted)}
   .legendrow span{display:inline-flex;align-items:center;gap:6px}.legendrow i{width:10px;height:10px;border-radius:3px}
   .cards-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
@@ -120,21 +113,6 @@
   .flag{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:6px;border:1px solid;text-transform:uppercase;letter-spacing:.02em}
   .fl-sell{color:#DC2626;border-color:#DC2626;background:#FEF2F2}
   .fl-warn{color:#D97706;border-color:#D97706;background:#FFFBEB}
-  .pa-sec{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:var(--muted);margin:22px 0 11px;display:flex;align-items:center;gap:8px}
-  .pa-sec:first-child{margin-top:4px}
-  .pa-sec .pd{width:9px;height:9px;border-radius:50%}
-  .pacard{display:flex;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:10px;overflow:hidden}
-  .pacard .bar{width:4px;flex:none}
-  .pacard .in{padding:13px 16px;display:flex;gap:16px;flex:1}
-  .pacard .lab{font-weight:800;font-size:12.5px;min-width:88px;flex:none}
-  .pacard .ti{font-weight:700;font-size:13.5px}
-  .pacard .mt{font-size:12px;color:var(--muted);margin-top:2px}
-  .pacard .ds{font-size:12.5px;color:#374151;margin-top:8px;line-height:1.5}
-  .pacard.pa-ctx{background:#F4F7FE}.pacard.pa-ctx .bar{background:#2563EB}
-  .pacard.pa-crit{background:#FEF5F4}.pacard.pa-crit .bar{background:#DC2626}
-  .pacard.pa-obs{background:#FFFBF2}.pacard.pa-obs .bar{background:#EA9A0B}
-  .pacard.pa-opp{background:#F4FCF6}.pacard.pa-opp .bar{background:#16A34A}
-  @media(max-width:560px){.pacard .in{flex-direction:column;gap:6px}}
   .aporte-form{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
   .aporte-form select,.aporte-form input{font-size:13px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-family:inherit;background:#fff;color:var(--ink)}
   .aporte-form input[type=number]{width:130px}
@@ -170,8 +148,9 @@
     <button data-tab="fiis">FIIs</button>
     <button data-tab="acoes">Ações</button>
     <button data-tab="proventos">Proventos</button>
-    <button data-tab="atencao">Pontos de Atenção</button>
+
     <button data-tab="aportes">Aportes</button>
+    <button data-tab="dy-projetivo">DY Projetivo</button>
   </nav>
 
   <div class="err" id="err"></div>
@@ -232,21 +211,11 @@
   <!-- ABA PROVENTOS -->
   <section data-panel="proventos" class="hide">
     <div class="grid" id="provKpis" style="grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px"></div>
-    <div class="card" style="margin-bottom:16px"><div class="panel-h">Independência Financeira <span class="hint" id="metaHint"></span></div><div id="indep"></div></div>
-    <div class="grid" style="grid-template-columns:1fr 1fr;margin-bottom:16px">
-      <div class="card"><div class="panel-h">Evolução Anual de Proventos</div><div class="chart-box sm"><canvas id="provAno"></canvas></div></div>
-      <div class="card"><div class="panel-h">Últimos 12 Meses <span class="hint">Total · Ações · FIIs</span></div><div class="chart-box sm"><canvas id="prov12"></canvas></div></div>
-    </div>
     <div class="sec-title">Projeções Futuras <span style="font-weight:500;color:var(--muted);font-size:12px">~17% a.a.</span></div>
     <div class="grid" id="projCards" style="grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px"></div>
     <div class="card" style="overflow-x:auto"><div class="panel-h">Histórico Mensal Completo</div><table id="provTable"></table></div>
   </section>
 
-  <!-- ABA ATENÇÃO -->
-  <section data-panel="atencao" class="hide">
-    <div id="alerts"></div>
-    <p class="note">Pontos gerados automaticamente a partir da planilha (regras de Margem de Segurança, teto e alocação ideal). Não são recomendação de investimento.</p>
-  </section>
 
   <!-- ABA APORTES -->
   <section data-panel="aportes" class="hide">
@@ -270,13 +239,6 @@
     </div>
     <!-- Programação mensal — agora logo após Meus Aportes, expansível por mês -->
     <div class="card" style="overflow-x:auto;margin-bottom:16px"><div class="panel-h">Programação mensal <span class="hint">clique no mês para ver aportes por ativo · planejado vs já feito</span></div><table id="aporteTable"></table></div>
-    <!-- Onde aportar — ranking por ativo -->
-    <div class="sec-title">Onde aportar — ranking por ativo <span style="font-weight:500;color:var(--muted);font-size:12px">proporcional à Margem de Segurança</span></div>
-    <div class="grid" style="grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <div class="card"><div class="panel-h">Ações <span class="hint" id="aporteAcaoTot"></span></div><div id="aporteAcaoRank"></div></div>
-      <div class="card"><div class="panel-h">FIIs <span class="hint" id="aporteFiiTot"></span></div><div id="aporteFiiRank"></div></div>
-    </div>
-    <p class="note" style="margin-bottom:22px">Plano forward-looking calculado ao vivo da planilha (gap até a meta, regra de Margem de Segurança). Não é histórico de transações nem recomendação de investimento.</p>
     <!-- Meta 2026 — seção inline -->
     <div class="sec-title" style="margin-top:4px">Meta 2026</div>
     <div class="grid" id="miniMeta2026" style="grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px"></div>
@@ -290,6 +252,19 @@
     <!-- 9. Movimentação mensal -->
     <div class="card" style="overflow-x:auto;margin-bottom:22px"><div class="panel-h">Movimentação mensal — compras e vendas</div><table id="realTable"></table></div>
     <p class="note" style="margin-top:0">Fonte: extrato de movimentação da B3 (jun/2024 – jun/2026). Para atualizar, exporte um novo extrato na Área do Investidor da B3 e me envie.</p>
+  </section>
+
+  <!-- ABA DY PROJETIVO -->
+  <section data-panel="dy-projetivo" class="hide">
+    <div class="sec-title" style="margin-top:4px">Seção 1 — FIIs <span style="font-weight:500;color:var(--muted);font-size:12px">renda mensal estimada por posição</span></div>
+    <div class="grid" id="dyFiiCards" style="grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px"></div>
+    <div class="card" style="overflow-x:auto;margin-bottom:28px"><table id="dyFiiTable"></table></div>
+    <div class="sec-title">Seção 2 — Ações <span style="font-weight:500;color:var(--muted);font-size:12px">DPA projetado 2026</span></div>
+    <div class="grid" id="dyAcaoCards" style="grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px"></div>
+    <div class="card" style="overflow-x:auto;margin-bottom:28px"><table id="dyAcaoTable"></table></div>
+    <div class="sec-title">Seção 3 — Consolidado</div>
+    <div class="grid" id="dyConsol" style="grid-template-columns:repeat(3,1fr);gap:20px"></div>
+    <p class="note" style="margin-top:18px">Renda mensal estimada com base na média dos últimos 6 meses de proventos recebidos, distribuída proporcionalmente ao valor de cada posição. Div/cota e DPA são derivados da renda estimada ÷ cotas — use como referência de planejamento, não como cotação oficial. Valores informativos — não constituem recomendação de investimento.</p>
   </section>
 
   <p class="note" id="footnote"></p>
@@ -526,14 +501,14 @@ function render(d){
   renderFiiTable(); renderAcaoTable(); renderFiiCards(); renderAcaoCards();
 
   /* proventos */
-  renderProvKpis(d); renderIndep(d,totFii,totAcao); renderProvTable(d); renderProj(d);
+  renderProvKpis(d); renderProvTable(d); renderProj(d);
 
   /* atenção + aportes + meta */
-  renderAlerts(d,acaoSet); renderRealizados(); renderAportes(d); renderMeta2026(d); renderRegistro();
+  renderRealizados(); renderAportes(d); renderMeta2026(d); renderRegistro(); renderDYProjetivo(d);
 
   /* charts */
   destroy();
-  drawDonut(d); drawEquity(d); drawProvAno(d); drawProv12(d); drawMetaProj(d); drawAporteCharts(d); drawRealizadosCharts();
+  drawDonut(d); drawEquity(d); drawMetaProj(d); drawAporteCharts(d); drawRealizadosCharts();
 
   /* footnote */
   document.getElementById("footnote").innerHTML="Fonte: planilha \"TONETTO ® HOLDING\" no Google Drive (compartilhada por Caio Venom), relida a cada abertura. "+
@@ -580,6 +555,11 @@ function renderFiiCards(){
         <div class="stat"><div class="l">M.S.</div><div class="v ${msClass(x.ms)}">${x.ms>=0?'+':''}${pct(x.ms)}</div></div>
         <div class="stat"><div class="l">Part.</div><div class="v">${pct(x.part)}</div></div>
         <div class="stat"><div class="l">Teto</div><div class="v">R$ ${money(x.teto)}</div></div>
+      </div>
+      <div class="stats2">
+        <div class="stat"><div class="l">PM</div><div class="v">R$ ${money(x.pm)}</div></div>
+        <div class="stat"><div class="l">Qtd</div><div class="v">${x.qtd.toLocaleString("pt-BR")}</div></div>
+        <div class="stat"><div class="l">Valor</div><div class="v">${fmt(x.valor)}</div></div>
       </div>
       <div class="tetobar"><i style="width:${tetoPct}%;background:${barCol}"></i></div>
     </div>`;
@@ -651,16 +631,6 @@ function renderProvKpis(d){
   ];
   document.getElementById("provKpis").innerHTML=kpis.map(k=>`<div class="card kpi"><div class="label">${k.label}</div><div class="value" style="color:${colVar(k.color)};font-size:16.5px">${k.value}</div><div class="sub">${k.sub}</div></div>`).join("");
 }
-function renderIndep(d){
-  const fiiMes=avg6(d.prov,"fii"), acaoMes=avg6(d.prov,"acao"), totMes=fiiMes+acaoMes;
-  const bar=(lbl,val,meta,cor)=>{const p=Math.min(100,meta?100*val/meta:0);
-    return `<div class="prog"><div class="top"><span><b>${lbl}</b> <span style="color:var(--muted)">méd. 6m</span></span><span style="color:var(--muted)">${fmt(val)} / ${fmt0(meta)} · ${pct(p)}</span></div><div class="bar"><i style="width:${p}%;background:${cor}"></i></div></div>`;}
-  document.getElementById("metaHint").textContent="média 6m · meta "+fmt0(CONFIG.metaIndepTotal)+"/mês";
-  document.getElementById("indep").innerHTML=
-    bar("Meta Total",totMes,CONFIG.metaIndepTotal,colVar("var(--roxo)"))+
-    bar("Meta FIIs",fiiMes,CONFIG.metaIndepFiis,colVar("var(--fiis)"))+
-    bar("Meta Ações",acaoMes,CONFIG.metaIndepAcoes,colVar("var(--acoes)"));
-}
 function renderProvTable(d){
   const best=(d.prov||[]).reduce((m,p)=>{const t=p.fii+p.acao;return t>m.t?{mes:p.mes,t}:m;},{mes:"",t:0});
   const head=`<thead><tr><th>Período</th><th>FIIs</th><th>Ações</th><th>Total</th><th>Variação</th><th>Méd. mensal</th><th>Por dia</th></tr></thead>`;
@@ -701,56 +671,6 @@ function toggleProvYear(yy){
   const cr=document.querySelector('#provTable tr.prov-year[data-yy="'+yy+'"] .prov-caret');
   if(cr) cr.textContent=open?"▾":"▸";
 }
-function renderAlerts(d,acaoSet){
-  const all=d.fiis.map(x=>({...x,cls:"FII"})).concat(d.acoes.map(x=>({...x,cls:"Ação"})));
-  const totFii=d.fiis.reduce((s,x)=>s+x.valor,0), totAcao=d.acoes.reduce((s,x)=>s+x.valor,0);
-  const money=v=>(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
-  const card=(sev,lab,ti,mt,ds)=>`<div class="pacard pa-${sev}"><div class="bar"></div><div class="in"><div class="lab">${lab}</div><div><div class="ti">${ti}</div><div class="mt">${mt}</div><div class="ds">${ds}</div></div></div></div>`;
-  const sec=(dot,txt)=>`<div class="pa-sec"><span class="pd" style="background:${dot}"></span>${txt}</div>`;
-  let html="";
-  /* Contexto */
-  const fiiPct=d.patrimonio?100*totFii/d.patrimonio:0, acaoPct=d.patrimonio?100*totAcao/d.patrimonio:0;
-  html+=sec("#2563EB","Contexto de carteira");
-  html+=card("ctx","CARTEIRA","Composição atual e desvio do ideal",
-    `Patrimônio ${fmt(d.patrimonio)} · Ações ${pct(acaoPct)} · FIIs ${pct(fiiPct)} · DY ${pct(d.dyHolding)}`,
-    `Carteira concentrada em renda variável: ${pct(acaoPct)} em ações e ${pct(fiiPct)} em FIIs, sem renda fixa nem caixa. A estratégia da planilha mira Ações 55% / FIIs 25%.`);
-  html+=card("ctx","PLANILHA","Preços ao vivo via Google Drive",
-    "Atualiza automaticamente ao abrir",
-    "O painel lê a planilha TONETTO HOLDING no Google Drive. Preços, quantidades e patrimônio são recalculados a cada abertura.");
-  /* Crítico: M.S. < 0 */
-  const crit=all.filter(x=>x.ms<0).sort((a,b)=>a.ms-b.ms);
-  if(crit.length){ html+=sec("#DC2626","Crítico — acima do teto");
-    crit.forEach(x=>{const above=x.teto?(x.preco-x.teto)/x.teto*100:0;
-      html+=card("crit",x.ativo,`${pct(above)} acima do teto — não aportar`,
-        `Cotação R$ ${money(x.preco)} vs Teto R$ ${money(x.teto)} · M.S. ${pct(x.ms)} · ${x.cls}`,
-        `${x.ativo} negocia acima do teto de R$ ${money(x.teto)} e não oferece margem de segurança. A regra da carteira recomenda não aportar e reavaliar a posição.`);});
-  }
-  /* Observação: M.S. 0–3 + setor overweight + classe subpeso */
-  const obs=all.filter(x=>x.ms>=0&&x.ms<=3).sort((a,b)=>a.ms-b.ms);
-  const over=acaoSet.filter(s=>{const id=d.acaoSetorIdeal[s.setor];return id!=null&&s.pct>id+0.5;});
-  const subs=d.alloc.filter(a=>/Renda Fixa|Caixa/.test(a.nome)&&a.atual<a.ideal-0.5);
-  if(obs.length||over.length||subs.length){ html+=sec("#EA9A0B","Observação — monitorar");
-    obs.forEach(x=>html+=card("obs",x.ativo,"Próximo ao teto — cautela",
-      `M.S. ${pct(x.ms)} · Cotação R$ ${money(x.preco)} vs Teto R$ ${money(x.teto)} · ${x.cls}`,
-      `Margem de segurança baixa (${pct(x.ms)}). Pouco espaço até o teto de R$ ${money(x.teto)}; aportar só com cautela e monitorar.`));
-    over.forEach(s=>{const id=d.acaoSetorIdeal[s.setor];
-      html+=card("obs","SETOR "+s.setor,`${s.setor} acima do ideal`,
-        `${pct(s.pct)} atual vs ${pct(id)} ideal · setor de Ações`,
-        `O setor ${s.setor} está acima do peso ideal. Evitar concentrar mais aportes nele até reequilibrar a carteira.`);});
-    subs.forEach(a=>html+=card("obs",a.nome,`${a.nome} abaixo do ideal`,
-      `${pct(a.atual)} atual vs ${pct(a.ideal)} ideal · faltam ${fmt(Math.abs(a.delta))}`,
-      `${a.nome} está abaixo do alvo da planilha (${pct(a.ideal)}). Fora do plano atual de aportar só em Ações e FIIs.`));
-  }
-  /* Oportunidade: M.S. > 15 */
-  const opp=all.filter(x=>x.ms>15).sort((a,b)=>b.ms-a.ms);
-  if(opp.length){ html+=sec("#16A34A","Oportunidade — aportar");
-    opp.forEach(x=>{const below=x.preco?(x.teto-x.preco)/x.preco*100:0;
-      html+=card("opp",x.ativo,`M.S. +${pct(x.ms)} — candidato a aporte`,
-        `Cotação R$ ${money(x.preco)} vs Teto R$ ${money(x.teto)} · ${pct(below)} abaixo do teto · Part. ${pct(x.part)} · ${x.cls}`,
-        `${x.ativo} está entre as maiores folgas até o teto da carteira. Margem de segurança de +${pct(x.ms)} o coloca como prioritário para receber aporte.`);});
-  }
-  document.getElementById("alerts").innerHTML=html;
-}
 function renderAportes(d){
   const P=computePlan(d);
   document.getElementById("aporteHint").textContent="meta "+fmt0(P.meta)+" até dez · "+fmt(P.mensal)+"/mês";
@@ -762,16 +682,6 @@ function renderAportes(d){
     {label:"Em FIIs /mês",value:fmt(P.mFiis),sub:pct(P.gap?100*P.gFiis/P.gap:0)+" do aporte",color:"var(--fiis)"},
   ];
   document.getElementById("aporteKpis").innerHTML=kpis.map(k=>`<div class="card kpi"><div class="label">${k.label}</div><div class="value" style="color:${colVar(k.color)};font-size:17px">${k.value}</div><div class="sub">${k.sub}</div></div>`).join("");
-  const rank=(grid,list,poolTot,color)=>{
-    const ok=list.filter(x=>x.ms>0); const s=ok.reduce((a,x)=>a+x.ms,0)||1;
-    const rows=ok.map(x=>({ativo:x.ativo,setor:x.setor,val:poolTot*x.ms/s})).sort((a,b)=>b.val-a.val);
-    const max=rows.length?rows[0].val:1;
-    document.getElementById(grid).innerHTML=rows.map((r,i)=>`<div style="margin:9px 0"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span><b style="color:var(--label)">${i+1}</b> <span class="tk">${r.ativo}</span> <span class="tag">${r.setor}</span></span><span style="color:var(--muted)">${fmt(r.val)} · ${pct(poolTot?100*r.val/poolTot:0)}</span></div><div class="mini-bar"><i style="width:${Math.round(100*r.val/max)}%;background:${color}"></i></div></div>`).join("")||`<div class="sub" style="color:var(--muted)">Nenhum ativo elegível (M.S. > 0).</div>`;
-  };
-  rank("aporteAcaoRank",d.acoes,P.gAcoes,colVar("var(--acoes)"));
-  rank("aporteFiiRank",d.fiis,P.gFiis,colVar("var(--fiis)"));
-  document.getElementById("aporteAcaoTot").textContent="total "+fmt(P.gAcoes);
-  document.getElementById("aporteFiiTot").textContent="total "+fmt(P.gFiis);
   const aa=document.getElementById("aporteAlvo");
   if(aa){
     const totH=(P.acoesAtual+P.fiisAtual)||1;
@@ -824,10 +734,14 @@ function renderAportes(d){
       const semAtNote=semAt>0?`<div style="font-size:11.5px;color:#92400E;background:#FEF3C7;border:1px solid #FDE68A;border-radius:6px;padding:8px 11px;margin-top:10px"><b>${fmt(semAt)}</b> registrado neste mês sem ativo — entra no total, mas não nas linhas por ativo. Para aparecer aqui em baixo, edite o aporte e informe o ticker.</div>`:'';
       const mesTag=r.past?` <span class="tag" style="background:#F1F3F7;color:var(--muted)">${r.mi<curMi?'passado':'este mês'}</span>`:r.mi===curMi?` <span class="tag" style="background:#EFF6FF;color:var(--roxo)">este mês</span>`:'';   
       const rowStyle=r.past?'cursor:pointer;background:#FAFBFC':'cursor:pointer';
-      const tdAc=`<td style="${r.past?'color:var(--muted)':''}">${fmt(planAc)}</td>`;
-      const tdFi=`<td style="${r.past?'color:var(--muted)':''}">${fmt(planFi)}</td>`;
-      const tdTot=`<td${r.past?' style="color:var(--muted)"':' style="font-weight:600"'}>${fmt(planTot)}</td>`;
-      const tdPat=r.past?'<td style="color:var(--muted)">—</td>':`<td>${fmt(r.pat)}</td>`;
+      const isCurMon=!r.past&&r.mi===curMi;
+      const curAc=isCurMon?regList.filter(x=>x.mesIdx===r.mi&&x.classe==="Ações").reduce((s,x)=>s+x.valor,0):planAc;
+      const curFi=isCurMon?regList.filter(x=>x.mesIdx===r.mi&&x.classe==="FIIs").reduce((s,x)=>s+x.valor,0):planFi;
+      const curTot=isCurMon?curAc+curFi:planTot;
+      const tdAc=`<td style="${r.past?'color:var(--muted)':''}">${fmt(isCurMon?curAc:planAc)}</td>`;
+      const tdFi=`<td style="${r.past?'color:var(--muted)':''}">${fmt(isCurMon?curFi:planFi)}</td>`;
+      const tdTot=`<td${r.past?' style="color:var(--muted)"':' style="font-weight:600"'}>${fmt(isCurMon?curTot:planTot)}</td>`;
+      const tdPat=r.past?'<td style="color:var(--muted)">—</td>':`<td>${fmt(isCurMon?P.pat:r.pat)}</td>`;
       body+=`<tr class="apo-row" data-mi="${r.mi}" style="${rowStyle}">
         <td><span class="apo-caret">▸</span></td>
         <td><b>${r.mes}</b>${mesTag}</td>
@@ -894,23 +808,6 @@ function drawEquity(d){
     data:{labels:d.equity.map(e=>e.mes),datasets:[{label:"Patrimônio",data:d.equity.map(e=>e.valor),
       backgroundColor:d.equity.map((e,i)=>i===last?colVar("var(--verde)"):colVar("var(--barra)")),borderRadius:6,maxBarThickness:70}]},
     options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>" "+fmt(c.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>"R$ "+(v/1000).toLocaleString("pt-BR")+"k"}},x:{grid:{display:false}}}}}));
-}
-function drawProvAno(d){
-  const a=d.provAnos.filter(x=>x.total>0);
-  charts.push(new Chart(document.getElementById("provAno"),{type:"bar",
-    data:{labels:a.map(x=>x.ano),datasets:[
-      {label:"FIIs",data:a.map(x=>x.fii),backgroundColor:colVar("var(--fiis)"),stack:"s",borderRadius:3},
-      {label:"Ações",data:a.map(x=>x.acao),backgroundColor:colVar("var(--acoes)"),stack:"s",borderRadius:3}]},
-    options:{plugins:{legend:{position:"bottom",labels:{boxWidth:11,font:{size:11}}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmt(c.parsed.y)}`}}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,ticks:{callback:v=>"R$ "+v}}}}}));
-}
-function drawProv12(d){
-  const last=d.prov.slice(-12);
-  charts.push(new Chart(document.getElementById("prov12"),{type:"line",
-    data:{labels:last.map(x=>x.mes),datasets:[
-      {label:"Total",data:last.map(x=>x.fii+x.acao),borderColor:"#F59E0B",backgroundColor:"rgba(245,158,11,.10)",fill:true,tension:.35,pointRadius:3,borderWidth:2},
-      {label:"Ações",data:last.map(x=>x.acao),borderColor:colVar("var(--acoes)"),tension:.35,pointRadius:2,borderWidth:1.5,fill:false},
-      {label:"FIIs",data:last.map(x=>x.fii),borderColor:colVar("var(--fiis)"),tension:.35,pointRadius:2,borderWidth:1.5,fill:false}]},
-    options:{plugins:{legend:{position:"top",labels:{boxWidth:11,font:{size:11}}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmt(c.parsed.y)}`}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>"R$ "+v}},x:{grid:{display:false}}}}}));
 }
 function renderProj(d){
   const grid=document.getElementById("projCards"); if(!grid) return;
@@ -1152,6 +1049,103 @@ function drawRealizadosCharts(){
     charts.push(new Chart(cc,{type:"doughnut",data:{labels:ent.map(e=>e[0]),datasets:[{data:ent.map(e=>e[1]),backgroundColor:ent.map(e=>colVar("var("+(cmap[e[0]]||"--caixa")+")")),borderColor:"#fff",borderWidth:2}]},options:{cutout:"62%",plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.label}: ${fmt(c.parsed)} (${pct(100*c.parsed/R.totalCompras)})`}}}}}));
     document.getElementById("realClasseLeg").innerHTML=ent.map(e=>`<span><i style="background:${colVar('var('+(cmap[e[0]]||'--caixa')+')')}"></i>${e[0]} ${pct(100*e[1]/R.totalCompras)}</span>`).join("");
   }
+}
+
+/* ===== DY PROJETIVO ===== */
+function renderDYProjetivo(d){
+  const META_FII=500,META_ACAO=1000,META_TOTAL=1500;
+  const fii6=avg6(d.prov,"fii"),acao6=avg6(d.prov,"acao");
+  const totalFiiValor=d.fiis.reduce((s,x)=>s+x.valor,0)||1;
+  const totalAcaoValor=d.acoes.reduce((s,x)=>s+x.valor,0)||1;
+  const money=v=>(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+
+  /* ── SEÇÃO 1: FII CARDS ── */
+  const fiiGap=Math.max(0,META_FII-fii6);
+  const fiiPct=Math.min(100,META_FII?100*fii6/META_FII:0);
+  const elFC=document.getElementById("dyFiiCards"); if(!elFC)return;
+  elFC.innerHTML=[
+    {l:"Renda FIIs/mês",v:fmt(fii6),s:"média últimos 6 meses",c:"var(--fiis)"},
+    {l:"Renda FIIs/ano",v:fmt(fii6*12),s:"projetado (× 12)",c:"var(--fiis)"},
+    {l:"Meta FIIs",v:"R$ 500/mês",s:"independência de renda",c:"var(--ink)"},
+    {l:"% Atingido",v:pct(fiiPct),s:"da meta FIIs",c:fiiPct>=100?"var(--verde)":"var(--ambar)"},
+    {l:"Gap",v:fiiGap<=0?"✓ Atingida":fmt(fiiGap)+"/mês",s:"falta para a meta",c:fiiGap<=0?"var(--verde)":"var(--vermelho)"},
+  ].map(k=>`<div class="card kpi"><div class="label">${k.l}</div><div class="value" style="color:${colVar(k.c)};font-size:17px">${k.v}</div><div class="sub">${k.s}</div></div>`).join("");
+
+  /* ── SEÇÃO 1: FII TABLE ── */
+  const fiiRows=d.fiis.map(x=>{
+    const rendaMes=(x.valor/totalFiiValor)*fii6;
+    const divcota=x.qtd>0?rendaMes/x.qtd:0;
+    const dyMes=x.preco>0?divcota/x.preco*100:0;
+    const yocMes=x.pm>0?divcota/x.pm*100:0;
+    return {ativo:x.ativo,qtd:x.qtd,divcota,dyMes,yocMes,dpa12:divcota*12,rendaMes,rendaAno:rendaMes*12};
+  });
+  const fiiTotMes=fiiRows.reduce((s,x)=>s+x.rendaMes,0);
+  const fiiTotAno=fiiRows.reduce((s,x)=>s+x.rendaAno,0);
+  const fiiHead=`<thead><tr><th>Ticker</th><th>Cotas</th><th>Div/cota *</th><th>Renda Mensal</th><th>DY Mens.%</th><th>YoC Mens.%</th><th>DPA 12m Proj.</th><th>Renda Anual Proj.</th><th>Frequência</th></tr></thead>`;
+  const fiiBod=fiiRows.map(x=>`<tr>
+    <td class="tk">${x.ativo}</td>
+    <td>${x.qtd.toLocaleString("pt-BR")}</td>
+    <td style="color:var(--muted)">R$ ${money(x.divcota)}</td>
+    <td style="font-weight:600">${fmt(x.rendaMes)}</td>
+    <td class="${x.dyMes>=0.8?'pos':''}">${money(x.dyMes)}%</td>
+    <td class="${x.yocMes>=0.8?'pos':''}">${money(x.yocMes)}%</td>
+    <td style="color:var(--muted)">R$ ${money(x.dpa12)}</td>
+    <td>${fmt(x.rendaAno)}</td>
+    <td><span class="tag">Mensal</span></td>
+  </tr>`).join("");
+  const fiiTotRow=`<tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td></td><td></td><td>${fmt(fiiTotMes)}</td><td></td><td></td><td></td><td>${fmt(fiiTotAno)}</td><td></td></tr>`;
+  document.getElementById("dyFiiTable").innerHTML=fiiHead+"<tbody>"+fiiBod+fiiTotRow+"</tbody>";
+
+  /* ── SEÇÃO 2: AÇÃO CARDS ── */
+  const acaoGap=Math.max(0,META_ACAO-acao6);
+  const acaoPct=Math.min(100,META_ACAO?100*acao6/META_ACAO:0);
+  const elAC=document.getElementById("dyAcaoCards"); if(!elAC)return;
+  elAC.innerHTML=[
+    {l:"Renda Ações/mês est.",v:fmt(acao6),s:"média últimos 6 meses",c:"var(--acoes)"},
+    {l:"Renda Ações/ano",v:fmt(acao6*12),s:"projetado (× 12)",c:"var(--acoes)"},
+    {l:"Meta Ações",v:"R$ 1.000/mês",s:"independência de renda",c:"var(--ink)"},
+    {l:"% Atingido",v:pct(acaoPct),s:"da meta ações",c:acaoPct>=100?"var(--verde)":"var(--ambar)"},
+    {l:"Gap",v:acaoGap<=0?"✓ Atingida":fmt(acaoGap)+"/mês",s:"falta para a meta",c:acaoGap<=0?"var(--verde)":"var(--vermelho)"},
+  ].map(k=>`<div class="card kpi"><div class="label">${k.l}</div><div class="value" style="color:${colVar(k.c)};font-size:17px">${k.v}</div><div class="sub">${k.s}</div></div>`).join("");
+
+  /* ── SEÇÃO 2: AÇÕES TABLE ── */
+  const FREQ={TAEE11:"Trimestral",ISAE4:"Trimestral",ITUB4:"Trimestral",BBAS3:"Semestral",BBSE3:"Semestral",VALE3:"Semestral",AURE3:"Semestral"};
+  const acaoRows=d.acoes.map(x=>{
+    const rendaAno=(x.valor/totalAcaoValor)*acao6*12;
+    const dpa26=x.qtd>0?rendaAno/x.qtd:0;
+    const dy26=x.preco>0?dpa26/x.preco*100:0;
+    const yoc26=x.pm>0?dpa26/x.pm*100:0;
+    return {ativo:x.ativo,qtd:x.qtd,dpa26,dy26,yoc26,rendaAno,freq:FREQ[x.ativo]||"Semestral"};
+  });
+  const acaoTotAno=acaoRows.reduce((s,x)=>s+x.rendaAno,0);
+  const acaoHead=`<thead><tr><th>Ticker</th><th>Cotas</th><th>DPA26 Proj. *</th><th>DY26%</th><th>YoC26%</th><th>Renda 2026</th><th>Frequência</th><th>Próx. Pgto Est.</th></tr></thead>`;
+  const acaoBod=acaoRows.map(x=>`<tr>
+    <td class="tk">${x.ativo}</td>
+    <td>${x.qtd.toLocaleString("pt-BR")}</td>
+    <td style="color:var(--muted)">R$ ${money(x.dpa26)}</td>
+    <td class="${x.dy26>=4?'pos':x.dy26>=2?'':'neg'}">${money(x.dy26)}%</td>
+    <td class="${x.yoc26>=4?'pos':x.yoc26>=2?'':'neg'}">${money(x.yoc26)}%</td>
+    <td style="font-weight:600">${fmt(x.rendaAno)}</td>
+    <td><span class="tag">${x.freq}</span></td>
+    <td style="color:var(--muted)">—</td>
+  </tr>`).join("");
+  const acaoTotRow=`<tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td></td><td></td><td></td><td></td><td>${fmt(acaoTotAno)}</td><td></td><td></td></tr>`;
+  document.getElementById("dyAcaoTable").innerHTML=acaoHead+"<tbody>"+acaoBod+acaoTotRow+"</tbody>";
+
+  /* ── SEÇÃO 3: CONSOLIDADO ── */
+  const totalMes=fii6+acao6;
+  const totalPct=Math.min(100,META_TOTAL?100*totalMes/META_TOTAL:0);
+  const totalGap=Math.max(0,META_TOTAL-totalMes);
+  const consolEl=document.getElementById("dyConsol"); if(!consolEl)return;
+  consolEl.innerHTML=[
+    {l:"Renda Total/mês",v:fmt(totalMes),s:"FIIs "+fmt(fii6)+" + Ações "+fmt(acao6),c:"var(--roxo)"},
+    {l:"% da Meta R$1.500/mês",v:pct(totalPct),s:pct(fiiPct)+" FIIs · "+pct(acaoPct)+" Ações",c:totalPct>=100?"var(--verde)":"var(--ambar)"},
+    {l:"Gap",v:totalGap<=0?"✓ Meta atingida":fmt(totalGap)+"/mês",s:totalGap<=0?"Independência de renda alcançada":"falta para R$ 1.500/mês",c:totalGap<=0?"var(--verde)":"var(--vermelho)"},
+  ].map(k=>`<div class="card" style="padding:28px 24px">
+    <div class="label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--label);font-weight:600;border-left:3px solid #111827;padding-left:8px">${k.l}</div>
+    <div style="color:${colVar(k.c)};font-size:28px;font-weight:800;margin-top:12px;letter-spacing:-.02em;line-height:1.1">${k.v}</div>
+    <div style="font-size:12.5px;color:var(--muted);margin-top:8px">${k.s}</div>
+  </div>`).join("");
 }
 
 /* ===== tabs + boot ===== */
