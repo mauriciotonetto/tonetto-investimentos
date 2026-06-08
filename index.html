@@ -1144,7 +1144,10 @@ function computePlan(d){
   const today=new Date(); const curMi=today.getMonth();
   const lastDay=new Date(today.getFullYear(),curMi+1,0).getDate();
   const isLastDay=today.getDate()===lastDay;
-  const monthsLeft=isLastDay?Math.max(0,11-curMi):Math.max(0,12-curMi);
+  let _regList2=[];try{_regList2=apLoad()||[];}catch(e){}
+  const _curAp=_regList2.filter(r=>r.mesIdx===curMi).reduce((s,r)=>s+r.valor,0);
+  const _roughM=(meta-pat)/(Math.max(1,isLastDay?11-curMi:12-curMi));
+  const monthsLeft=(_curAp>=_roughM*0.7||isLastDay)?Math.max(0,11-curMi):Math.max(0,12-curMi);
   const gap=Math.max(0,meta-pat);
   const acoesAtual=d.acoes.reduce((s,x)=>s+x.valor,0), fiisAtual=d.fiis.reduce((s,x)=>s+x.valor,0);
   const acoesAlvo=meta*CONFIG.metaAcoesPct/100, fiisAlvo=meta*CONFIG.metaFiisPct/100;
