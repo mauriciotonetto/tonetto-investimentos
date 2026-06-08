@@ -982,10 +982,11 @@ function toggleProvYear(yy){
 function renderAportes(d){
   const P=computePlan(d);
   document.getElementById("aporteHint").textContent="meta "+fmt0(P.meta)+" até dez · "+fmt(P.mensal)+"/mês";
+  const _startMes=(P.curMonthDone||P.isLastDay)?MES12[Math.min(11,P.curMi+1)]:MES12[P.curMi];
   const kpis=[
     {label:"Aporte mensal",value:fmt(P.mensal),sub:(P.monthsLeft||0)+" meses · mercado estável",color:"var(--roxo)"},
     {label:"Total até a meta",value:fmt(P.gap),sub:"para chegar a "+fmt0(P.meta),color:"var(--verde)"},
-    {label:"Meses restantes",value:String(P.monthsLeft||"—"),sub:(P.isLastDay?MES12[Math.min(11,P.curMi+1)]:MES12[P.curMi]).toLowerCase()+"–dez de 2026",color:"var(--ink)"},
+    {label:"Meses restantes",value:String(P.monthsLeft||"—"),sub:_startMes.toLowerCase()+"–dez de 2026"+(P.curMonthDone?" · jun concluído ✓":""),color:"var(--ink)"},
     {label:"Em Ações /mês",value:fmt(P.mAcoes),sub:pct(P.gap?100*P.gAcoes/P.gap:0)+" do aporte",color:"var(--acoes)"},
     {label:"Em FIIs /mês",value:fmt(P.mFiis),sub:pct(P.gap?100*P.gFiis/P.gap:0)+" do aporte",color:"var(--fiis)"},
   ];
@@ -1153,7 +1154,7 @@ function computePlan(d){
   const acoesAlvo=meta*CONFIG.metaAcoesPct/100, fiisAlvo=meta*CONFIG.metaFiisPct/100;
   let gA=Math.max(0,acoesAlvo-acoesAtual), gF=Math.max(0,fiisAlvo-fiisAtual); const s=(gA+gF)||1;
   gA=gap*gA/s; gF=gap*gF/s; const div=monthsLeft>0?monthsLeft:1;
-  return {meta,pat,monthsLeft,gap,mensal:gap/div,gAcoes:gA,gFiis:gF,mAcoes:gA/div,mFiis:gF/div,acoesAtual,fiisAtual,acoesAlvo,fiisAlvo,curMi,isLastDay};
+  const curMonthDone=(_curAp>=_roughM*0.7||isLastDay);return {meta,pat,monthsLeft,gap,mensal:gap/Math.max(1,monthsLeft),gAcoes:gA,gFiis:gF,mAcoes:gA/Math.max(1,monthsLeft),mFiis:gF/Math.max(1,monthsLeft),acoesAtual,fiisAtual,acoesAlvo,fiisAlvo,curMi,isLastDay,curMonthDone};
 }
 function renderMetaAporteProg(d,P){
   const el=document.getElementById("metaAporteProg"); if(!el) return;
