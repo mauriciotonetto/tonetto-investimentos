@@ -16,6 +16,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="build-time" content="20260608T1437">
 <title>TONETTO HOLDING</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
@@ -1652,5 +1653,29 @@ async function boot(){
 if(document.readyState!=="loading")boot();else document.addEventListener("DOMContentLoaded",boot);
 
 </script>
+
+<script>
+// Auto-reload: verifica a cada 5 min se há nova versão no GitHub Pages
+(function(){
+  var BUILD="20260608T1437";
+  var KEY="tonetto_build";
+  try{
+    var stored=sessionStorage.getItem(KEY);
+    if(stored&&stored!==BUILD){sessionStorage.setItem(KEY,BUILD);location.reload(true);return;}
+    sessionStorage.setItem(KEY,BUILD);
+  }catch(e){}
+  // Verificar GitHub a cada 5 minutos
+  setInterval(function(){
+    fetch(location.href+'?_='+Date.now(),{cache:'no-store',method:'HEAD'})
+      .then(function(r){
+        var etag=r.headers.get('etag')||r.headers.get('last-modified')||'';
+        var storedEtag=sessionStorage.getItem('tonetto_etag');
+        if(storedEtag&&storedEtag!==etag&&etag){location.reload(true);}
+        if(etag)sessionStorage.setItem('tonetto_etag',etag);
+      }).catch(function(){});
+  },300000); // 5 minutos
+})();
+</script>
+
 </body>
 </html>
