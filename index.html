@@ -2,7 +2,7 @@
 {
   "name": "Tonetto Holding",
   "schemaVersion": 1,
-  "description": "Painel ao vivo \"TONETTO HOLDING\" no padrão CVENOM, com 6 abas. Relê a planilha do Google Drive a cada abertura: Carteira (5 KPIs + 5 mini-cards de alocação + donut + setores + evolução patrimonial), FIIs e Ações (tabelas com preço/PM/rent/M.S. e filtros), Proventos (KPIs, projeções 17% a.a., histórico mensal), Aportes (ativos com M.S.>0). Retrato de 08/06/2026 embutido como fallback.",
+  "description": "Painel ao vivo \"TONETTO HOLDING\" no padrão CVENOM, com 6 abas. Relê a planilha do Google Drive a cada abertura: Carteira (5 KPIs + 5 mini-cards de alocação + donut + setores + evolução patrimonial), FIIs e Ações (tabelas com preço/PM/rent/M.S. e filtros), Proventos (KPIs, projeções 17% a.a., histórico mensal), Aportes (ativos com M.S.>0). Retrato de 21/05/2026 embutido como fallback.",
   "mcpTools": [
     "mcp__fcfb38a8-9339-4ca8-b68b-70783af4a15e__read_file_content"
   ],
@@ -26,8 +26,8 @@
     --bg: #F5F4F0;
     --card: #FFFFFF;
     --ink: #111111;
-    --muted: #6B6B6B;
-    --label: #9A9A9A;
+    --muted: #4A4A4A;
+    --label: #666666;
     --line: #E4E0D9;
     --mini: #F0EDE8;
     --accent: #C4602A;
@@ -49,7 +49,7 @@
     background: var(--bg);
     color: var(--ink);
     font-family: var(--font-body);
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     letter-spacing: 0.01em;
@@ -156,9 +156,9 @@
   /* ── KPIs ── */
   .kpis { grid-template-columns: repeat(5,1fr); margin-bottom: 12px; }
   .kpi .label {
-    font-size: 9.5px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     color: var(--label);
     font-weight: 500;
     margin-bottom: 10px;
@@ -166,14 +166,14 @@
     border-bottom: 1px solid var(--line);
   }
   .kpi .value {
-    font-family: var(--font-display);
-    font-size: 26px;
+    font-family: var(--font-body);
+    font-size: 24px;
     font-weight: 600;
     line-height: 1;
     letter-spacing: -0.01em;
     margin-top: 2px;
   }
-  .kpi .sub { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .kpi .sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
   /* ── MINIS ── */
   .minis { grid-template-columns: repeat(5,1fr); margin-bottom: 16px; }
@@ -183,16 +183,16 @@
     border-radius: 2px;
     padding: 14px 16px;
   }
-  .mini .nm { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--label); font-weight: 500; }
+  .mini .nm { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--label); font-weight: 500; }
   .mini .pa {
-    font-family: var(--font-display);
-    font-size: 22px;
+    font-family: var(--font-body);
+    font-size: 20px;
     font-weight: 600;
     margin-top: 6px;
     line-height: 1;
   }
-  .mini .id { font-size: 11px; color: var(--label); margin-top: 4px; }
-  .mini .dl { font-size: 11px; margin-top: 3px; font-weight: 500; }
+  .mini .id { font-size: 12px; color: var(--label); margin-top: 4px; }
+  .mini .dl { font-size: 12px; margin-top: 3px; font-weight: 600; }
 
   /* ── SECTION TITLES ── */
   .sec-title {
@@ -225,16 +225,16 @@
   .three { grid-template-columns: 1fr 1fr 1fr; }
 
   /* ── TABLES ── */
-  table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: var(--font-body); }
-  th, td { padding: 8px 10px; text-align: right; white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: var(--font-body); }
+  th, td { padding: 9px 10px; text-align: right; white-space: nowrap; }
   th:first-child, td:first-child { text-align: left; }
   thead th {
-    font-size: 9px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
     color: var(--label);
     border-bottom: 1px solid var(--line);
-    font-weight: 500;
+    font-weight: 600;
     padding-bottom: 10px;
   }
   thead th.sortable { cursor: pointer; user-select: none; -webkit-user-select: none; transition: color 0.15s; }
@@ -324,19 +324,19 @@
     letter-spacing: 0.04em;
   }
   .fcard .price {
-    font-family: var(--font-display);
-    font-size: 22px; font-weight: 600;
+    font-family: var(--font-body);
+    font-size: 20px; font-weight: 700;
     letter-spacing: -0.01em; line-height: 1.1;
   }
   .fcard .price small { font-size: 11px; font-weight: 400; color: var(--muted); margin-right: 2px; font-family: var(--font-body); }
-  .fcard .chg { font-size: 11px; font-weight: 500; margin-top: 2px; }
+  .fcard .chg { font-size: 12px; font-weight: 600; margin-top: 2px; }
   .fcard .stats {
     display: flex; justify-content: space-between;
     border-top: 1px solid var(--line);
     margin-top: 14px; padding-top: 12px;
   }
-  .fcard .stat .l { color: var(--label); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; font-size: 9px; }
-  .fcard .stat .v { font-size: 13px; font-weight: 600; margin-top: 3px; }
+  .fcard .stat .l { color: var(--label); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; font-size: 10px; }
+  .fcard .stat .v { font-size: 14px; font-weight: 600; margin-top: 3px; }
   .fcard .tetobar { height: 2px; background: var(--line); overflow: hidden; margin-top: 14px; }
   .fcard .tetobar > i { display: block; height: 100%; }
   .fcard .stats2 { display: flex; justify-content: space-between; margin-top: 11px; }
@@ -534,8 +534,18 @@
   </section>
 
   <section data-panel="aportes" class="hide">
+    <!-- 1. Plano de Aportes -->
     <div class="sec-title" style="margin-top:4px">Plano de Aportes <span style="font-style:normal;color:var(--label);font-size:11px" id="aporteHint"></span></div>
     <div class="grid" id="aporteKpis" style="grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px"></div>
+    <!-- 2. Programação mensal -->
+    <div class="card" style="overflow-x:auto;margin-bottom:14px"><div class="panel-h">Programação mensal <span class="hint">clique no mês para expandir</span></div><table id="aporteTable"></table></div>
+    <!-- 3. Aportes realizados 2026 -->
+    <div id="aport2026Wrap" style="margin-bottom:14px"></div>
+    <!-- 4. Meta 2026 -->
+    <div class="sec-title" style="margin-top:4px">Meta 2026</div>
+    <div class="grid" id="miniMeta2026" style="grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px"></div>
+    <div style="border-top:1px solid var(--line);margin-bottom:18px"></div>
+    <!-- 5. Registro de Aportes -->
     <div class="sec-title">Registro de Aportes</div>
     <div class="card" style="margin-bottom:14px">
       <div class="aporte-form">
@@ -550,11 +560,7 @@
       <div id="apResumo" style="margin-top:16px"></div>
       <div id="apHist" style="overflow-x:auto"></div>
     </div>
-    <div class="card" style="overflow-x:auto;margin-bottom:14px"><div class="panel-h">Programação mensal <span class="hint">clique no mês para expandir</span></div><table id="aporteTable"></table></div>
-    <div id="aport2026Wrap" style="margin-bottom:14px"></div>
-    <div class="sec-title" style="margin-top:4px">Meta 2026</div>
-    <div class="grid" id="miniMeta2026" style="grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px"></div>
-    <div style="border-top:1px solid var(--line);margin-bottom:18px"></div>
+    <!-- 6. Ativo mais comprado e realizados histórico -->
     <div class="sec-title" style="margin-top:4px">Aportes Realizados <span style="font-style:normal;color:var(--label);font-size:11px" id="realPeriodo"></span></div>
     <div class="grid" id="realKpis" style="grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px"></div>
     <div class="sec-title">Ativo mais comprado — por ano</div>
@@ -588,35 +594,35 @@ const SHEET_TABS = { FIIS:"FIIS", ACOES:"AÇÕES", PROVENTOS:"PROVENTO$", PATRIM
 
 /* SNAPSHOT_START */
 const SNAPSHOT = {
-  updated:"retrato salvo · 08/06/2026 · encerramento do dia (9 aportes)", patrimonio:93306.86, dyHolding:6.81, proventosTotal:5567.02,
+  updated:"retrato salvo · 08/06/2026 · encerramento do dia", patrimonio:94034.71, dyHolding:5.92, proventosTotal:5567.02,
   alloc:[
-    {nome:"Ações BR", valor:56484.10, atual:61, ideal:55, delta:-5165.33, cor:"var(--acoes)"},
-    {nome:"FIIs", valor:36822.76, atual:39, ideal:25, delta:-13496.04, cor:"var(--fiis)"},
-    {nome:"Renda Fixa", valor:0, atual:0, ideal:15, delta:13996.03, cor:"var(--rf)"},
-    {nome:"Caixa", valor:0, atual:0, ideal:5, delta:4665.34, cor:"var(--caixa)"},
+    {nome:"Ações BR", valor:56946.02, atual:61, ideal:55, delta:-5226.93, cor:"var(--acoes)"},
+    {nome:"FIIs", valor:37088.69, atual:39, ideal:25, delta:-13580.01, cor:"var(--fiis)"},
+    {nome:"Renda Fixa", valor:0, atual:0, ideal:15, delta:14105.21, cor:"var(--rf)"},
+    {nome:"Caixa", valor:0, atual:0, ideal:5, delta:4701.74, cor:"var(--caixa)"},
     {nome:"Ações US$", valor:0, atual:0, ideal:0, delta:0, cor:"var(--us)"},
   ],
   fiis:[
-    {ativo:"XPML11",setor:"Shopping",preco:106.42,pm:109.56,teto:121.00,rent:-2.87,ms:13.70,qtd:58,valor:6172.36,part:16.76,holding:6.62,vuc:106.42,duc:"01/06/2026",aporte:3},
-    {ativo:"HGCR11",setor:"Shopping",preco:95.63,pm:93.94,teto:114.00,rent:1.80,ms:19.21,qtd:51,valor:4877.13,part:13.24,holding:5.23,vuc:95.38,duc:"01/06/2026",aporte:4},
-    {ativo:"BTLG11",setor:"Logistico",preco:103.92,pm:101.10,teto:102.00,rent:2.79,ms:-1.85,qtd:20,valor:2078.40,part:5.64,holding:2.23,vuc:102.63,duc:"",aporte:0},
-    {ativo:"RBRR11",setor:"Logistico",preco:82.14,pm:84.58,teto:118.00,rent:-2.88,ms:43.66,qtd:70,valor:5749.80,part:15.61,holding:6.16,vuc:82.14,duc:"08/06/2026",aporte:0},
-    {ativo:"TRXF11",setor:"Hibrido",preco:90.63,pm:102.11,teto:133.00,rent:-11.24,ms:46.75,qtd:102,valor:9244.26,part:25.10,holding:9.91,vuc:90.64,duc:"01/06/2026",aporte:0},
-    {ativo:"HGRU11",setor:"Hibrido",preco:128.50,pm:115.96,teto:128.00,rent:10.81,ms:-0.39,qtd:10,valor:1285.00,part:3.49,holding:1.38,vuc:119.26,duc:"02/04/2025",aporte:0},
-    {ativo:"VGIR11",setor:"Papel",preco:9.63,pm:9.58,teto:9.90,rent:0.52,ms:2.80,qtd:177,valor:1704.51,part:4.63,holding:1.83,vuc:9.67,duc:"",aporte:5},
-    {ativo:"RECR11",setor:"Papel",preco:81.59,pm:80.04,teto:98.00,rent:1.94,ms:20.11,qtd:70,valor:5711.30,part:15.51,holding:6.12,vuc:81.59,duc:"08/06/2026",aporte:0},
+    {ativo:"XPML11",setor:"Shopping",preco:105.70,pm:109.56,teto:121.00,rent:-3.52,ms:14.47,qtd:58,valor:6130.60,part:16.53,holding:6.52,vuc:106.42,duc:"01/06/2026",aporte:3},
+    {ativo:"HGCR11",setor:"Shopping",preco:94.21,pm:93.94,teto:114.00,rent:0.29,ms:21.01,qtd:51,valor:4804.71,part:12.95,holding:5.11,vuc:95.38,duc:"01/06/2026",aporte:4},
+    {ativo:"BTLG11",setor:"Logistico",preco:102.68,pm:101.10,teto:102.00,rent:1.56,ms:-0.66,qtd:20,valor:2053.60,part:5.54,holding:2.18,vuc:102.63,duc:"19/08/2024",aporte:0},
+    {ativo:"RBRR11",setor:"Logistico",preco:82.10,pm:85.85,teto:118.00,rent:-4.37,ms:43.73,qtd:70,valor:5747.00,part:15.50,holding:6.11,vuc:82.14,duc:"08/06/2026",aporte:24},
+    {ativo:"TRXF11",setor:"Hibrido",preco:91.15,pm:102.11,teto:133.00,rent:-10.73,ms:45.91,qtd:102,valor:9297.30,part:25.07,holding:9.89,vuc:90.64,duc:"01/06/2026",aporte:11},
+    {ativo:"HGRU11",setor:"Hibrido",preco:128.49,pm:115.96,teto:128.00,rent:10.81,ms:-0.38,qtd:10,valor:1284.90,part:3.46,holding:1.37,vuc:119.26,duc:"02/04/2025",aporte:0},
+    {ativo:"VGIR11",setor:"Papel",preco:9.64,pm:9.58,teto:9.90,rent:0.63,ms:2.70,qtd:177,valor:1706.28,part:4.60,holding:1.81,vuc:9.67,duc:"29/05/2026",aporte:5},
+    {ativo:"RECR11",setor:"Papel",preco:81.95,pm:77.09,teto:98.00,rent:6.30,ms:19.59,qtd:74,valor:6064.30,part:16.35,holding:6.45,vuc:81.59,duc:"08/06/2026",aporte:38},
   ],
   acoes:[
-    {ativo:"VALE3",setor:"Mineração",preco:81.70,pm:55.32,teto:78.00,rent:47.69,ms:-4.53,qtd:62,valor:5065.40,part:8.97,holding:5.43,vuc:50.06,duc:"08/04/2025",aporte:0},
-    {ativo:"BBAS3",setor:"Bancos",preco:20.08,pm:25.18,teto:25.00,rent:-20.25,ms:24.50,qtd:493,valor:9899.44,part:17.53,holding:10.61,vuc:20.17,duc:"01/06/2026",aporte:0},
-    {ativo:"TAEE11",setor:"Elétrico",preco:38.77,pm:39.21,teto:47.58,rent:-1.12,ms:22.72,qtd:238,valor:9227.26,part:16.34,holding:9.89,vuc:38.77,duc:"08/06/2026",aporte:0},
-    {ativo:"ISAE4",setor:"Elétrico",preco:26.95,pm:26.25,teto:31.27,rent:2.67,ms:16.03,qtd:379,valor:10214.05,part:18.08,holding:10.95,vuc:26.95,duc:"08/06/2026",aporte:0},
-    {ativo:"AURE3",setor:"Elétrico",preco:12.06,pm:11.44,teto:11.66,rent:5.42,ms:-3.32,qtd:195,valor:2351.70,part:4.16,holding:2.52,vuc:10.12,duc:"",aporte:0},
-    {ativo:"BBSE3",setor:"Seguridade",preco:35.69,pm:34.85,teto:35.50,rent:2.41,ms:-0.53,qtd:320,valor:11420.80,part:20.22,holding:12.24,vuc:35.69,duc:"08/06/2026",aporte:0},
-    {ativo:"ITUB4",setor:"Bancos",preco:38.63,pm:39.97,teto:47.92,rent:-3.35,ms:24.05,qtd:215,valor:8305.45,part:14.70,holding:8.90,vuc:38.63,duc:"08/06/2026",aporte:0},
+    {ativo:"VALE3",setor:"Mineração",preco:78.07,pm:55.32,teto:78.00,rent:41.12,ms:-0.09,qtd:62,valor:4840.34,part:8.50,holding:5.15,vuc:50.06,duc:"08/04/2025",aporte:0},
+    {ativo:"BBAS3",setor:"Bancos",preco:19.10,pm:23.67,teto:25.00,rent:-19.31,ms:30.89,qtd:493,valor:9416.30,part:16.54,holding:10.01,vuc:20.17,duc:"01/06/2026",aporte:148},
+    {ativo:"TAEE11",setor:"Elétrico",preco:38.82,pm:39.14,teto:47.58,rent:-0.82,ms:22.57,qtd:252,valor:9782.64,part:17.18,holding:10.40,vuc:38.77,duc:"08/06/2026",aporte:40},
+    {ativo:"ISAE4",setor:"Elétrico",preco:26.79,pm:26.36,teto:31.27,rent:1.63,ms:16.72,qtd:406,valor:10876.74,part:19.10,holding:11.57,vuc:26.95,duc:"08/06/2026",aporte:55},
+    {ativo:"AURE3",setor:"Elétrico",preco:11.64,pm:11.44,teto:11.66,rent:1.75,ms:0.17,qtd:195,valor:2269.80,part:3.99,holding:2.41,vuc:10.12,duc:"14/10/2024",aporte:0},
+    {ativo:"BBSE3",setor:"Seguridade",preco:35.87,pm:34.63,teto:35.50,rent:3.58,ms:-1.03,qtd:320,valor:11478.40,part:20.16,holding:12.21,vuc:35.69,duc:"08/06/2026",aporte:67},
+    {ativo:"ITUB4",setor:"Bancos",preco:38.52,pm:39.87,teto:47.92,rent:-3.39,ms:24.40,qtd:215,valor:8281.80,part:14.54,holding:8.81,vuc:38.63,duc:"08/06/2026",aporte:29},
   ],
   acaoSetorIdeal:{ "Elétrico":25, "Bancos":25, "Mineração":10, "Seguridade":15 },
-  equity:[{mes:"Jan",valor:62300.10},{mes:"Fev",valor:62960.70},{mes:"Mar",valor:65353.29},{mes:"Abr",valor:78593.53},{mes:"Mai",valor:69759.54},{mes:"Jun",valor:93306.86}],
+  equity:[{mes:"Jan",valor:62300.10},{mes:"Fev",valor:62960.70},{mes:"Mar",valor:65353.29},{mes:"Abr",valor:78593.53},{mes:"Mai",valor:69759.54},{mes:"Jun",valor:94034.71}],
   prov:[
     {mes:"Abr/25",fii:190.91,acao:0},{mes:"Mai/25",fii:203.26,acao:124.16},{mes:"Jun/25",fii:203.32,acao:73.90},
     {mes:"Jul/25",fii:249.20,acao:0.44},{mes:"Ago/25",fii:220.18,acao:299.12},{mes:"Set/25",fii:213.49,acao:117.95},
@@ -626,28 +632,26 @@ const SNAPSHOT = {
   provAnos:[
     {ano:"2024",fii:0,acao:0,total:0,media:0,dia:0,varAA:null},
     {ano:"2025",fii:1998.54,acao:972.01,total:2970.55,media:247.55,dia:8.13,varAA:null},
-    {ano:"2026",fii:1453.70,acao:1142.77,total:2596.47,media:216.37,dia:16.97,varAA:-12.59},
+    {ano:"2026",fii:1453.70,acao:1142.77,total:2596.47,media:216.37,dia:16.33,varAA:-12.59},
   ],
 };
 /* SNAPSHOT_END */
 
 /* FATOS_START */
 const FATOS = {
-  updated: "08/06/2026 · 14:37 · encerramento",
+  updated: "08/06/2026 · 18:45 · encerramento",
   itens: [
-    {cat:"noticia", ticker:"RECR11", titulo:"RECR11 +14 cotas @ R$ 81,59 → 70 total (último aporte do dia)", corpo:"Aporte de <b>R$ 1.142,26</b>. PM atualizado para <b>R$ 80,04</b>. M.S. 20,11%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
-    {cat:"noticia", ticker:"BBSE3", titulo:"BBSE3 +31 ações @ R$ 35,69 → 320 total", corpo:"Aporte fracionário de <b>R$ 1.106,39</b>. PM atualizado para <b>R$ 34,85</b>. Acima do teto (R$35,50) — MS -0,53%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
-    {cat:"noticia", ticker:"ITUB4", titulo:"ITUB4 +29 ações @ R$ 38,63 → 215 total", corpo:"Aporte fracionário de <b>R$ 1.120,27</b>. PM atualizado para <b>R$ 39,97</b>. M.S. 24,05%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
-    {cat:"noticia", ticker:"TAEE11", titulo:"TAEE11 +40 ações @ R$ 38,77 → 238 total", corpo:"Aporte fracionário de <b>R$ 1.550,80</b>. PM atualizado para <b>R$ 39,21</b>. M.S. 22,72%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
-    {cat:"noticia", ticker:"ISAE4", titulo:"ISAE4 +55 ações @ R$ 26,95 → 379 total", corpo:"Aporte fracionário de <b>R$ 1.482,25</b>. PM atualizado para <b>R$ 26,25</b>. M.S. 16,03%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
-    {cat:"noticia", ticker:"BBSE3", titulo:"BBSE3 +36 ações @ R$ 35,76 → 289 total", corpo:"Aporte fracionário de <b>R$ 1.287,36</b>. PM atualizado para <b>R$ 34,76</b>. Ativo acima do teto (R$35,50) — MS: -0,73%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
-    {cat:"noticia", ticker:"RECR11", titulo:"RECR11 +24 cotas @ R$ 83,06 → 56 total", corpo:"Aporte de <b>R$ 1.993,44</b>. PM atualizado para <b>R$ 79,65</b>. M.S. 17,99%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
-    {cat:"noticia", ticker:"RBRR11", titulo:"RBRR11 +24 cotas @ R$ 82,14 → 70 total", corpo:"Aporte de <b>R$ 1.971,36</b>. PM atualizado para <b>R$ 84,58</b>. M.S. 43,66%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
-    {cat:"provento", ticker:"BBAS3", titulo:"BBAS3: JCP R$ 0,14/ação pago em 11/06/2026", corpo:"Banco do Brasil pagou <b>dois JCPs em junho</b>: R$ 0,08157 + R$ 0,05968/ação (ex 01/06/2026, pgto 11/06/2026).", data:"01/06/2026", fonte:"https://stockevents.app/en/stock/BBAS3.BA/dividends"},
+    {cat:"noticia", ticker:"RECR11", titulo:"RECR11 +38 cotas → 74 total · aporte de jun/26", corpo:"Aporte acumulado em junho: PM atualizado para <b>R$ 77,09</b>. Rentabilidade vs PM: <b>+6,30%</b>. M.S. 19,59%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
+    {cat:"noticia", ticker:"TAEE11", titulo:"TAEE11 +40 ações → 252 total · aporte de jun/26", corpo:"Aporte fracionário acumulado em junho. PM atualizado para <b>R$ 39,14</b>. M.S. 22,57%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
+    {cat:"noticia", ticker:"ISAE4", titulo:"ISAE4 +55 ações → 406 total · aporte de jun/26", corpo:"PM atualizado para <b>R$ 26,36</b>. M.S. 16,72%.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
+    {cat:"noticia", ticker:"BBAS3", titulo:"BBAS3 +148 ações → 493 total · aporte jun/26", corpo:"PM atualizado para <b>R$ 23,67</b>. M.S. 30,89%. Aporte significativo aproveitando queda de preço.", data:"08/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
+    {cat:"provento", ticker:"BBAS3", titulo:"BBAS3: JCP R$ 0,14/ação pago em 11/06/2026", corpo:"Banco do Brasil aprovou <b>R$ 465,7 mi</b> em JCP (Q1 2026). Ex-data: 01/06/2026. Pagamento: 11/06/2026.", data:"01/06/2026", fonte:"https://stockevents.app/en/stock/BBAS3.BA/dividends"},
+    {cat:"alerta", ticker:"BBAS3", titulo:"BB revisou lucro projetado 2026 para R$ 18–22 bi", corpo:"Estimativa anterior era <b>R$ 22–26 bi</b>. Revisão anunciada em 13/05/2026 — impacto negativo na projeção de dividendos.", data:"13/05/2026", fonte:"https://riconnect.rico.com.vc/analises/dividendos-do-banco-do-brasil-bbas3/"},
     {cat:"alerta", ticker:"BBAS3", titulo:"Proposta de alta no imposto de JCP ainda em discussão", corpo:"Projeto de lei eleva tributação de JCP de <b>15% para 17,5%</b> em 2026 — impacta bancos e utilities.", data:"05/06/2026", fonte:"https://investidor10.com.br/noticias/bbas3-itsa4-e-csmg3-estao-entre-as-acoes-mais-afetadas-pela-alta-do-imposto-do-jcp-117502/"},
     {cat:"provento", ticker:"HGRU11", titulo:"HGRU11 confirma R$ 0,95/cota para junho", corpo:"Pátria Renda Urbana mantém rendimento de <b>R$ 0,95/cota</b>.", data:"29/05/2026", fonte:"https://fiis.com.br/noticias/fundo-imobiliario-dividendos-hgru11-confira-quanto-fundo-vai-pagar-junho-2026-jj/"},
     {cat:"fii", ticker:"TRXF11", titulo:"TRXF11 mantém guidance R$ 0,90–0,93/cota até dez/26", corpo:"TRX Investimentos manteve guidance até dezembro de 2026.", data:"22/05/2026", fonte:"https://conteudos.xpi.com.br/fundos-imobiliarios/trx-real-estate-fii-trxf11/"},
     {cat:"provento", ticker:"RECR11", titulo:"RECR11: último dividendo R$ 1,05/cota (mai/26)", corpo:"REC Recebíveis distribuiu <b>R$ 1,05/cota</b> — DY12m estimado em ~15%.", data:"26/05/2026", fonte:"https://www.fundsexplorer.com.br/funds/recr11"},
+    {cat:"noticia", ticker:"VALE3", titulo:"VALE3 abaixo do teto — queda acumulada no mês", corpo:"Preço atual <b>R$ 78,07</b> encostou no teto (R$ 78,00). Atenção para possível oportunidade de entrada ou reavaliação do teto.", data:"08/06/2026", fonte:"https://statusinvest.com.br/acoes/vale3"},
   ]
 };
 /* FATOS_END */
@@ -985,10 +989,10 @@ function toggleProvYear(yy){
 }
 function renderAportes(d){
   const P=computePlan(d);
-  document.getElementById("aporteHint").textContent="meta "+fmt0(P.meta)+" até dez · "+fmt(P.mensal)+"/mês";
+  document.getElementById("aporteHint").textContent="meta "+fmt0(P.meta)+" até dez · "+fmt(P.mensal)+"/mês aporte + "+fmt(P.divMes)+"/mês dividendos";
   const _startMes=(P.curMonthDone||P.isLastDay)?MES12[Math.min(11,P.curMi+1)]:MES12[P.curMi];
   const kpis=[
-    {label:"Aporte mensal",value:fmt(P.mensal),sub:(P.monthsLeft||0)+" meses · mercado estável",color:"var(--roxo)"},
+    {label:"Aporte mensal",value:fmt(P.mensal),sub:(P.monthsLeft||0)+" meses · +"+fmt(P.divMes)+"/mês dividendos reinvestidos",color:"var(--roxo)"},
     {label:"Total até a meta",value:fmt(P.gap),sub:"para chegar a "+fmt0(P.meta),color:"var(--verde)"},
     {label:"Meses restantes",value:String(P.monthsLeft||"—"),sub:_startMes.toLowerCase()+"–dez de 2026"+(P.curMonthDone?" · jun concluído ✓":""),color:"var(--ink)"},
     {label:"Em Ações /mês",value:fmt(P.mAcoes),sub:pct(P.gap?100*P.gAcoes/P.gap:0)+" do aporte",color:"var(--acoes)"},
@@ -1016,7 +1020,7 @@ function renderAportes(d){
   const apMonths=[...new Set(regList.map(r=>r.mesIdx))];
   let proj=P.pat; const monthRows=[];
   apMonths.filter(mi=>mi<curMi).sort((a,b)=>a-b).forEach(mi=>{monthRows.push({mes:MES12[mi]+"/26",mi,pat:null,past:true});});
-  for(let mi=curMi;mi<=11;mi++){ proj+=P.mensal; monthRows.push({mes:MES12[mi]+"/26",mi,pat:proj,past:false});}
+  for(let mi=curMi;mi<=11;mi++){ proj+=P.mensal+P.divMes; monthRows.push({mes:MES12[mi]+"/26",mi,pat:proj,past:false});}
   const head=`<thead><tr><th style="width:24px"></th><th>Mês</th><th>Aporte Ações</th><th>Aporte FIIs</th><th>Total</th><th>Já aportei</th><th>Patrim. proj.</th></tr></thead>`;
   let body="";
   if(monthRows.length===0){
@@ -1090,7 +1094,7 @@ function renderAportes(d){
     const mKpis=[
       {label:"Meta 2026",value:fmt(P.meta),sub:"até dezembro",color:"var(--ink)"},
       {label:"Falta",value:done2?"atingida 🎉":fmt(P.gap),sub:done2?"meta batida":"para a meta",color:done2?"var(--verde)":"var(--ambar)"},
-      {label:"Aporte por mês",value:fmt(P.mensal),sub:P.monthsLeft+(P.monthsLeft===1?" mês":" meses")+" restantes",color:"var(--roxo)"},
+      {label:"Aporte por mês",value:fmt(P.mensal),sub:P.monthsLeft+(P.monthsLeft===1?" mês":" meses")+" · + "+fmt(P.divMes)+"/mês dividendos",color:"var(--roxo)"},
     ];
     mmEl.innerHTML=mKpis.map(k=>`<div class="card kpi"><div class="label">${k.label}</div><div class="value" style="color:${colVar(k.color)}">${k.value}</div><div class="sub">${k.sub}</div></div>`).join("");
   }
@@ -1151,14 +1155,22 @@ function computePlan(d){
   const isLastDay=today.getDate()===lastDay;
   let _regList2=[];try{_regList2=apLoad()||[];}catch(e){}
   const _curAp=_regList2.filter(r=>r.mesIdx===curMi).reduce((s,r)=>s+r.valor,0);
-  const _roughM=(meta-pat)/(Math.max(1,isLastDay?11-curMi:12-curMi));
+  // Dividendos mensais projetados (serão reaportados)
+  const divFiiMes=(d.fiis||[]).reduce((s,x)=>s+(DY_DATA.fiis[x.ativo]?.divCota||0)*x.qtd,0);
+  const divAcaoMes=(d.acoes||[]).reduce((s,x)=>s+(DY_DATA.acoes[x.ativo]?.dpa26||0)*x.qtd/12,0);
+  const divMes=divFiiMes+divAcaoMes;
+  const mLeft=Math.max(1,isLastDay?11-curMi:12-curMi);
+  const _roughM=Math.max(0,(meta-pat-divMes*mLeft))/mLeft;
   const monthsLeft=(_curAp>=_roughM*0.7||isLastDay)?Math.max(0,11-curMi):Math.max(0,12-curMi);
   const gap=Math.max(0,meta-pat);
-  const acoesAtual=d.acoes.reduce((s,x)=>s+x.valor,0), fiisAtual=d.fiis.reduce((s,x)=>s+x.valor,0);
+  const totalDivs=divMes*monthsLeft;
+  const gapAjustado=Math.max(0,gap-totalDivs);
+  const acoesAtual=(d.acoes||[]).reduce((s,x)=>s+x.valor,0), fiisAtual=(d.fiis||[]).reduce((s,x)=>s+x.valor,0);
   const acoesAlvo=meta*CONFIG.metaAcoesPct/100, fiisAlvo=meta*CONFIG.metaFiisPct/100;
   let gA=Math.max(0,acoesAlvo-acoesAtual), gF=Math.max(0,fiisAlvo-fiisAtual); const s=(gA+gF)||1;
-  gA=gap*gA/s; gF=gap*gF/s; const div=monthsLeft>0?monthsLeft:1;
-  const curMonthDone=(_curAp>=_roughM*0.7||isLastDay);return {meta,pat,monthsLeft,gap,mensal:gap/Math.max(1,monthsLeft),gAcoes:gA,gFiis:gF,mAcoes:gA/Math.max(1,monthsLeft),mFiis:gF/Math.max(1,monthsLeft),acoesAtual,fiisAtual,acoesAlvo,fiisAlvo,curMi,isLastDay,curMonthDone};
+  gA=gapAjustado*gA/s; gF=gapAjustado*gF/s;
+  const curMonthDone=(_curAp>=_roughM*0.7||isLastDay);
+  return {meta,pat,monthsLeft,gap,gapAjustado,divMes,divFiiMes,divAcaoMes,mensal:gapAjustado/Math.max(1,monthsLeft),gAcoes:gA,gFiis:gF,mAcoes:gA/Math.max(1,monthsLeft),mFiis:gF/Math.max(1,monthsLeft),acoesAtual,fiisAtual,acoesAlvo,fiisAlvo,curMi,isLastDay,curMonthDone};
 }
 function renderMetaAporteProg(d,P){
   const el=document.getElementById("metaAporteProg"); if(!el) return;
@@ -1196,7 +1208,7 @@ function renderMetaAporteProg(d,P){
     <div class="sub" style="margin-top:10px;line-height:1.6">
       <b>Plano do ano:</b> ${fmt(aporteAno)} (${fmt(planoMensal)}/mês × 12). Esperado até <b>${MES12[curMonth]}/${yr.slice(2)}</b>: <b>${fmt(planoAteHoje)}</b>.<br>
       ${regTot2026>0?`<b>Meus Aportes (registro manual):</b> ${fmt(regTot2026)} — Ações ${fmt(regAcoes2026)} · FIIs ${fmt(regFiis2026)}.<br>`:''}
-      <b>Saldo até a meta:</b> ${fmt(P.gap)} em <b>${P.monthsLeft}</b> meses → <b>${fmt(P.mensal)}/mês</b> daqui pra frente.
+      <b>Saldo até a meta:</b> ${fmt(P.gap)} em <b>${P.monthsLeft}</b> meses → <b>${fmt(P.mensal)}/mês</b> aporte + <b class="pos">${fmt(P.divMes)}/mês</b> dividendos reinvestidos.
     </div>`;
   const mes=document.getElementById("metaAporteMensal"); if(!mes) return;
   const meses12=MES12.map((mm,i)=>{
@@ -1231,7 +1243,7 @@ function renderMeta2026(d){
     {label:"Meta 2026",value:fmt(P.meta),sub:"até dezembro",color:"var(--ink)"},
     {label:"Falta",value:done?"atingida 🎉":fmt(P.gap),sub:done?"meta batida":"para a meta",color:done?"var(--verde)":"var(--ambar)"},
     {label:"Meses restantes",value:String(P.monthsLeft||"—"),sub:"de aporte até dez",color:"var(--ink)"},
-    {label:"Aporte por mês",value:done?"—":fmt(P.mensal),sub:"mercado estável",color:"var(--roxo)"},
+    {label:"Aporte por mês",value:done?"—":fmt(P.mensal),sub:"+ "+fmt(P.divMes)+"/mês dividendos reinvestidos",color:"var(--roxo)"},
   ];
   document.getElementById("metaKpis").innerHTML=kpis.map(k=>`<div class="card kpi"><div class="label">${k.label}</div><div class="value" style="color:${colVar(k.color)}">${k.value}</div><div class="sub">${k.sub}</div></div>`).join("");
   renderMetaAporteProg(d,P);
@@ -1239,7 +1251,7 @@ function renderMeta2026(d){
   document.getElementById("metaSplit").innerHTML=
     splitRow("Ações",P.mAcoes,P.gAcoes,colVar("var(--acoes)"),P.acoesAtual,P.acoesAlvo)+
     splitRow("FIIs",P.mFiis,P.gFiis,colVar("var(--fiis)"),P.fiisAtual,P.fiisAlvo)+
-    `<div class="sub" style="margin-top:9px">Total <b>${fmt(P.mensal)}/mês</b> · alvo ${pct(CONFIG.metaAcoesPct)} ações / ${pct(CONFIG.metaFiisPct)} FIIs.</div>`;
+    `<div class="sub" style="margin-top:9px">Aporte <b>${fmt(P.mensal)}/mês</b> + <span class="pos"><b>${fmt(P.divMes)}/mês</b> dividendos reinvestidos</span> · alvo ${pct(CONFIG.metaAcoesPct)} ações / ${pct(CONFIG.metaFiisPct)} FIIs.</div>`;
   const months=P.monthsLeft||1;
   const aprows=(list,poolMes)=>{const ok=list.filter(x=>x.ms>0).sort((a,b)=>b.ms-a.ms),no=list.filter(x=>x.ms<=0);
     const s=ok.reduce((a,x)=>a+x.ms,0)||1;
@@ -1248,15 +1260,15 @@ function renderMeta2026(d){
   const tbl=(title,r,totMes,totTot)=>`<div style="font-weight:700;font-size:12px;color:var(--muted);margin:2px 0 6px">${title}</div><table style="margin-bottom:14px"><thead><tr><th>Ativo</th><th>Setor</th><th>M.S.</th><th>Aporte/mês</th><th>Total ${months}m</th></tr></thead><tbody>${r.body}${r.no.length?`<tr><td colspan="5" style="color:var(--vermelho);font-size:11.5px;padding-top:6px">Fora — acima do teto: ${r.no.map(x=>x.ativo).join(", ")}</td></tr>`:""}<tr style="font-weight:700;border-top:1px solid var(--line)"><td>Total</td><td></td><td></td><td>${fmt(totMes)}</td><td>${fmt(totTot)}</td></tr></tbody></table>`;
   document.getElementById("metaPref").innerHTML=tbl("AÇÕES — "+fmt(P.mAcoes)+"/mês",aprows(d.acoes,P.mAcoes),P.mAcoes,P.gAcoes)+tbl("FIIs — "+fmt(P.mFiis)+"/mês",aprows(d.fiis,P.mFiis),P.mFiis,P.gFiis);
   const startIdx=P.isLastDay?P.curMi+1:P.curMi; let proj=P.pat; const rows=[];
-  for(let i=0;i<P.monthsLeft;i++){const mi=startIdx+i; if(mi>11)break; proj+=P.mensal; rows.push({mes:MES12[mi],ac:P.mAcoes,fi:P.mFiis,tot:P.mensal,pat:proj});}
-  const head=`<thead><tr><th>Mês</th><th>Aporte Ações</th><th>Aporte FIIs</th><th>Total</th><th>Patrimônio projetado</th></tr></thead>`;
-  const body=rows.map(r=>`<tr><td>${r.mes}/26</td><td>${fmt(r.ac)}</td><td>${fmt(r.fi)}</td><td>${fmt(r.tot)}</td><td>${fmt(r.pat)}</td></tr>`).join("");
-  const foot=`<tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td>${fmt(P.gAcoes)}</td><td>${fmt(P.gFiis)}</td><td>${fmt(P.gap)}</td><td>${fmt(P.meta)}</td></tr>`;
-  document.getElementById("metaTable").innerHTML=head+"<tbody>"+(body?body+foot:`<tr><td colspan="5" style="text-align:center;color:var(--verde)">Meta já atingida 🎉</td></tr>`)+"</tbody>";
+  for(let i=0;i<P.monthsLeft;i++){const mi=startIdx+i; if(mi>11)break; proj+=P.mensal+P.divMes; rows.push({mes:MES12[mi],ac:P.mAcoes,fi:P.mFiis,tot:P.mensal,div:P.divMes,pat:proj});}
+  const head=`<thead><tr><th>Mês</th><th>Aporte Ações</th><th>Aporte FIIs</th><th>Aporte total</th><th style="color:var(--verde)">Dividendos reinvest.</th><th>Patrimônio proj.</th></tr></thead>`;
+  const body=rows.map(r=>`<tr><td><b>${r.mes}/26</b></td><td>${fmt(r.ac)}</td><td>${fmt(r.fi)}</td><td style="font-weight:600">${fmt(r.tot)}</td><td class="pos">${fmt(r.div)}</td><td style="font-weight:700">${fmt(r.pat)}</td></tr>`).join("");
+  const foot=`<tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td>${fmt(P.gAcoes)}</td><td>${fmt(P.gFiis)}</td><td>${fmt(P.gapAjustado)}</td><td class="pos">${fmt(P.divMes*P.monthsLeft)}</td><td>${fmt(P.meta)}</td></tr>`;
+  document.getElementById("metaTable").innerHTML=head+"<tbody>"+(body?body+foot:`<tr><td colspan="6" style="text-align:center;color:var(--verde)">Meta já atingida 🎉</td></tr>`)+"</tbody>";
 }
 function drawMetaProj(d){
   const P=computePlan(d); const actual=d.equity.map(e=>e.valor), aN=actual.length;
-  const path=actual.slice(); let proj=P.pat; for(let i=0;i<P.monthsLeft;i++){proj+=P.mensal;path.push(proj);}
+  const path=actual.slice(); let proj=P.pat; for(let i=0;i<P.monthsLeft;i++){proj+=P.mensal+P.divMes;path.push(proj);}
   const labels=MES12.slice(0,Math.min(12,path.length)); const metaLine=labels.map(()=>P.meta);
   charts.push(new Chart(document.getElementById("metaProj"),{type:"line",
     data:{labels,datasets:[
