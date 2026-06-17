@@ -16,7 +16,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-time" content="20260617T1545">
+<meta name="build-time" content="20260617T1620">
 <title>TONETTO HOLDING</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
@@ -520,7 +520,7 @@
   </section>
 
   <section data-panel="proventos" class="hide">
-    <div class="grid" id="provKpis" style="grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:14px"></div>
+    <div class="grid" id="provKpis" style="grid-template-columns:repeat(7,1fr);gap:12px;margin-bottom:14px"></div>
     <div class="sec-title">Projeções Futuras <span style="font-style:normal;color:var(--label);font-size:11px">~17% a.a.</span></div>
     <div class="grid" id="projCards" style="grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px"></div>
     <div class="card" style="margin-bottom:14px">
@@ -949,6 +949,7 @@ function renderProvKpis(d){
     {label:"DY Projetivo/mês",value:fmt(dyTotalMes),sub:"FIIs "+fmt(dyFiiMes)+" · Ações "+fmt(dyAcaoMes)+" · RF "+fmt(dyRfMes),color:"var(--roxo)"},
     {label:"Renda FIIs — méd. real",value:fmt(realMedFii),sub:"projetado "+fmt(dyFiiMes)+" · gap "+fmt(Math.max(0,dyFiiMes-realMedFii)),color:"var(--fiis)"},
     {label:"Renda Ações — méd. real",value:fmt(realMedAcao),sub:"projetado "+fmt(dyAcaoMes)+" · gap "+fmt(Math.max(0,dyAcaoMes-realMedAcao)),color:"var(--acoes)"},
+    {label:"Renda RF — projetada",value:fmt(dyRfMes),sub:"meta "+fmt(CONFIG.metaIndepRf||500)+" · gap "+fmt(Math.max(0,(CONFIG.metaIndepRf||500)-dyRfMes)),color:"var(--rf)"},
   ];
   document.getElementById("provKpis").innerHTML=kpis.map(k=>`<div class="card kpi"><div class="label">${k.label}</div><div class="value" style="color:${colVar(k.color)};font-size:16.5px">${k.value}</div><div class="sub">${k.sub}</div></div>`).join("");
 }
@@ -1149,9 +1150,11 @@ function drawEquity(d){
 function renderProj(d){
   const grid=document.getElementById("projCards"); if(!grid) return;
   const yr=new Date().getFullYear(); const cards=[]; let p=d.patrimonio;
-  for(let i=0;i<5;i++){ if(i>0) p=p*(1+CONFIG.projGrowth); const ano=p*(d.dyHolding/100); cards.push({yr:(i===0?yr+"*":String(yr+i)),val:ano,mes:ano/12}); }
+  const g=CONFIG.projGrowth;
+  const rfAno0=(typeof rfCompute==="function")?rfCompute().totAno:0;  // renda RF anual atual
+  for(let i=0;i<5;i++){ if(i>0) p=p*(1+g); const base=p*(d.dyHolding/100); const rf=rfAno0*Math.pow(1+g,i); const ano=base+rf; cards.push({yr:(i===0?yr+"*":String(yr+i)),val:ano,mes:ano/12,rfMes:rf/12}); }
   const max=cards[cards.length-1].val||1;
-  grid.innerHTML=cards.map(c=>`<div class="card" style="padding:14px"><div class="label" style="font-size:11px;color:var(--label);font-weight:600;border-left:2px solid var(--accent);padding-left:8px">${c.yr}</div><div style="font-size:15.5px;font-weight:800;margin-top:7px">${fmt(c.val)}</div><div class="sub" style="font-size:11.5px;color:var(--muted)">${fmt(c.mes)}/mês</div><div class="mini-bar" style="margin-top:9px"><i style="width:${Math.round(100*c.val/max)}%;background:var(--roxo)"></i></div><div class="sub" style="font-size:10.5px;margin-top:5px">17% a.a.</div></div>`).join("");
+  grid.innerHTML=cards.map(c=>`<div class="card" style="padding:14px"><div class="label" style="font-size:11px;color:var(--label);font-weight:600;border-left:2px solid var(--accent);padding-left:8px">${c.yr}</div><div style="font-size:15.5px;font-weight:800;margin-top:7px">${fmt(c.val)}</div><div class="sub" style="font-size:11.5px;color:var(--muted)">${fmt(c.mes)}/mês</div><div class="mini-bar" style="margin-top:9px"><i style="width:${Math.round(100*c.val/max)}%;background:var(--roxo)"></i></div><div class="sub" style="font-size:10px;margin-top:5px;color:var(--rf)">incl. RF ${fmt(c.rfMes)}/mês</div><div class="sub" style="font-size:10.5px;margin-top:3px">17% a.a.</div></div>`).join("");
 }
 const MES12=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 function computePlan(d){
@@ -1729,7 +1732,7 @@ if(document.readyState!=="loading")boot();else document.addEventListener("DOMCon
 <script>
 // Auto-reload: verifica a cada 5 min se há nova versão no GitHub Pages
 (function(){
-  var BUILD="20260617T1545";
+  var BUILD="20260617T1620";
   var KEY="tonetto_build";
   try{
     var stored=sessionStorage.getItem(KEY);
