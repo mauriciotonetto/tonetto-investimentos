@@ -16,7 +16,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-time" content="20260617T1620">
+<meta name="build-time" content="20260617T1700">
 <title>TONETTO HOLDING</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
@@ -1512,7 +1512,7 @@ function renderDYProjetivo(d){
   _dyFiiRows=fiiRows; _dyAcaoRows=acaoRows; _dyRfRows=RF.ativos; _dyMedReal=medRealMes; _dyMedFii=medRealFii; _dyMedAcao=medRealAcao;
   consolEl.innerHTML=[
     {l:"DY Projetivo/mês",v:fmt(totalMes),s:"FIIs "+fmt(fiiTotMes)+" · Ações "+fmt(acaoTotMes)+" · RF "+fmt(rfTotMes),c:"var(--roxo)"},
-    {l:"Média Real 2026",v:fmt(medRealMes),s:"FIIs "+fmt(medRealFii)+" · Ações "+fmt(medRealAcao)+" · "+prov26r.length+"m",c:"var(--ink)"},
+    {l:"Média Real 2026",v:fmt(medRealMes),s:"FIIs "+fmt(medRealFii)+" · Ações "+fmt(medRealAcao)+" · RF — (paga no venc.) · "+prov26r.length+"m",c:"var(--ink)"},
     {l:"% da Meta R$2.500/mês",v:pct(totalPct),s:pct(fiiPct)+" FIIs · "+pct(acaoPct)+" Ações · "+pct(rfPct)+" RF",c:totalPct>=100?"var(--verde)":"var(--ambar)"},
     {l:"Gap",v:totalGap<=0?"✓ Meta atingida":fmt(totalGap)+"/mês",s:totalGap<=0?"Meta atingida 🎉":"falta para R$ 2.500/mês",c:totalGap<=0?"var(--verde)":"var(--vermelho)"},
   ].map(k=>`<div class="card" style="padding:28px 24px">
@@ -1632,7 +1632,7 @@ function drawDYConsolChart(){
   var cB=document.getElementById("dyBars");
   if(cB){dyCharts.push(new Chart(cB,{type:"bar",data:{labels:allAssets.map(function(x){return x.tk;}),datasets:[{data:allAssets.map(function(x){return x.v;}),backgroundColor:allAssets.map(function(x){return x.cls==="FII"?fi:x.cls==="RF"?rf:ac;}),borderRadius:1,borderSkipped:false}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return " "+fmt(c.parsed.x)+"/mês";},afterLabel:function(c){var a=allAssets[c.dataIndex];return "MS: "+(a.ms>=0?"+":"")+a.ms.toFixed(2)+"%";}}}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},ticks:{color:"#6B6B6B",font:{size:9},callback:function(v){return "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}},beginAtZero:true},y:{grid:{display:false},ticks:{color:"#111111",font:{size:10,weight:"600"}}}}}}));}
   var cC=document.getElementById("dyCompare");
-  if(cC){dyCharts.push(new Chart(cC,{type:"bar",data:{labels:["FIIs","Ações","Total"],datasets:[{label:"Projetado",data:[fiiTot,acaoTot,total],backgroundColor:[fi,ac,"#111111"],borderRadius:1},{label:"Real (média 2026)",data:[_dyMedFii,_dyMedAcao,_dyMedReal],backgroundColor:["rgba(196,96,42,0.3)","rgba(58,106,138,0.3)","rgba(0,0,0,0.08)"],borderRadius:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:8,font:{size:10},color:"#6B6B6B",padding:14}}},scales:{x:{grid:{display:false},ticks:{color:"#6B6B6B",font:{size:11,weight:"500"}}},y:{grid:{color:"rgba(0,0,0,0.05)"},ticks:{color:"#6B6B6B",font:{size:9},callback:function(v){return "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}},beginAtZero:true}}}}));}
+  if(cC){dyCharts.push(new Chart(cC,{type:"bar",data:{labels:["FIIs","Ações","RF","Total"],datasets:[{label:"Projetado",data:[fiiTot,acaoTot,rfTot,total],backgroundColor:[fi,ac,rf,"#111111"],borderRadius:1},{label:"Real (média 2026)",data:[_dyMedFii,_dyMedAcao,0,_dyMedReal],backgroundColor:["rgba(196,96,42,0.3)","rgba(58,106,138,0.3)","rgba(74,106,90,0.3)","rgba(0,0,0,0.08)"],borderRadius:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:8,font:{size:10},color:"#6B6B6B",padding:14}}},scales:{x:{grid:{display:false},ticks:{color:"#6B6B6B",font:{size:11,weight:"500"}}},y:{grid:{color:"rgba(0,0,0,0.05)"},ticks:{color:"#6B6B6B",font:{size:9},callback:function(v){return "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}},beginAtZero:true}}}}));}
 }
 
 function setupTabs(){
@@ -1732,7 +1732,7 @@ if(document.readyState!=="loading")boot();else document.addEventListener("DOMCon
 <script>
 // Auto-reload: verifica a cada 5 min se há nova versão no GitHub Pages
 (function(){
-  var BUILD="20260617T1620";
+  var BUILD="20260617T1700";
   var KEY="tonetto_build";
   try{
     var stored=sessionStorage.getItem(KEY);
