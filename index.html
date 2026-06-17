@@ -16,7 +16,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-time" content="20260617T1400">
+<meta name="build-time" content="20260617T1545">
 <title>TONETTO HOLDING</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
@@ -576,7 +576,10 @@
     <div class="sec-title">Seção 2 — Ações <span style="font-style:normal;color:var(--label);font-size:11px">DPA projetado 2026</span></div>
     <div class="grid" id="dyAcaoCards" style="grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px"></div>
     <div class="card" style="overflow-x:auto;margin-bottom:28px"><table id="dyAcaoTable"></table></div>
-    <div class="sec-title">Seção 3 — Consolidado</div>
+    <div class="sec-title">Seção 3 — Renda Fixa <span style="font-style:normal;color:var(--label);font-size:11px">renda estimada por título</span></div>
+    <div class="grid" id="dyRfCards" style="grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px"></div>
+    <div class="card" style="overflow-x:auto;margin-bottom:28px"><table id="dyRfTable"></table></div>
+    <div class="sec-title">Seção 4 — Consolidado</div>
     <div class="grid" id="dyConsol" style="grid-template-columns:repeat(4,1fr);gap:20px"></div>
     <div id="dyConsolChart" style="margin-bottom:20px"></div>
     <p class="note" style="margin-top:18px">Dados pesquisados em Investidor10, Suno, fiis.com.br e Infomoney; proventos declarados de junho atualizados em 17/06/2026. Valores informativos — não constituem recomendação de investimento.</p>
@@ -586,7 +589,7 @@
 </div>
 
 <script>
-const CONFIG = { metaIndepTotal:2000, metaIndepFiis:700, metaIndepAcoes:1300, metaPatrimonio2026:200000, metaAcoesPct:68.75, metaFiisPct:31.25, projGrowth:0.17 };
+const CONFIG = { metaIndepTotal:2500, metaIndepFiis:700, metaIndepAcoes:1300, metaIndepRf:500, metaPatrimonio2026:200000, metaAcoesPct:68.75, metaFiisPct:31.25, projGrowth:0.17 };
 const FILE_ID = "1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM";
 const DRIVE_TOOL = "mcp__fcfb38a8-9339-4ca8-b68b-70783af4a15e__read_file_content";
 const SHEET_ID = "1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM";
@@ -762,7 +765,7 @@ async function fetchSheetCSV(){
 }
 
 let charts=[]; let aportCharts=[]; let _aport2026Drawn=false; let DATA=null; let fiiSort="padrao", acaoSort="padrao";
-let _dyFiiMes=0, _dyAcaoMes=0;
+let _dyFiiMes=0, _dyAcaoMes=0, _dyRfMes=0;
 let cartFiiSort={key:"qtd",dir:"desc"};
 let cartAcaoSort={key:"qtd",dir:"desc"};
 const TEXT_KEYS={ativo:1,setor:1};
@@ -933,8 +936,9 @@ function renderProvKpis(d){
   const fii6=avg6(d.prov,"fii"), acao6=avg6(d.prov,"acao");
   const dyFiiMes=d.fiis.reduce((s,x)=>s+(DY_DATA.fiis[x.ativo]?.divCota||0)*x.qtd,0);
   const dyAcaoMes=d.acoes.reduce((s,x)=>s+(DY_DATA.acoes[x.ativo]?.dpa26||0)*x.qtd/12,0);
-  const dyTotalMes=dyFiiMes+dyAcaoMes;
-  _dyFiiMes=dyFiiMes; _dyAcaoMes=dyAcaoMes;
+  const dyRfMes=(typeof rfCompute==="function")?rfCompute().totMes:0;
+  const dyTotalMes=dyFiiMes+dyAcaoMes+dyRfMes;
+  _dyFiiMes=dyFiiMes; _dyAcaoMes=dyAcaoMes; _dyRfMes=dyRfMes;
   const m26r=d.prov.filter(p=>/\/26$/.test(p.mes));
   const realMedFii=m26r.length?m26r.reduce((s,p)=>s+p.fii,0)/m26r.length:0;
   const realMedAcao=m26r.length?m26r.reduce((s,p)=>s+p.acao,0)/m26r.length:0;
@@ -942,7 +946,7 @@ function renderProvKpis(d){
     {label:"Total Histórico",value:fmt(d.proventosTotal),sub:"recebidos desde 2025",color:"var(--roxo)"},
     {label:"Melhor Mês",value:fmt(best.t),sub:best.mes+" 🏆",color:"var(--ink)"},
     {label:"Média Real 2026",value:fmt(media2026),sub:"real recebido · "+m26r.length+"m registrados",color:"var(--ink)"},
-    {label:"DY Projetivo/mês",value:fmt(dyTotalMes),sub:"FIIs "+fmt(dyFiiMes)+" · Ações "+fmt(dyAcaoMes),color:"var(--roxo)"},
+    {label:"DY Projetivo/mês",value:fmt(dyTotalMes),sub:"FIIs "+fmt(dyFiiMes)+" · Ações "+fmt(dyAcaoMes)+" · RF "+fmt(dyRfMes),color:"var(--roxo)"},
     {label:"Renda FIIs — méd. real",value:fmt(realMedFii),sub:"projetado "+fmt(dyFiiMes)+" · gap "+fmt(Math.max(0,dyFiiMes-realMedFii)),color:"var(--fiis)"},
     {label:"Renda Ações — méd. real",value:fmt(realMedAcao),sub:"projetado "+fmt(dyAcaoMes)+" · gap "+fmt(Math.max(0,dyAcaoMes-realMedAcao)),color:"var(--acoes)"},
   ];
@@ -1408,8 +1412,26 @@ const DY_DATA = {
   }
 };
 
+/* Renda Fixa — renda calculada a partir do valor aplicado × taxa contratada do título.
+   yield nominal = (1+IPCA12m)×(1+taxa real)−1. Atualize "aplicado" a cada novo aporte. */
+const RF_DATA = {
+  meta: 500,            // meta de renda mensal em Renda Fixa (R$)
+  ipca12m: 4.72,        // IPCA acumulado 12 meses (mai/2026, IBGE)
+  fonteIpca: "IBGE",
+  atualizado: "17/06/2026",
+  ativos: [
+    {ativo:"Tesouro Direto+IPCA 2032", aplicado:8607.06, taxaReal:8.22, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto / Status Invest"},
+  ]
+};
+function rfYieldAa(a){ const ipca=(RF_DATA.ipca12m||0)/100, real=(a.taxaReal||0)/100; return ((1+ipca)*(1+real)-1)*100; }
+function rfCompute(){
+  const ativos=(RF_DATA.ativos||[]).map(a=>{ const ya=rfYieldAa(a); const rendaAno=a.aplicado*ya/100; return Object.assign({},a,{yieldAa:ya, rendaAno, rendaMes:rendaAno/12}); });
+  const totMes=ativos.reduce((s,x)=>s+x.rendaMes,0), totAno=ativos.reduce((s,x)=>s+x.rendaAno,0), aplicado=ativos.reduce((s,x)=>s+x.aplicado,0);
+  return {ativos,totMes,totAno,aplicado,meta:RF_DATA.meta||0};
+}
+
 function renderDYProjetivo(d){
-  const META_FII=700,META_ACAO=1300,META_TOTAL=2000;
+  const META_FII=700,META_ACAO=1300,META_RF=(RF_DATA&&RF_DATA.meta)||500,META_TOTAL=META_FII+META_ACAO+META_RF;
   const money=v=>(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
   const fiiRows=d.fiis.map(x=>{
     const dd=DY_DATA.fiis[x.ativo]||{};
@@ -1458,7 +1480,25 @@ function renderDYProjetivo(d){
   const acaoBod=acaoRows.map(x=>`<tr><td class="tk">${x.ativo}</td><td>${x.qtd.toLocaleString("pt-BR")}</td><td>R$ ${money(x.dpa26)}</td><td class="${x.yoc26>=8?'pos':x.yoc26>=4?'ms-a':x.yoc26>0?'':'neg'}">${money(x.yoc26)}%</td><td style="font-weight:600">${fmt(x.rendaAno)}</td><td style="color:var(--accent)">${fmt(x.rendaAno/12)}</td><td><span class="tag">${x.freq}</span></td><td style="color:var(--muted);font-size:11.5px">${x.proxLabel}</td></tr>`).join("");
   const acaoTotRow=`<tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td></td><td></td><td></td><td></td><td>${fmt(acaoTotAno)}</td><td style="font-weight:700">${fmt(acaoTotMes)}</td><td></td><td></td></tr>`;
   document.getElementById("dyAcaoTable").innerHTML=acaoHead+"<tbody>"+acaoBod+acaoTotRow+"</tbody>";
-  const totalMes=fiiTotMes+acaoTotMes;
+  // ── Renda Fixa ──
+  const RF=rfCompute();
+  const rfTotMes=RF.totMes, rfTotAno=RF.totAno;
+  const rfGap=Math.max(0,META_RF-rfTotMes);
+  const rfPct=Math.min(100,META_RF?100*rfTotMes/META_RF:0);
+  const elRF=document.getElementById("dyRfCards");
+  if(elRF){ elRF.innerHTML=[
+    {l:"Renda RF/mês est.",v:fmt(rfTotMes),s:"aplicado "+fmt(RF.aplicado),c:"var(--rf)"},
+    {l:"Renda RF/ano",v:fmt(rfTotAno),s:"projetado (× 12)",c:"var(--rf)"},
+    {l:"Meta RF",v:"R$ "+META_RF.toLocaleString("pt-BR")+"/mês",s:"meta mensal",c:"var(--ink)"},
+    {l:"% Atingido",v:pct(rfPct),s:"da meta RF",c:rfPct>=100?"var(--verde)":"var(--ambar)"},
+    {l:"Gap",v:rfGap<=0?"✓ Atingida":fmt(rfGap)+"/mês",s:"falta para a meta",c:rfGap<=0?"var(--verde)":"var(--vermelho)"},
+  ].map(k=>`<div class="card kpi"><div class="label">${k.l}</div><div class="value" style="color:${colVar(k.c)};font-size:17px">${k.v}</div><div class="sub">${k.s}</div></div>`).join(""); }
+  const elRFt=document.getElementById("dyRfTable");
+  if(elRFt){ const rfHead=`<thead><tr><th>Título</th><th>Aplicado</th><th>Indexador</th><th>Taxa real</th><th>Yield est.%a.a.</th><th>Renda Mensal</th><th>Renda Anual</th><th>Vencimento</th></tr></thead>`;
+    const rfBod=RF.ativos.map(x=>`<tr><td class="tk">${x.ativo}</td><td>${fmt(x.aplicado)}</td><td><span class="tag">${x.indexador||"—"}</span></td><td>${x.taxaReal!=null?money(x.taxaReal)+"%":"—"}</td><td class="pos">${money(x.yieldAa)}%</td><td style="font-weight:600">${fmt(x.rendaMes)}</td><td>${fmt(x.rendaAno)}</td><td style="color:var(--muted)">${x.venc||"—"}</td></tr>`).join("");
+    const rfTotRow=`<tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td>${fmt(RF.aplicado)}</td><td></td><td></td><td></td><td>${fmt(rfTotMes)}</td><td>${fmt(rfTotAno)}</td><td></td></tr>`;
+    elRFt.innerHTML=rfHead+"<tbody>"+rfBod+rfTotRow+"</tbody>"; }
+  const totalMes=fiiTotMes+acaoTotMes+rfTotMes;
   const totalPct=Math.min(100,META_TOTAL?100*totalMes/META_TOTAL:0);
   const totalGap=Math.max(0,META_TOTAL-totalMes);
   const consolEl=document.getElementById("dyConsol"); if(!consolEl)return;
@@ -1466,12 +1506,12 @@ function renderDYProjetivo(d){
   const medRealMes=prov26r.length?prov26r.reduce((s,p)=>s+p.fii+p.acao,0)/prov26r.length:0;
   const medRealFii=prov26r.length?prov26r.reduce((s,p)=>s+p.fii,0)/prov26r.length:0;
   const medRealAcao=prov26r.length?prov26r.reduce((s,p)=>s+p.acao,0)/prov26r.length:0;
-  _dyFiiRows=fiiRows; _dyAcaoRows=acaoRows; _dyMedReal=medRealMes; _dyMedFii=medRealFii; _dyMedAcao=medRealAcao;
+  _dyFiiRows=fiiRows; _dyAcaoRows=acaoRows; _dyRfRows=RF.ativos; _dyMedReal=medRealMes; _dyMedFii=medRealFii; _dyMedAcao=medRealAcao;
   consolEl.innerHTML=[
-    {l:"DY Projetivo/mês",v:fmt(totalMes),s:"FIIs "+fmt(fiiTotMes)+" · Ações "+fmt(acaoTotMes),c:"var(--roxo)"},
+    {l:"DY Projetivo/mês",v:fmt(totalMes),s:"FIIs "+fmt(fiiTotMes)+" · Ações "+fmt(acaoTotMes)+" · RF "+fmt(rfTotMes),c:"var(--roxo)"},
     {l:"Média Real 2026",v:fmt(medRealMes),s:"FIIs "+fmt(medRealFii)+" · Ações "+fmt(medRealAcao)+" · "+prov26r.length+"m",c:"var(--ink)"},
-    {l:"% da Meta R$2.000/mês",v:pct(totalPct),s:pct(fiiPct)+" FIIs · "+pct(acaoPct)+" Ações",c:totalPct>=100?"var(--verde)":"var(--ambar)"},
-    {l:"Gap",v:totalGap<=0?"✓ Meta atingida":fmt(totalGap)+"/mês",s:totalGap<=0?"Meta atingida 🎉":"falta para R$ 2.000/mês",c:totalGap<=0?"var(--verde)":"var(--vermelho)"},
+    {l:"% da Meta R$2.500/mês",v:pct(totalPct),s:pct(fiiPct)+" FIIs · "+pct(acaoPct)+" Ações · "+pct(rfPct)+" RF",c:totalPct>=100?"var(--verde)":"var(--ambar)"},
+    {l:"Gap",v:totalGap<=0?"✓ Meta atingida":fmt(totalGap)+"/mês",s:totalGap<=0?"Meta atingida 🎉":"falta para R$ 2.500/mês",c:totalGap<=0?"var(--verde)":"var(--vermelho)"},
   ].map(k=>`<div class="card" style="padding:28px 24px">
     <div class="label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--label);font-weight:600;border-left:2px solid var(--accent);padding-left:8px">${k.l}</div>
     <div style="color:${colVar(k.c)};font-size:28px;font-weight:800;margin-top:12px;letter-spacing:-.02em;line-height:1.1">${k.v}</div>
@@ -1479,17 +1519,17 @@ function renderDYProjetivo(d){
   </div>`).join("");
 }
 
-let _dyFiiRows=[], _dyAcaoRows=[], _dyMedReal=0, _dyMedFii=0, _dyMedAcao=0;
+let _dyFiiRows=[], _dyAcaoRows=[], _dyRfRows=[], _dyMedReal=0, _dyMedFii=0, _dyMedAcao=0;
 
 function drawProvChart(d){
   const el=document.getElementById("provChart"); if(!el) return;
   const best=(d.prov||[]).reduce((m,p)=>{const t=p.fii+p.acao;return t>m.t?{mes:p.mes,t}:m;},{mes:"—",t:0});
   const media2026=(d.provAnos.find(a=>a.ano==="2026")||{}).media||0;
-  const fiiP=_dyFiiMes||0, acaoP=_dyAcaoMes||0;
-  const totalP=fiiP+acaoP;
-  const META_RENDA=CONFIG.metaIndepTotal||2000;
+  const fiiP=_dyFiiMes||0, acaoP=_dyAcaoMes||0, rfP=_dyRfMes||0;
+  const totalP=fiiP+acaoP+rfP;
+  const META_RENDA=CONFIG.metaIndepTotal||2500;
   const pctMeta=Math.min(100,META_RENDA?100*totalP/META_RENDA:0);
-  const accent="#C4602A", acoes="#3A6A8A", verde="#5A8A6A", muted="#6B6B6B";
+  const accent="#C4602A", acoes="#3A6A8A", verde="#5A8A6A", muted="#6B6B6B", rf="#4A6A5A";
   const centerPlugin={id:"provCenter",afterDraw(chart){
     const {ctx,chartArea:{top,bottom,left,right}}=chart;
     const cx=(left+right)/2, cy=(top+bottom)/2;
@@ -1502,14 +1542,14 @@ function drawProvChart(d){
     ctx.fillText(pct(pctMeta)+" da meta",cx,cy+24);
     ctx.restore();
   }};
-  charts.push(new Chart(el,{type:"doughnut",data:{labels:["FIIs Projetado","Ações Projetado"],datasets:[{data:[fiiP,acaoP],backgroundColor:[accent,acoes],borderColor:"#FFFFFF",borderWidth:4,hoverOffset:8}]},options:{cutout:"72%",plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.label}: ${fmt(c.parsed)} (${pct(100*c.parsed/totalP)})`}}}},plugins:[centerPlugin]}));
+  charts.push(new Chart(el,{type:"doughnut",data:{labels:["FIIs Projetado","Ações Projetado","RF Projetado"],datasets:[{data:[fiiP,acaoP,rfP],backgroundColor:[accent,acoes,rf],borderColor:"#FFFFFF",borderWidth:4,hoverOffset:8}]},options:{cutout:"72%",plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.label}: ${fmt(c.parsed)} (${pct(100*c.parsed/totalP)})`}}}},plugins:[centerPlugin]}));
   const stats=document.getElementById("provStats"); if(!stats) return;
   const m26r=d.prov.filter(p=>/\/26$/.test(p.mes));
   const realFii=m26r.length?m26r.reduce((s,p)=>s+p.fii,0)/m26r.length:0;
   const realAcao=m26r.length?m26r.reduce((s,p)=>s+p.acao,0)/m26r.length:0;
   const progW=Math.min(100,pctMeta).toFixed(1);
   const progCol=pctMeta>=100?verde:pctMeta>=50?accent:"#6B6B6B";
-  stats.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px"><div style="border-left:2px solid ${accent};padding-left:12px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:6px">FIIs Projetado</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#111111">${fmt(fiiP)}</div><div style="font-size:10px;color:${muted};margin-top:3px">real ${fmt(realFii)} · gap ${fmt(Math.max(0,fiiP-realFii))}</div></div><div style="border-left:2px solid ${acoes};padding-left:12px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:6px">Ações Projetado</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#111111">${fmt(acaoP)}</div><div style="font-size:10px;color:${muted};margin-top:3px">real ${fmt(realAcao)} · gap ${fmt(Math.max(0,acaoP-realAcao))}</div></div><div style="border-left:2px solid #555550;padding-left:12px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:6px">Média Real 2026</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#111111">${fmt(media2026)}</div><div style="font-size:10px;color:${muted};margin-top:3px">${m26r.length} meses registrados</div></div><div style="border-left:2px solid ${verde};padding-left:12px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:6px">Melhor Mês</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#111111">${fmt(best.t)}</div><div style="font-size:10px;color:${muted};margin-top:3px">${best.mes}</div></div></div><div><div style="display:flex;justify-content:space-between;font-size:10px;color:${muted};margin-bottom:6px;letter-spacing:.04em"><span style="text-transform:uppercase;letter-spacing:.08em">Meta R$ 2.000/mês</span><span style="color:${progCol};font-weight:600">${pct(pctMeta)} · faltam ${fmt(Math.max(0,META_RENDA-totalP))}</span></div><div style="height:3px;background:#E4E0D9;border-radius:1px;overflow:hidden"><div style="height:100%;width:${progW}%;background:${progCol};transition:width .4s ease"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:#333330;margin-top:5px"><span>R$ 0</span><span>R$ 2.000</span></div></div>`;
+  stats.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px"><div style="border-left:2px solid ${accent};padding-left:12px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:6px">FIIs Projetado</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#111111">${fmt(fiiP)}</div><div style="font-size:10px;color:${muted};margin-top:3px">real ${fmt(realFii)} · gap ${fmt(Math.max(0,fiiP-realFii))}</div></div><div style="border-left:2px solid ${acoes};padding-left:12px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:6px">Ações Projetado</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#111111">${fmt(acaoP)}</div><div style="font-size:10px;color:${muted};margin-top:3px">real ${fmt(realAcao)} · gap ${fmt(Math.max(0,acaoP-realAcao))}</div></div><div style="border-left:2px solid ${rf};padding-left:12px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:6px">RF Projetado</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#111111">${fmt(rfP)}</div><div style="font-size:10px;color:${muted};margin-top:3px">meta ${fmt((CONFIG.metaIndepRf||500))} · gap ${fmt(Math.max(0,(CONFIG.metaIndepRf||500)-rfP))}</div></div><div style="border-left:2px solid #555550;padding-left:12px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:6px">Média Real 2026</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#111111">${fmt(media2026)}</div><div style="font-size:10px;color:${muted};margin-top:3px">${m26r.length} meses registrados</div></div><div style="border-left:2px solid ${verde};padding-left:12px"><div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:${muted};margin-bottom:6px">Melhor Mês</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#111111">${fmt(best.t)}</div><div style="font-size:10px;color:${muted};margin-top:3px">${best.mes}</div></div></div><div><div style="display:flex;justify-content:space-between;font-size:10px;color:${muted};margin-bottom:6px;letter-spacing:.04em"><span style="text-transform:uppercase;letter-spacing:.08em">Meta R$ 2.500/mês</span><span style="color:${progCol};font-weight:600">${pct(pctMeta)} · faltam ${fmt(Math.max(0,META_RENDA-totalP))}</span></div><div style="height:3px;background:#E4E0D9;border-radius:1px;overflow:hidden"><div style="height:100%;width:${progW}%;background:${progCol};transition:width .4s ease"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:#333330;margin-top:5px"><span>R$ 0</span><span>R$ 2.500</span></div></div>`;
 }
 
 
@@ -1554,37 +1594,40 @@ function drawDYConsolChart(){
   if(!_dyFiiRows.length && typeof DATA!=="undefined" && DATA && DATA.fiis) {
     _dyFiiRows=DATA.fiis.map(function(x){var dd=DY_DATA.fiis[x.ativo]||{};var divcota=dd.divCota||0;return{ativo:x.ativo,qtd:x.qtd,ms:x.ms||0,rendaMes:divcota*x.qtd,rendaAno:divcota*x.qtd*12};});
     _dyAcaoRows=DATA.acoes.map(function(x){var dd=DY_DATA.acoes[x.ativo]||{};var dpa26=dd.dpa26||0;return{ativo:x.ativo,qtd:x.qtd,ms:x.ms||0,rendaAno:dpa26*x.qtd};});
+    _dyRfRows=(typeof rfCompute==="function")?rfCompute().ativos:[];
     var prov26r=(DATA.prov||[]).filter(function(p){return/\/26$/.test(p.mes);});
     _dyMedReal=prov26r.length?prov26r.reduce(function(s,p){return s+p.fii+p.acao;},0)/prov26r.length:0;
     _dyMedFii=prov26r.length?prov26r.reduce(function(s,p){return s+p.fii;},0)/prov26r.length:0;
     _dyMedAcao=prov26r.length?prov26r.reduce(function(s,p){return s+p.acao;},0)/prov26r.length:0;
   }
   if(!_dyFiiRows.length) return;
-  var fi="#C4602A",ac="#3A6A8A",verde="#5A8A6A",muted="#6B6B6B";
+  var fi="#C4602A",ac="#3A6A8A",verde="#5A8A6A",muted="#6B6B6B",rf="#4A6A5A";
   var fiiTot=_dyFiiRows.reduce(function(s,x){return s+x.rendaMes;},0);
   var acaoTot=_dyAcaoRows.reduce(function(s,x){return s+x.rendaAno/12;},0);
-  var total=fiiTot+acaoTot;
-  var META=2000;var pctMeta=Math.min(100,total/META*100);
+  var rfTot=(_dyRfRows||[]).reduce(function(s,x){return s+(x.rendaMes||0);},0);
+  var total=fiiTot+acaoTot+rfTot;
+  var META=2500;var pctMeta=Math.min(100,total/META*100);
   var progCol=pctMeta>=100?verde:pctMeta>=50?fi:muted;
   var allAssets=[];
   _dyFiiRows.forEach(function(x){allAssets.push({tk:x.ativo,v:x.rendaMes,ms:x.ms,cls:"FII"});});
   _dyAcaoRows.forEach(function(x){allAssets.push({tk:x.ativo,v:x.rendaAno/12,ms:x.ms,cls:"Ação"});});
+  (_dyRfRows||[]).forEach(function(x){allAssets.push({tk:x.ativo,v:x.rendaMes||0,ms:0,cls:"RF"});});
   allAssets.sort(function(a,b){return b.v-a.v;});
   var barH=Math.max(200,allAssets.length*26)+"px";
   var h="<div class='card'><div class='panel-h'>DY Projetivo Consolidado — renda mensal estimada por ativo</div>";
   h+="<div style='display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px'>";
-  [{l:"Total Projetado/mês",v:fmt(total),c:"#111111"},{l:"FIIs/mês",v:fmt(fiiTot),c:fi},{l:"Ações/mês",v:fmt(acaoTot),c:ac},{l:"Média Real 2026/mês",v:fmt(_dyMedReal),c:muted}].forEach(function(k){h+="<div style='border-left:2px solid "+k.c+";padding-left:12px'><div style='font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#6B6B6B;margin-bottom:6px'>"+k.l+"</div><div style='font-family:var(--font-display);font-size:22px;font-weight:600;color:"+k.c+"'>"+k.v+"</div></div>";});
-  h+="</div><div style='display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;margin-bottom:24px'><div><div style='font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#6B6B6B;margin-bottom:10px'>Split FIIs vs Ações</div><div style='position:relative;height:190px'><canvas id='dyDonut'></canvas></div><div style='margin-top:12px;display:flex;flex-direction:column;gap:6px'>";
-  [{l:"FIIs",v:fiiTot,c:fi},{l:"Ações",v:acaoTot,c:ac},{l:"Real",v:_dyMedReal,c:muted}].forEach(function(x){h+="<div style='display:flex;align-items:center;gap:8px;font-size:11px;color:#6B6B6B'><span style='width:8px;height:8px;background:"+x.c+";flex:none;display:inline-block'></span><span style='flex:1'>"+x.l+"</span><span style='color:#111111;font-weight:500'>"+fmt(x.v)+"/mês</span></div>";});
-  h+="<div style='margin-top:16px'><div style='display:flex;justify-content:space-between;font-size:9px;color:#6B6B6B;margin-bottom:5px;letter-spacing:.06em'><span>META R$ 2.000/mês</span><span style='color:"+progCol+"'>"+pct(pctMeta)+"</span></div><div style='height:3px;background:#E4E0D9;border-radius:1px'><div style='height:100%;width:"+pctMeta.toFixed(1)+"%;background:"+progCol+"'></div></div><div style='font-size:10px;color:#6B6B6B;margin-top:4px'>faltam "+fmt(Math.max(0,META-total))+"/mês</div></div></div></div>";
+  [{l:"Total Projetado/mês",v:fmt(total),c:"#111111"},{l:"FIIs/mês",v:fmt(fiiTot),c:fi},{l:"Ações/mês",v:fmt(acaoTot),c:ac},{l:"RF/mês",v:fmt(rfTot),c:rf},{l:"Média Real 2026/mês",v:fmt(_dyMedReal),c:muted}].forEach(function(k){h+="<div style='border-left:2px solid "+k.c+";padding-left:12px'><div style='font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#6B6B6B;margin-bottom:6px'>"+k.l+"</div><div style='font-family:var(--font-display);font-size:22px;font-weight:600;color:"+k.c+"'>"+k.v+"</div></div>";});
+  h+="</div><div style='display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;margin-bottom:24px'><div><div style='font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#6B6B6B;margin-bottom:10px'>Split por classe</div><div style='position:relative;height:190px'><canvas id='dyDonut'></canvas></div><div style='margin-top:12px;display:flex;flex-direction:column;gap:6px'>";
+  [{l:"FIIs",v:fiiTot,c:fi},{l:"Ações",v:acaoTot,c:ac},{l:"RF",v:rfTot,c:rf},{l:"Real",v:_dyMedReal,c:muted}].forEach(function(x){h+="<div style='display:flex;align-items:center;gap:8px;font-size:11px;color:#6B6B6B'><span style='width:8px;height:8px;background:"+x.c+";flex:none;display:inline-block'></span><span style='flex:1'>"+x.l+"</span><span style='color:#111111;font-weight:500'>"+fmt(x.v)+"/mês</span></div>";});
+  h+="<div style='margin-top:16px'><div style='display:flex;justify-content:space-between;font-size:9px;color:#6B6B6B;margin-bottom:5px;letter-spacing:.06em'><span>META R$ 2.500/mês</span><span style='color:"+progCol+"'>"+pct(pctMeta)+"</span></div><div style='height:3px;background:#E4E0D9;border-radius:1px'><div style='height:100%;width:"+pctMeta.toFixed(1)+"%;background:"+progCol+"'></div></div><div style='font-size:10px;color:#6B6B6B;margin-top:4px'>faltam "+fmt(Math.max(0,META-total))+"/mês</div></div></div></div>";
   h+="<div><div style='font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#6B6B6B;margin-bottom:10px'>Renda mensal por ativo</div><div style='position:relative;height:"+barH+"'><canvas id='dyBars'></canvas></div></div></div>";
   h+="<div style='font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#6B6B6B;margin-bottom:10px'>Real 2026 vs Projetado</div><div style='position:relative;height:160px'><canvas id='dyCompare'></canvas></div></div>";
   wrap.innerHTML=h;
   var cD=document.getElementById("dyDonut");
   if(cD){var cPlug={id:"dyCtr",afterDraw:function(chart){var ctx=chart.ctx,ca=chart.chartArea;var cx=(ca.left+ca.right)/2,cy=(ca.top+ca.bottom)/2;ctx.save();ctx.font="500 8px 'DM Sans',sans-serif";ctx.fillStyle="#9A9A9A";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("PROJETADO",cx,cy-10);ctx.font="600 15px 'Cormorant Garamond',serif";ctx.fillStyle="#111111";ctx.fillText(fmt(total),cx,cy+6);ctx.restore();}};
-    dyCharts.push(new Chart(cD,{type:"doughnut",data:{labels:["FIIs","Ações"],datasets:[{data:[fiiTot,acaoTot],backgroundColor:[fi,ac],borderColor:"#FFFFFF",borderWidth:3,hoverOffset:6}]},options:{cutout:"65%",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return " "+c.label+": "+fmt(c.parsed)+" ("+pct(100*c.parsed/total)+")";}}}}} ,plugins:[cPlug]}));}
+    dyCharts.push(new Chart(cD,{type:"doughnut",data:{labels:["FIIs","Ações","RF"],datasets:[{data:[fiiTot,acaoTot,rfTot],backgroundColor:[fi,ac,rf],borderColor:"#FFFFFF",borderWidth:3,hoverOffset:6}]},options:{cutout:"65%",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return " "+c.label+": "+fmt(c.parsed)+" ("+pct(100*c.parsed/total)+")";}}}}} ,plugins:[cPlug]}));}
   var cB=document.getElementById("dyBars");
-  if(cB){dyCharts.push(new Chart(cB,{type:"bar",data:{labels:allAssets.map(function(x){return x.tk;}),datasets:[{data:allAssets.map(function(x){return x.v;}),backgroundColor:allAssets.map(function(x){return x.cls==="FII"?fi:ac;}),borderRadius:1,borderSkipped:false}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return " "+fmt(c.parsed.x)+"/mês";},afterLabel:function(c){var a=allAssets[c.dataIndex];return "MS: "+(a.ms>=0?"+":"")+a.ms.toFixed(2)+"%";}}}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},ticks:{color:"#6B6B6B",font:{size:9},callback:function(v){return "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}},beginAtZero:true},y:{grid:{display:false},ticks:{color:"#111111",font:{size:10,weight:"600"}}}}}}));}
+  if(cB){dyCharts.push(new Chart(cB,{type:"bar",data:{labels:allAssets.map(function(x){return x.tk;}),datasets:[{data:allAssets.map(function(x){return x.v;}),backgroundColor:allAssets.map(function(x){return x.cls==="FII"?fi:x.cls==="RF"?rf:ac;}),borderRadius:1,borderSkipped:false}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return " "+fmt(c.parsed.x)+"/mês";},afterLabel:function(c){var a=allAssets[c.dataIndex];return "MS: "+(a.ms>=0?"+":"")+a.ms.toFixed(2)+"%";}}}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},ticks:{color:"#6B6B6B",font:{size:9},callback:function(v){return "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}},beginAtZero:true},y:{grid:{display:false},ticks:{color:"#111111",font:{size:10,weight:"600"}}}}}}));}
   var cC=document.getElementById("dyCompare");
   if(cC){dyCharts.push(new Chart(cC,{type:"bar",data:{labels:["FIIs","Ações","Total"],datasets:[{label:"Projetado",data:[fiiTot,acaoTot,total],backgroundColor:[fi,ac,"#111111"],borderRadius:1},{label:"Real (média 2026)",data:[_dyMedFii,_dyMedAcao,_dyMedReal],backgroundColor:["rgba(196,96,42,0.3)","rgba(58,106,138,0.3)","rgba(0,0,0,0.08)"],borderRadius:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:8,font:{size:10},color:"#6B6B6B",padding:14}}},scales:{x:{grid:{display:false},ticks:{color:"#6B6B6B",font:{size:11,weight:"500"}}},y:{grid:{color:"rgba(0,0,0,0.05)"},ticks:{color:"#6B6B6B",font:{size:9},callback:function(v){return "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}},beginAtZero:true}}}}));}
 }
@@ -1686,7 +1729,7 @@ if(document.readyState!=="loading")boot();else document.addEventListener("DOMCon
 <script>
 // Auto-reload: verifica a cada 5 min se há nova versão no GitHub Pages
 (function(){
-  var BUILD="20260617T1400";
+  var BUILD="20260617T1545";
   var KEY="tonetto_build";
   try{
     var stored=sessionStorage.getItem(KEY);
