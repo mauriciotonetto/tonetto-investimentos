@@ -16,7 +16,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-time" content="20260617T1700">
+<meta name="build-time" content="20260618T1200">
 <title>TONETTO HOLDING</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
@@ -582,7 +582,7 @@
     <div class="sec-title">Seção 4 — Consolidado</div>
     <div class="grid" id="dyConsol" style="grid-template-columns:repeat(4,1fr);gap:20px"></div>
     <div id="dyConsolChart" style="margin-bottom:20px"></div>
-    <p class="note" style="margin-top:18px">Dados pesquisados em Investidor10, Suno, fiis.com.br e Infomoney; proventos declarados de junho atualizados em 17/06/2026. Valores informativos — não constituem recomendação de investimento.</p>
+    <p class="note" style="margin-top:18px">Dados pesquisados em Investidor10, Suno, fiis.com.br e Infomoney; proventos declarados de junho atualizados em 18/06/2026. Valores informativos — não constituem recomendação de investimento.</p>
   </section>
 
   <p class="note" id="footnote"></p>
@@ -597,12 +597,12 @@ const SHEET_TABS = { FIIS:"FIIS", ACOES:"AÇÕES", PROVENTOS:"PROVENTO$", PATRIM
 
 /* SNAPSHOT_START */
 const SNAPSHOT = {
-  updated:"retrato salvo · 17/06/2026 · planilha ao vivo", patrimonio:81731.31, dyHolding:6.81, proventosTotal:5567.02,
+  updated:"retrato salvo · 18/06/2026 · planilha ao vivo + aporte RF", patrimonio:95362.76, dyHolding:6.81, proventosTotal:5567.02,
   alloc:[
-    {nome:"Ações BR", valor:49904.93, atual:61, ideal:55, delta:-4952.71, cor:"var(--acoes)"},
-    {nome:"FIIs", valor:31826.38, atual:39, ideal:25, delta:-11393.55, cor:"var(--fiis)"},
-    {nome:"Renda Fixa", valor:0, atual:0, ideal:15, delta:12259.70, cor:"var(--rf)"},
-    {nome:"Caixa", valor:0, atual:0, ideal:5, delta:4086.57, cor:"var(--caixa)"},
+    {nome:"Ações BR", valor:49904.93, atual:52.33, ideal:55, delta:2544.59, cor:"var(--acoes)"},
+    {nome:"FIIs", valor:31826.38, atual:33.37, ideal:25, delta:-7985.69, cor:"var(--fiis)"},
+    {nome:"Renda Fixa", valor:13631.45, atual:14.29, ideal:15, delta:672.96, cor:"var(--rf)"},
+    {nome:"Caixa", valor:0, atual:0, ideal:5, delta:4768.14, cor:"var(--caixa)"},
     {nome:"Ações US$", valor:0, atual:0, ideal:0, delta:0, cor:"var(--us)"},
   ],
   fiis:[
@@ -625,7 +625,7 @@ const SNAPSHOT = {
     {ativo:"ITUB4",setor:"Bancos",preco:39.36,pm:40.18,teto:47.92,rent:-2.04,ms:21.75,qtd:186,valor:7320.96,part:14.67,holding:8.96,vuc:39.33,duc:"01/06/2026",aporte:68},
   ],
   acaoSetorIdeal:{ "Elétrico":25, "Bancos":25, "Mineração":10, "Seguridade":15 },
-  equity:[{mes:"Jan",valor:62300.10},{mes:"Fev",valor:62960.70},{mes:"Mar",valor:65353.29},{mes:"Abr",valor:78593.53},{mes:"Mai",valor:69759.54},{mes:"Jun",valor:81731.31}],
+  equity:[{mes:"Jan",valor:62300.10},{mes:"Fev",valor:62960.70},{mes:"Mar",valor:65353.29},{mes:"Abr",valor:78593.53},{mes:"Mai",valor:69759.54},{mes:"Jun",valor:95362.76}],
   prov:[
     {mes:"Abr/25",fii:190.91,acao:0},{mes:"Mai/25",fii:203.26,acao:124.16},{mes:"Jun/25",fii:203.32,acao:73.90},
     {mes:"Jul/25",fii:249.20,acao:0.44},{mes:"Ago/25",fii:220.18,acao:299.12},{mes:"Set/25",fii:213.49,acao:117.95},
@@ -642,15 +642,15 @@ const SNAPSHOT = {
 
 /* FATOS_START */
 const FATOS = {
-  updated: "17/06/2026 · 14:00",
+  updated: "18/06/2026 · 12:00",
   itens: [
-    {cat:"macro", ticker:"COPOM", titulo:"Copom anuncia a Selic hoje (17/06) — mercado dividido entre corte de 0,25 p.p. e manutenção", corpo:"A taxa básica está em <b>14,50% a.a.</b> e o mercado se divide entre um corte para <b>14,25%</b> e a manutenção. O IPCA de maio veio <b>acima do esperado e furou o teto da meta</b>, o que reforçou a cautela e a aposta de alguns analistas numa pausa no ciclo de cortes. O resultado sai após o fechamento.", data:"17/06/2026", fonte:"https://soubrasilia.com/copom-selic-17-junho-2026/"},
-    {cat:"dividendo", ticker:"RBRR11", titulo:"RBRR11 paga R$ 0,95 por cota hoje (17/06) — maior rendimento em 10 meses", corpo:"O <b>RBRR11</b> distribui <b>R$ 0,95/cota</b> nesta quarta, referente a maio — o maior valor em 10 meses. É a posição com a <b>maior meta de aporte</b> da carteira de FIIs (M.S. 42%).", data:"17/06/2026", fonte:"https://fiis.com.br/noticias/dividendos-fundo-imobiliario-rbrr11-serao-maiores-10-meses-descubra-valor-junho-jj/"},
-    {cat:"dividendo", ticker:"TRXF11", titulo:"TRXF11 paga R$ 0,93 por cota (yield ~1,01%) nesta semana", corpo:"O TRX Real Estate distribui <b>R$ 0,93/cota</b>, yield de ~1,01%, na leva de 194 pagamentos de FIIs da semana. É a <b>maior posição em FIIs</b> da carteira (29% do bolso de FIIs · 11,3% da holding).", data:"17/06/2026", fonte:"https://www.infomoney.com.br/onde-investir/mxrf11-trxf11-hglg11-e-outros-fiis-pagam-dividendos-hoje-veja-lista-e-valores/"},
+    {cat:"noticia", ticker:"APORTE", titulo:"Novo aporte registrado: Tesouro IPCA+ 2032 — R$ 5.024,39", corpo:"Aporte de <b>R$ 5.024,39</b> (1,75 título · taxa <b>IPCA+ 8,51%</b> · venc. 15/08/2032) lançado em <b>18/06/2026</b>. Soma-se à 1ª compra (R$ 8.607,06 · IPCA+ 8,22%), levando a posição em Renda Fixa a <b>R$ 13.631,45</b>.", data:"18/06/2026", fonte:"https://www.tesourodireto.com.br/"},
+    {cat:"macro", ticker:"COPOM", titulo:"Copom corta a Selic para 14,25% (17/06) — 3ª queda consecutiva, decisão unânime", corpo:"O Banco Central reduziu a Selic de <b>14,50%</b> para <b>14,25% a.a.</b> nesta quarta (17/06), em decisão <b>unânime</b> e em linha com o mercado. O comunicado manteve tom <b>cauteloso</b>: inflação ainda acima da meta e cenário externo incerto. Juro em queda tende a favorecer FIIs e a marcação dos títulos IPCA+ em carteira.", data:"17/06/2026", fonte:"https://oespecialista.safra.com.br/copom-junho-2026/"},
+    {cat:"alerta", ticker:"ALOCAÇÃO", titulo:"Renda Fixa sobe para 14,3% (meta 15%) após o aporte; FIIs ainda 33,4%", corpo:"Com o novo aporte, a <b>Renda Fixa</b> sai de 0% e chega a <b>14,3%</b> — praticamente na meta de 15% (faltam ~<b>R$ 673</b>). <b>FIIs</b> seguem acima do alvo em <b>33,4%</b> (meta 25%) e <b>Ações</b> em 52,3% (meta 55%). Próximos aportes pedem Ações/Caixa.", data:"18/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
+    {cat:"noticia", ticker:"HOLDING", titulo:"Patrimônio em R$ 95.363 com a Renda Fixa incluída", corpo:"Somando a posição de Renda Fixa (R$ 13.631), o patrimônio da holding chega a <b>R$ 95.363</b>. Composição: <b>Ações 52,3% · FIIs 33,4% · RF 14,3%</b>.", data:"18/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
+    {cat:"dividendo", ticker:"RBRR11", titulo:"RBRR11 paga R$ 0,95 por cota (17/06) — maior rendimento em 10 meses", corpo:"O <b>RBRR11</b> distribuiu <b>R$ 0,95/cota</b> referente a maio — o maior valor em 10 meses (yield ~1,12%, CRIs atrelados ao IPCA). É a posição com a <b>maior meta de aporte</b> da carteira de FIIs (M.S. 42%).", data:"17/06/2026", fonte:"https://fiis.com.br/noticias/dividendos-fundo-imobiliario-rbrr11-serao-maiores-10-meses-descubra-valor-junho-jj/"},
+    {cat:"dividendo", ticker:"TRXF11", titulo:"TRXF11 paga R$ 0,93 por cota (yield ~1,01%) nesta semana", corpo:"O TRX Real Estate distribui <b>R$ 0,93/cota</b>, yield de ~1,01%. É a <b>maior posição em FIIs</b> da carteira (29% do bolso de FIIs · 11,3% da holding).", data:"17/06/2026", fonte:"https://www.infomoney.com.br/onde-investir/mxrf11-trxf11-hglg11-e-outros-fiis-pagam-dividendos-hoje-veja-lista-e-valores/"},
     {cat:"provento", ticker:"HGRU11", titulo:"HGRU11 pagou R$ 0,95 por cota em 15/06", corpo:"Pátria Renda Urbana distribuiu <b>R$ 0,95/cota</b> com pagamento em <b>15/06/2026</b> (competência maio). Fundo híbrido segue entre os pagadores consistentes da carteira.", data:"15/06/2026", fonte:"https://fiis.com.br/noticias/fundo-imobiliario-dividendos-hgru11-confira-quanto-fundo-vai-pagar-junho-2026-jj/"},
-    {cat:"provento", ticker:"BBAS3", titulo:"BBAS3 paga proventos em 17/06 (data-com 04/06)", corpo:"Banco do Brasil tem <b>pagamento de proventos em 17/06/2026</b>, com data-com em 04/06. É a <b>2ª maior posição em ações</b> da carteira (M.S. 24,5%).", data:"17/06/2026", fonte:"https://stockevents.app/en/stock/BBAS3.BA/dividends"},
-    {cat:"noticia", ticker:"HOLDING", titulo:"Patrimônio em R$ 81.731 em jun/26 (+17,2% no mês)", corpo:"Patrimônio total avança de R$ 69.760 (mai) para <b>R$ 81.731</b> em junho — alta de <b>+17,2%</b>, puxada por aportes e valorização. Composição: Ações 61% · FIIs 39% · RF 0%.", data:"16/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
-    {cat:"alerta", ticker:"ALOCAÇÃO", titulo:"FIIs em 39% (meta 25%) e Renda Fixa zerada (meta 15%)", corpo:"FIIs estão <b>14 p.p. acima</b> do alvo e a Renda Fixa segue em <b>0%</b> contra meta de 15% — faltam ~<b>R$ 12.260</b> na classe. Próximos aportes pedem RF/caixa.", data:"17/06/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
     {cat:"alerta", ticker:"VALE3", titulo:"VALE3 acima do teto — R$ 81,70 vs teto R$ 78,00", corpo:"Cotação atual <b>R$ 81,70</b> ultrapassa o teto de compra (R$ 78,00). Rentabilidade vs PM de <b>+47,7%</b>. Sem aporte recomendado no momento.", data:"17/06/2026", fonte:"https://statusinvest.com.br/acoes/vale3"},
   ]
 };
@@ -1323,7 +1323,7 @@ function setupRegistro(){
 }
 
 /* REAL_START */
-const REALIZADOS_BASE = {"mensalBase":[{"sk":"2024-06","mes":"Jun/24","ano":"2024","ca":0.0,"cf":0.0,"cr":447.6,"tv":1000.0},{"sk":"2024-07","mes":"Jul/24","ano":"2024","ca":4512.83,"cf":5501.43,"cr":0.0,"tv":449.73},{"sk":"2024-08","mes":"Ago/24","ano":"2024","ca":4832.37,"cf":2273.03,"cr":0.0,"tv":0.0},{"sk":"2024-09","mes":"Set/24","ano":"2024","ca":4469.49,"cf":3549.39,"cr":0.0,"tv":0.0},{"sk":"2024-10","mes":"Out/24","ano":"2024","ca":2041.36,"cf":2388.32,"cr":0.0,"tv":0.0},{"sk":"2024-12","mes":"Dez/24","ano":"2024","ca":247.55,"cf":97.94,"cr":0.0,"tv":0.0},{"sk":"2025-01","mes":"Jan/25","ano":"2025","ca":1673.13,"cf":1974.4,"cr":0.0,"tv":0.0},{"sk":"2025-02","mes":"Fev/25","ano":"2025","ca":0.0,"cf":2622.85,"cr":0.0,"tv":0.0},{"sk":"2025-03","mes":"Mar/25","ano":"2025","ca":1696.78,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-04","mes":"Abr/25","ano":"2025","ca":1001.2,"cf":2239.23,"cr":0.0,"tv":0.0},{"sk":"2025-05","mes":"Mai/25","ano":"2025","ca":0.0,"cf":1079.28,"cr":0.0,"tv":0.0},{"sk":"2025-06","mes":"Jun/25","ano":"2025","ca":1230.9,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-07","mes":"Jul/25","ano":"2025","ca":1823.99,"cf":2065.4,"cr":1081.88,"tv":0.0},{"sk":"2025-08","mes":"Ago/25","ano":"2025","ca":729.2,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-09","mes":"Set/25","ano":"2025","ca":2890.9,"cf":1037.22,"cr":0.0,"tv":328.14},{"sk":"2025-10","mes":"Out/25","ano":"2025","ca":120.61,"cf":336.96,"cr":0.0,"tv":0.0},{"sk":"2025-11","mes":"Nov/25","ano":"2025","ca":1656.65,"cf":4067.05,"cr":0.0,"tv":0.0},{"sk":"2025-12","mes":"Dez/25","ano":"2025","ca":168.64,"cf":364.16,"cr":0.0,"tv":0.0},{"sk":"2026-01","mes":"Jan/26","ano":"2026","ca":161.97,"cf":1627.21,"cr":0.0,"tv":0.0},{"sk":"2026-02","mes":"Fev/26","ano":"2026","ca":908.21,"cf":3012.0,"cr":0.0,"tv":8118.5},{"sk":"2026-03","mes":"Mar/26","ano":"2026","ca":11996.6,"cf":98.0,"cr":0.0,"tv":12498.94},{"sk":"2026-04","mes":"Abr/26","ano":"2026","ca":10024.26,"cf":1009.69,"cr":0.0,"tv":3045.76},{"sk":"2026-05","mes":"Mai/26","ano":"2026","ca":164.48,"cf":0.0,"cr":3044.91,"tv":0.0},{"sk":"2026-06","mes":"Jun/26","ano":"2026","ca":18105.77,"cf":8101.62,"cr":8607.06,"tv":0.0}],"tickerAno":{"2024":{"AURE3":2231.14,"BBAS3":4409.89,"BBSE3":824.38,"BTLG11":3437.23,"CXSE3":3486.47,"ITUB4":356.73,"KLBN11":375.84,"RECR11":877.58,"TAEE11":995.28,"TRPL4":995.48,"TRXF11":5060.57,"VALE3":2428.39,"XPML11":4434.73},"2025":{"BBAS3":476.97,"BBDC4":1617.49,"BBSE3":1581.55,"CPLE6":1280.29,"CSMG3":191.3,"CXSE3":2799.7,"HGCR11":3443.85,"HGRU11":1507.5,"ISAE4":2089.62,"ITUB4":562.31,"LCA":1081.88,"RBRP11":2174.69,"RBRR11":3004.92,"RECR11":1589.42,"SAPR11":639.52,"TAEE11":752.05,"TRXF11":1010.7,"VALE3":1001.2,"VGIR11":961.92,"VILG11":502.6,"XPML11":1590.95},"2026":{"BBAS3":9770.95,"BBSE3":8923.80,"CDB":3044.91,"CPLE3":92.96,"CXSE3":1321.60,"HGCR11":1352.62,"ISAE4":7648.66,"ITUB4":10332.34,"RBRP11":982.96,"RBRR11":3807.37,"RECR11":3466.14,"SAPR11":1011.75,"TAEE11":8100.55,"TRXF11":5101.40,"VGIR11":782.11,"XPML11":319.26,"Tesouro Direto+IPCA 2032":8607.06}}};
+const REALIZADOS_BASE = {"mensalBase":[{"sk":"2024-06","mes":"Jun/24","ano":"2024","ca":0.0,"cf":0.0,"cr":447.6,"tv":1000.0},{"sk":"2024-07","mes":"Jul/24","ano":"2024","ca":4512.83,"cf":5501.43,"cr":0.0,"tv":449.73},{"sk":"2024-08","mes":"Ago/24","ano":"2024","ca":4832.37,"cf":2273.03,"cr":0.0,"tv":0.0},{"sk":"2024-09","mes":"Set/24","ano":"2024","ca":4469.49,"cf":3549.39,"cr":0.0,"tv":0.0},{"sk":"2024-10","mes":"Out/24","ano":"2024","ca":2041.36,"cf":2388.32,"cr":0.0,"tv":0.0},{"sk":"2024-12","mes":"Dez/24","ano":"2024","ca":247.55,"cf":97.94,"cr":0.0,"tv":0.0},{"sk":"2025-01","mes":"Jan/25","ano":"2025","ca":1673.13,"cf":1974.4,"cr":0.0,"tv":0.0},{"sk":"2025-02","mes":"Fev/25","ano":"2025","ca":0.0,"cf":2622.85,"cr":0.0,"tv":0.0},{"sk":"2025-03","mes":"Mar/25","ano":"2025","ca":1696.78,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-04","mes":"Abr/25","ano":"2025","ca":1001.2,"cf":2239.23,"cr":0.0,"tv":0.0},{"sk":"2025-05","mes":"Mai/25","ano":"2025","ca":0.0,"cf":1079.28,"cr":0.0,"tv":0.0},{"sk":"2025-06","mes":"Jun/25","ano":"2025","ca":1230.9,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-07","mes":"Jul/25","ano":"2025","ca":1823.99,"cf":2065.4,"cr":1081.88,"tv":0.0},{"sk":"2025-08","mes":"Ago/25","ano":"2025","ca":729.2,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-09","mes":"Set/25","ano":"2025","ca":2890.9,"cf":1037.22,"cr":0.0,"tv":328.14},{"sk":"2025-10","mes":"Out/25","ano":"2025","ca":120.61,"cf":336.96,"cr":0.0,"tv":0.0},{"sk":"2025-11","mes":"Nov/25","ano":"2025","ca":1656.65,"cf":4067.05,"cr":0.0,"tv":0.0},{"sk":"2025-12","mes":"Dez/25","ano":"2025","ca":168.64,"cf":364.16,"cr":0.0,"tv":0.0},{"sk":"2026-01","mes":"Jan/26","ano":"2026","ca":161.97,"cf":1627.21,"cr":0.0,"tv":0.0},{"sk":"2026-02","mes":"Fev/26","ano":"2026","ca":908.21,"cf":3012.0,"cr":0.0,"tv":8118.5},{"sk":"2026-03","mes":"Mar/26","ano":"2026","ca":11996.6,"cf":98.0,"cr":0.0,"tv":12498.94},{"sk":"2026-04","mes":"Abr/26","ano":"2026","ca":10024.26,"cf":1009.69,"cr":0.0,"tv":3045.76},{"sk":"2026-05","mes":"Mai/26","ano":"2026","ca":164.48,"cf":0.0,"cr":3044.91,"tv":0.0},{"sk":"2026-06","mes":"Jun/26","ano":"2026","ca":18105.77,"cf":8101.62,"cr":13631.45,"tv":0.0}],"tickerAno":{"2024":{"AURE3":2231.14,"BBAS3":4409.89,"BBSE3":824.38,"BTLG11":3437.23,"CXSE3":3486.47,"ITUB4":356.73,"KLBN11":375.84,"RECR11":877.58,"TAEE11":995.28,"TRPL4":995.48,"TRXF11":5060.57,"VALE3":2428.39,"XPML11":4434.73},"2025":{"BBAS3":476.97,"BBDC4":1617.49,"BBSE3":1581.55,"CPLE6":1280.29,"CSMG3":191.3,"CXSE3":2799.7,"HGCR11":3443.85,"HGRU11":1507.5,"ISAE4":2089.62,"ITUB4":562.31,"LCA":1081.88,"RBRP11":2174.69,"RBRR11":3004.92,"RECR11":1589.42,"SAPR11":639.52,"TAEE11":752.05,"TRXF11":1010.7,"VALE3":1001.2,"VGIR11":961.92,"VILG11":502.6,"XPML11":1590.95},"2026":{"BBAS3":9770.95,"BBSE3":8923.80,"CDB":3044.91,"CPLE3":92.96,"CXSE3":1321.60,"HGCR11":1352.62,"ISAE4":7648.66,"ITUB4":10332.34,"RBRP11":982.96,"RBRR11":3807.37,"RECR11":3466.14,"SAPR11":1011.75,"TAEE11":8100.55,"TRXF11":5101.40,"VGIR11":782.11,"XPML11":319.26,"Tesouro Direto+IPCA 2032":13631.45}}};
 let MOVS=[];
 /* REAL_END */
 function parseMovs(rowsArr){
@@ -1421,9 +1421,10 @@ const RF_DATA = {
   meta: 500,            // meta de renda mensal em Renda Fixa (R$)
   ipca12m: 4.72,        // IPCA acumulado 12 meses (mai/2026, IBGE)
   fonteIpca: "IBGE",
-  atualizado: "17/06/2026",
+  atualizado: "18/06/2026",
   ativos: [
-    {ativo:"Tesouro Direto+IPCA 2032", aplicado:8607.06, taxaReal:8.22, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto / Status Invest"},
+    {ativo:"Tesouro IPCA+ 2032 · 1ª compra", aplicado:8607.06, taxaReal:8.22, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto / Status Invest"},
+    {ativo:"Tesouro IPCA+ 2032 · 2ª compra", aplicado:5024.39, taxaReal:8.51, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto · aporte 18/06/2026"},
   ]
 };
 function rfYieldAa(a){ const ipca=(RF_DATA.ipca12m||0)/100, real=(a.taxaReal||0)/100; return ((1+ipca)*(1+real)-1)*100; }
@@ -1665,13 +1666,17 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
 (function(){
   const KEY="tonetto_aportes_v1";
   const MIG_RF="tonetto_aportes_mig_rf2032";
+  const MIG_RF_B="tonetto_aportes_mig_rf2032b";
   // Aporte de Renda Fixa de junho/26 (Tesouro Direto+IPCA 2032)
   const RF_2032={id:1750100001,mes:"Jun/26",mesIdx:5,classe:"Renda Fixa",ativo:"Tesouro Direto+IPCA 2032",valor:8607.06};
+  // 2º aporte de Renda Fixa em 18/06/26 (Tesouro IPCA+ 2032)
+  const RF_2032B={id:1750200002,mes:"Jun/26",mesIdx:5,classe:"Renda Fixa",ativo:"Tesouro IPCA+ 2032 (2º aporte 18/06)",valor:5024.39};
   const temRF2032=l=>Array.isArray(l)&&l.some(x=>/renda/i.test(x.classe||"")&&/tesouro|ipca\s*2032/i.test(x.ativo||""));
+  const temRF2032B=l=>Array.isArray(l)&&l.some(x=>x.id===1750200002||(/renda/i.test(x.classe||"")&&/2º aporte|18\/06/i.test(x.ativo||"")));
   try{
     let existing=JSON.parse(localStorage.getItem(KEY)||"[]");
     if(!Array.isArray(existing)) existing=[];
-    // Caso 1: nenhum lançamento salvo → semeia o histórico-base completo (já com a RF).
+    // Caso 1: nenhum lançamento salvo → semeia o histórico-base completo (já com as RFs).
     if(existing.length===0){
       const recovered=[
         {id:1749081001,mes:"Jun/26",mesIdx:5,classe:"Ações",ativo:"BBAS3",valor:2985.16},
@@ -1694,16 +1699,23 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
         {id:1749081018,mes:"Jun/26",mesIdx:5,classe:"Ações",ativo:"BBSE3",valor:1106.39},
         {id:1749081019,mes:"Jun/26",mesIdx:5,classe:"FIIs",ativo:"RECR11",valor:1142.26},
         RF_2032,
+        RF_2032B,
       ];
       localStorage.setItem(KEY,JSON.stringify(recovered));
       localStorage.setItem(MIG_RF,"1");
+      localStorage.setItem(MIG_RF_B,"1");
       return;
     }
-    // Caso 2: já existem lançamentos → migração única: adiciona a RF se faltar,
+    // Caso 2: já existem lançamentos → migrações únicas: adiciona as RFs se faltarem,
     // sem tocar nos registros manuais existentes.
     if(!localStorage.getItem(MIG_RF)){
       if(!temRF2032(existing)){ existing.push(RF_2032); localStorage.setItem(KEY,JSON.stringify(existing)); }
       localStorage.setItem(MIG_RF,"1");
+    }
+    if(!localStorage.getItem(MIG_RF_B)){
+      let cur=JSON.parse(localStorage.getItem(KEY)||"[]"); if(!Array.isArray(cur)) cur=[];
+      if(!temRF2032B(cur)){ cur.push(RF_2032B); localStorage.setItem(KEY,JSON.stringify(cur)); }
+      localStorage.setItem(MIG_RF_B,"1");
     }
   }catch(e){}
 })();
@@ -1732,7 +1744,7 @@ if(document.readyState!=="loading")boot();else document.addEventListener("DOMCon
 <script>
 // Auto-reload: verifica a cada 5 min se há nova versão no GitHub Pages
 (function(){
-  var BUILD="20260617T1700";
+  var BUILD="20260618T1200";
   var KEY="tonetto_build";
   try{
     var stored=sessionStorage.getItem(KEY);
