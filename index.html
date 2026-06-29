@@ -16,7 +16,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-time" content="20260629T1640">
+<meta name="build-time" content="20260629T1650">
 <title>TONETTO HOLDING</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
@@ -154,7 +154,7 @@
   .grid { display: grid; gap: 12px; }
 
   /* ── KPIs ── */
-  .kpis { grid-template-columns: repeat(6,1fr); margin-bottom: 12px; }
+  .kpis { grid-template-columns: repeat(7,1fr); margin-bottom: 12px; }
   .kpi .label {
     font-size: 11px;
     text-transform: uppercase;
@@ -167,7 +167,7 @@
   }
   .kpi .value {
     font-family: var(--font-body);
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     line-height: 1;
     letter-spacing: -0.01em;
@@ -791,6 +791,7 @@ function render(d){
   document.getElementById("srclabel").textContent=d.updated;
   const totFii=d.fiis.reduce((s,x)=>s+x.valor,0), totAcao=d.acoes.reduce((s,x)=>s+x.valor,0);
   const totRf=((d.alloc||[]).find(a=>/renda/i.test(a.nome))||{}).valor||0;
+  const totReserva=((d.alloc||[]).find(a=>/reserva|seguran|caixa/i.test(a.nome))||{}).valor||0;
   const monthlyProv=(d.provAnos.find(a=>a.ano==="2026")||{}).media||0;
   const prov2026=(d.provAnos.find(a=>a.ano==="2026")||{}).total||0;
   const meta2026Pct=CONFIG.metaPatrimonio2026?100*d.patrimonio/CONFIG.metaPatrimonio2026:0;
@@ -802,6 +803,7 @@ function render(d){
     {label:"Ações BR",value:fmt(totAcao),sub:pct(d.patrimonio?100*totAcao/d.patrimonio:0)+" do total",color:"var(--roxo)"},
     {label:"FIIs",value:fmt(totFii),sub:pct(d.patrimonio?100*totFii/d.patrimonio:0)+" do total",color:"var(--roxo)"},
     {label:"Renda Fixa",value:fmt(totRf),sub:pct(d.patrimonio?100*totRf/d.patrimonio:0)+" do total",color:"var(--rf)"},
+    {label:"Reserva Emergência",value:fmt(totReserva),sub:pct(d.patrimonio?100*totReserva/d.patrimonio:0)+" do total · emergência",color:"var(--caixa)"},
     {label:"Meta Renda — "+fmt0(CONFIG.metaIndepTotal)+"/mês",value:pct(rendaPct),sub:"faltam "+fmt(rendaFalta)+"/mês · meta mensal",color:rendaPct>=100?"var(--verde)":"var(--ambar)"},
     {label:"Meta 2026 — "+fmt0(CONFIG.metaPatrimonio2026),value:pct(meta2026Pct),sub:"gap "+fmt(gap2026),color:meta2026Pct>=100?"var(--verde)":"var(--ambar)"},
   ];
@@ -1781,7 +1783,7 @@ if(document.readyState!=="loading")boot();else document.addEventListener("DOMCon
 <script>
 // Auto-reload: verifica a cada 5 min se há nova versão no GitHub Pages
 (function(){
-  var BUILD="20260629T1640";
+  var BUILD="20260629T1650";
   var KEY="tonetto_build";
   try{
     var stored=sessionStorage.getItem(KEY);
