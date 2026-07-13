@@ -16,7 +16,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="build-time" content="20260713T1200">
+<meta name="build-time" content="20260713T1630">
 <title>TONETTO HOLDING</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
@@ -534,19 +534,14 @@
   </section>
 
   <section data-panel="aportes" class="hide">
-    <!-- 1. Plano de Aportes -->
-    <div class="sec-title" style="margin-top:4px">Plano de Aportes <span style="font-style:normal;color:var(--label);font-size:11px" id="aporteHint"></span></div>
-    <div class="grid" id="aporteKpis" style="grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px"></div>
-    <!-- 2. Programação mensal -->
-    <div class="card" style="overflow-x:auto;margin-bottom:14px"><div class="panel-h">Programação mensal <span class="hint">clique no mês para expandir</span></div><table id="aporteTable"></table></div>
-    <!-- 3. Aportes realizados 2026 -->
+    <!-- 1. Aportes realizados 2026 -->
     <div id="aport2026Wrap" style="margin-bottom:14px"></div>
-    <!-- 4. Meta 2026 -->
+    <!-- 2. Meta 2026 -->
     <div class="sec-title" style="margin-top:4px">Meta 2026</div>
     <div class="grid" id="miniMeta2026" style="grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px"></div>
     <div style="border-top:1px solid var(--line);margin-bottom:18px"></div>
-    <!-- 5. Registro de Aportes -->
-    <div class="sec-title">Registro de Aportes</div>
+    <!-- 3. Registro de Aportes -->
+    <div class="sec-title">Registro de Aportes <span style="font-style:normal;color:var(--label);font-size:11px">clique no mês para abrir</span></div>
     <div class="card" style="margin-bottom:14px">
       <div class="aporte-form">
         <select id="apMes">
@@ -560,13 +555,10 @@
       <div id="apResumo" style="margin-top:16px"></div>
       <div id="apHist" style="overflow-x:auto"></div>
     </div>
-    <!-- 6. Ativo mais comprado e realizados histórico -->
-    <div class="sec-title" style="margin-top:4px">Aportes Realizados <span style="font-style:normal;color:var(--label);font-size:11px" id="realPeriodo"></span></div>
-    <div class="grid" id="realKpis" style="grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px"></div>
-    <div class="sec-title">Ativo mais comprado — por ano</div>
-    <div class="grid three" id="realTop" style="margin-bottom:14px"></div>
-    <div class="card" style="overflow-x:auto;margin-bottom:22px"><div class="panel-h">Movimentação mensal</div><table id="realTable"></table></div>
-    <p class="note">Fonte: extrato B3 (jun/2024 – jun/2026).</p>
+    <!-- 4. Movimentação mensal -->
+    <div class="sec-title" style="margin-top:4px">Movimentação Mensal <span style="font-style:normal;color:var(--label);font-size:11px">clique no ano para abrir os meses</span></div>
+    <div class="card" style="overflow-x:auto;margin-bottom:22px"><table id="realTable"></table></div>
+    <p class="note">Fonte: extrato B3 (jun/2024 – jul/2026).</p>
   </section>
 
   <section data-panel="dy-projetivo" class="hide">
@@ -821,9 +813,9 @@ function render(d){
   document.getElementById("fiiSegTbl").innerHTML=setTable(fiiSeg,"Segmento");
   renderFiiTable(); renderAcaoTable(); renderFiiCards(); renderAcaoCards();
   renderProvKpis(d); renderProvTable(d); renderProj(d);
-  renderRealizados(); renderAportes(d); renderMeta2026(d); renderRegistro(); renderDYProjetivo(d);
+  renderRealizados(); renderMeta2026(d); renderRegistro(); renderDYProjetivo(d);
   destroy();
-  drawDonut(d); drawEquity(d); drawMetaProj(d); drawProvChart(d); drawAporteCharts(d); drawRealizadosCharts();
+  drawDonut(d); drawEquity(d); drawMetaProj(d); drawProvChart(d); drawRealizadosCharts();
   document.getElementById("footnote").innerHTML="Fonte: planilha \"TONETTO ® HOLDING\" no Google Drive (compartilhada por Caio Venom), relida a cada abertura. "+
     "Colunas Div/cota, YoC, P/VP (FIIs) e DY, ROE, P/L (Ações) aparecem como — porque não constam da planilha. "+
     "Metas são parâmetros editáveis (não constam da planilha). Valores informativos — não constituem recomendação de investimento.";
@@ -1291,7 +1283,7 @@ function drawMetaProj(d){
 const AP_KEY="tonetto_aportes_v1";
 function apLoad(){try{return JSON.parse(localStorage.getItem(AP_KEY))||[]}catch(e){return []}}
 function apSave(a){try{localStorage.setItem(AP_KEY,JSON.stringify(a))}catch(e){}}
-function apDel(id){apSave(apLoad().filter(x=>x.id!==id));renderRegistro();if(typeof DATA!=="undefined"&&DATA)renderAportes(DATA);}
+function apDel(id){apSave(apLoad().filter(x=>x.id!==id));renderRegistro();}
 function renderRegistro(){
   const res=document.getElementById("apResumo"); if(!res) return;
   const list=apLoad().slice().sort((a,b)=>(a.mesIdx-b.mesIdx)||(a.id-b.id));
@@ -1306,9 +1298,34 @@ function renderRegistro(){
     `<div class="legendrow" style="margin-top:8px"><span><i style="background:${colVar('var(--acoes)')}"></i>Ações ${fmt(acoes)}</span><span><i style="background:${colVar('var(--fiis)')}"></i>FIIs ${fmt(fiis)}</span><span><i style="background:${colVar('var(--rf)')}"></i>Renda Fixa ${fmt(rf)}</span><span><i style="background:${colVar('var(--caixa)')}"></i>Reserva ${fmt(seg)}</span></div>`;
   const hist=document.getElementById("apHist"); if(!hist) return;
   if(!list.length){ hist.innerHTML=`<div class="sub" style="color:var(--muted);margin-top:12px">Nenhum aporte registrado ainda.</div>`; return; }
+  const byMes={}; const order=[];
+  list.forEach(x=>{ if(!byMes[x.mes]){byMes[x.mes]=[];order.push(x.mes);} byMes[x.mes].push(x); });
+  const curLbl=MES12[new Date().getMonth()]+"/"+String(new Date().getFullYear()).slice(2);
+  let body="";
+  order.forEach(mes=>{
+    const items=byMes[mes]; const mTot=items.reduce((s,x)=>s+x.valor,0);
+    const open=(mes===curLbl); const key="regm-"+mes.replace(/[^A-Za-z0-9]/g,"");
+    body+=`<tr class="reg-mes" data-key="${key}" style="cursor:pointer;background:#F8F6F2">
+      <td colspan="3"><span class="apo-caret" style="margin-right:8px">${open?'▾':'▸'}</span><b>${mes}</b> <span style="color:var(--muted);font-size:11.5px">· ${items.length} lançamento${items.length>1?'s':''}</span></td>
+      <td style="font-weight:700">${fmt(mTot)}</td><td></td>
+    </tr>`;
+    items.forEach(x=>{
+      body+=`<tr class="reg-detail ${key}" style="display:${open?'table-row':'none'}"><td style="padding-left:24px;color:var(--muted)">${x.mes}</td><td><span class="tag">${x.classe}</span></td><td>${x.ativo||"—"}</td><td>${fmt(x.valor)}</td><td><button class="del-btn" onclick="apDel(${x.id})">remover</button></td></tr>`;
+    });
+  });
   hist.innerHTML=`<table style="margin-top:10px"><thead><tr><th>Mês</th><th>Classe</th><th>Ativo</th><th>Valor</th><th></th></tr></thead><tbody>`+
-    list.map(x=>`<tr><td>${x.mes}</td><td><span class="tag">${x.classe}</span></td><td>${x.ativo||"—"}</td><td>${fmt(x.valor)}</td><td><button class="del-btn" onclick="apDel(${x.id})">remover</button></td></tr>`).join("")+
+    body+
     `<tr style="font-weight:700;border-top:2px solid var(--line)"><td>Total</td><td></td><td></td><td>${fmt(total)}</td><td></td></tr></tbody></table>`;
+  hist.querySelectorAll("tr.reg-mes").forEach(tr=>{
+    tr.addEventListener("click",()=>{
+      const key=tr.dataset.key;
+      const caret=tr.querySelector(".apo-caret");
+      const rows=hist.querySelectorAll("tr."+key);
+      const nowOpen=rows.length&&rows[0].style.display!=="none";
+      rows.forEach(r=>{r.style.display=nowOpen?"none":"table-row";});
+      if(caret) caret.textContent=nowOpen?"▸":"▾";
+    });
+  });
 }
 function setupRegistro(){
   const am=document.getElementById("apMes"); if(am) am.value=String(Math.min(11,new Date().getMonth()));
@@ -1321,12 +1338,12 @@ function setupRegistro(){
     a.push({id:Date.now(),mes:mesSel.options[mesSel.selectedIndex].text,mesIdx:+mesSel.value,classe:document.getElementById("apClasse").value,ativo:(document.getElementById("apAtivo").value||"").trim().toUpperCase(),valor});
     apSave(a);
     document.getElementById("apValor").value=""; document.getElementById("apAtivo").value="";
-    renderRegistro(); if(typeof DATA!=="undefined"&&DATA) renderAportes(DATA);
+    renderRegistro();
   });
 }
 
 /* REAL_START */
-const REALIZADOS_BASE = {"mensalBase":[{"sk":"2024-06","mes":"Jun/24","ano":"2024","ca":0.0,"cf":0.0,"cr":447.6,"tv":1000.0},{"sk":"2024-07","mes":"Jul/24","ano":"2024","ca":4512.83,"cf":5501.43,"cr":0.0,"tv":449.73},{"sk":"2024-08","mes":"Ago/24","ano":"2024","ca":4832.37,"cf":2273.03,"cr":0.0,"tv":0.0},{"sk":"2024-09","mes":"Set/24","ano":"2024","ca":4469.49,"cf":3549.39,"cr":0.0,"tv":0.0},{"sk":"2024-10","mes":"Out/24","ano":"2024","ca":2041.36,"cf":2388.32,"cr":0.0,"tv":0.0},{"sk":"2024-12","mes":"Dez/24","ano":"2024","ca":247.55,"cf":97.94,"cr":0.0,"tv":0.0},{"sk":"2025-01","mes":"Jan/25","ano":"2025","ca":1673.13,"cf":1974.4,"cr":0.0,"tv":0.0},{"sk":"2025-02","mes":"Fev/25","ano":"2025","ca":0.0,"cf":2622.85,"cr":0.0,"tv":0.0},{"sk":"2025-03","mes":"Mar/25","ano":"2025","ca":1696.78,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-04","mes":"Abr/25","ano":"2025","ca":1001.2,"cf":2239.23,"cr":0.0,"tv":0.0},{"sk":"2025-05","mes":"Mai/25","ano":"2025","ca":0.0,"cf":1079.28,"cr":0.0,"tv":0.0},{"sk":"2025-06","mes":"Jun/25","ano":"2025","ca":1230.9,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-07","mes":"Jul/25","ano":"2025","ca":1823.99,"cf":2065.4,"cr":1081.88,"tv":0.0},{"sk":"2025-08","mes":"Ago/25","ano":"2025","ca":729.2,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-09","mes":"Set/25","ano":"2025","ca":2890.9,"cf":1037.22,"cr":0.0,"tv":328.14},{"sk":"2025-10","mes":"Out/25","ano":"2025","ca":120.61,"cf":336.96,"cr":0.0,"tv":0.0},{"sk":"2025-11","mes":"Nov/25","ano":"2025","ca":1656.65,"cf":4067.05,"cr":0.0,"tv":0.0},{"sk":"2025-12","mes":"Dez/25","ano":"2025","ca":168.64,"cf":364.16,"cr":0.0,"tv":0.0},{"sk":"2026-01","mes":"Jan/26","ano":"2026","ca":161.97,"cf":1627.21,"cr":0.0,"tv":0.0},{"sk":"2026-02","mes":"Fev/26","ano":"2026","ca":908.21,"cf":3012.0,"cr":0.0,"tv":8118.5},{"sk":"2026-03","mes":"Mar/26","ano":"2026","ca":11996.6,"cf":98.0,"cr":0.0,"tv":12498.94},{"sk":"2026-04","mes":"Abr/26","ano":"2026","ca":10024.26,"cf":1009.69,"cr":0.0,"tv":3045.76},{"sk":"2026-05","mes":"Mai/26","ano":"2026","ca":164.48,"cf":0.0,"cr":3044.91,"tv":0.0},{"sk":"2026-06","mes":"Jun/26","ano":"2026","ca":18105.77,"cf":8101.62,"cr":13631.45,"tv":0.0}],"tickerAno":{"2024":{"AURE3":2231.14,"BBAS3":4409.89,"BBSE3":824.38,"BTLG11":3437.23,"CXSE3":3486.47,"ITUB4":356.73,"KLBN11":375.84,"RECR11":877.58,"TAEE11":995.28,"TRPL4":995.48,"TRXF11":5060.57,"VALE3":2428.39,"XPML11":4434.73},"2025":{"BBAS3":476.97,"BBDC4":1617.49,"BBSE3":1581.55,"CPLE6":1280.29,"CSMG3":191.3,"CXSE3":2799.7,"HGCR11":3443.85,"HGRU11":1507.5,"ISAE4":2089.62,"ITUB4":562.31,"LCA":1081.88,"RBRP11":2174.69,"RBRR11":3004.92,"RECR11":1589.42,"SAPR11":639.52,"TAEE11":752.05,"TRXF11":1010.7,"VALE3":1001.2,"VGIR11":961.92,"VILG11":502.6,"XPML11":1590.95},"2026":{"BBAS3":9770.95,"BBSE3":8923.80,"CDB":3044.91,"CPLE3":92.96,"CXSE3":1321.60,"HGCR11":1352.62,"ISAE4":7648.66,"ITUB4":10332.34,"RBRP11":982.96,"RBRR11":3807.37,"RECR11":3466.14,"SAPR11":1011.75,"TAEE11":8100.55,"TRXF11":5101.40,"VGIR11":782.11,"XPML11":319.26,"Tesouro Direto+IPCA 2032":13631.45}}};
+const REALIZADOS_BASE = {"mensalBase":[{"sk":"2024-06","mes":"Jun/24","ano":"2024","ca":0.0,"cf":0.0,"cr":447.6,"tv":1000.0},{"sk":"2024-07","mes":"Jul/24","ano":"2024","ca":4512.83,"cf":5501.43,"cr":0.0,"tv":449.73},{"sk":"2024-08","mes":"Ago/24","ano":"2024","ca":4832.37,"cf":2273.03,"cr":0.0,"tv":0.0},{"sk":"2024-09","mes":"Set/24","ano":"2024","ca":4469.49,"cf":3549.39,"cr":0.0,"tv":0.0},{"sk":"2024-10","mes":"Out/24","ano":"2024","ca":2041.36,"cf":2388.32,"cr":0.0,"tv":0.0},{"sk":"2024-12","mes":"Dez/24","ano":"2024","ca":247.55,"cf":97.94,"cr":0.0,"tv":0.0},{"sk":"2025-01","mes":"Jan/25","ano":"2025","ca":1673.13,"cf":1974.4,"cr":0.0,"tv":0.0},{"sk":"2025-02","mes":"Fev/25","ano":"2025","ca":0.0,"cf":2622.85,"cr":0.0,"tv":0.0},{"sk":"2025-03","mes":"Mar/25","ano":"2025","ca":1696.78,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-04","mes":"Abr/25","ano":"2025","ca":1001.2,"cf":2239.23,"cr":0.0,"tv":0.0},{"sk":"2025-05","mes":"Mai/25","ano":"2025","ca":0.0,"cf":1079.28,"cr":0.0,"tv":0.0},{"sk":"2025-06","mes":"Jun/25","ano":"2025","ca":1230.9,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-07","mes":"Jul/25","ano":"2025","ca":1823.99,"cf":2065.4,"cr":1081.88,"tv":0.0},{"sk":"2025-08","mes":"Ago/25","ano":"2025","ca":729.2,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-09","mes":"Set/25","ano":"2025","ca":2890.9,"cf":1037.22,"cr":0.0,"tv":328.14},{"sk":"2025-10","mes":"Out/25","ano":"2025","ca":120.61,"cf":336.96,"cr":0.0,"tv":0.0},{"sk":"2025-11","mes":"Nov/25","ano":"2025","ca":1656.65,"cf":4067.05,"cr":0.0,"tv":0.0},{"sk":"2025-12","mes":"Dez/25","ano":"2025","ca":168.64,"cf":364.16,"cr":0.0,"tv":0.0},{"sk":"2026-01","mes":"Jan/26","ano":"2026","ca":161.97,"cf":1627.21,"cr":0.0,"tv":0.0},{"sk":"2026-02","mes":"Fev/26","ano":"2026","ca":908.21,"cf":3012.0,"cr":0.0,"tv":8118.5},{"sk":"2026-03","mes":"Mar/26","ano":"2026","ca":11996.6,"cf":98.0,"cr":0.0,"tv":12498.94},{"sk":"2026-04","mes":"Abr/26","ano":"2026","ca":10024.26,"cf":1009.69,"cr":0.0,"tv":3045.76},{"sk":"2026-05","mes":"Mai/26","ano":"2026","ca":164.48,"cf":0.0,"cr":3044.91,"tv":0.0},{"sk":"2026-06","mes":"Jun/26","ano":"2026","ca":18105.77,"cf":8101.62,"cr":13631.45,"tv":0.0},{"sk":"2026-07","mes":"Jul/26","ano":"2026","ca":1993.32,"cf":1822.00,"cr":0.0,"tv":0.0}],"tickerAno":{"2024":{"AURE3":2231.14,"BBAS3":4409.89,"BBSE3":824.38,"BTLG11":3437.23,"CXSE3":3486.47,"ITUB4":356.73,"KLBN11":375.84,"RECR11":877.58,"TAEE11":995.28,"TRPL4":995.48,"TRXF11":5060.57,"VALE3":2428.39,"XPML11":4434.73},"2025":{"BBAS3":476.97,"BBDC4":1617.49,"BBSE3":1581.55,"CPLE6":1280.29,"CSMG3":191.3,"CXSE3":2799.7,"HGCR11":3443.85,"HGRU11":1507.5,"ISAE4":2089.62,"ITUB4":562.31,"LCA":1081.88,"RBRP11":2174.69,"RBRR11":3004.92,"RECR11":1589.42,"SAPR11":639.52,"TAEE11":752.05,"TRXF11":1010.7,"VALE3":1001.2,"VGIR11":961.92,"VILG11":502.6,"XPML11":1590.95},"2026":{"BBAS3":9770.95,"BBSE3":8923.80,"CDB":3044.91,"CPLE3":92.96,"CXSE3":3314.92,"HGCR11":1352.62,"ISAE4":7648.66,"ITUB4":10332.34,"RBRP11":982.96,"RBRR11":3807.37,"RECR11":3466.14,"SAPR11":1011.75,"TAEE11":8100.55,"TRXF11":6923.40,"VGIR11":782.11,"XPML11":319.26,"Tesouro Direto+IPCA 2032":13631.45}}};
 let MOVS=[];
 /* REAL_END */
 function parseMovs(rowsArr){
@@ -1374,12 +1391,22 @@ function renderRealizados(){
   const tb=document.getElementById("realTable");
   if(tb){ const head=`<thead><tr><th>Mês</th><th>Ações</th><th>%</th><th>FIIs</th><th>%</th><th>RF</th><th>%</th><th>Compras</th><th>Vendas</th><th>Líquido</th></tr></thead>`;
     const anos=[...new Set(R.mensal.map(m=>m.ano))]; const pc=(v,t)=>t?pct(100*v/t):"—"; let body="";
+    const curYear=String(new Date().getFullYear());
     anos.forEach(ano=>{const ms=R.mensal.filter(m=>m.ano===ano);
       const sca=ms.reduce((s,m)=>s+m.ca,0),scf=ms.reduce((s,m)=>s+m.cf,0),scr=ms.reduce((s,m)=>s+m.cr,0),stc=ms.reduce((s,m)=>s+m.tc,0),stv=ms.reduce((s,m)=>s+m.tv,0);
-      body+=`<tr style="font-weight:700;background:#F8F6F2"><td>${ano}</td><td>${fmt(sca)}</td><td>${pc(sca,stc)}</td><td>${fmt(scf)}</td><td>${pc(scf,stc)}</td><td>${fmt(scr)}</td><td>${pc(scr,stc)}</td><td>${fmt(stc)}</td><td>${stv?fmt(stv):"—"}</td><td class="${stc-stv>=0?'pos':'neg'}">${fmt(stc-stv)}</td></tr>`;
-      ms.forEach(m=>{body+=`<tr><td style="padding-left:16px;color:var(--muted)">${m.mes}</td><td>${m.ca?fmt(m.ca):"—"}</td><td>${m.tc?pc(m.ca,m.tc):"—"}</td><td>${m.cf?fmt(m.cf):"—"}</td><td>${m.tc?pc(m.cf,m.tc):"—"}</td><td>${m.cr?fmt(m.cr):"—"}</td><td>${m.tc?pc(m.cr,m.tc):"—"}</td><td style="font-weight:600">${fmt(m.tc)}</td><td>${m.tv?`<span class="neg">${fmt(m.tv)}</span>`:"—"}</td><td class="${m.liq>=0?'pos':'neg'}">${fmt(m.liq)}</td></tr>`;});
+      const open=(ano===curYear);
+      body+=`<tr class="real-year" data-ano="${ano}" style="font-weight:700;background:#F8F6F2;cursor:pointer"><td><span class="real-caret">${open?'▾':'▸'}</span> ${ano}</td><td>${fmt(sca)}</td><td>${pc(sca,stc)}</td><td>${fmt(scf)}</td><td>${pc(scf,stc)}</td><td>${fmt(scr)}</td><td>${pc(scr,stc)}</td><td>${fmt(stc)}</td><td>${stv?fmt(stv):"—"}</td><td class="${stc-stv>=0?'pos':'neg'}">${fmt(stc-stv)}</td></tr>`;
+      ms.forEach(m=>{body+=`<tr class="real-month yr-${ano}" style="display:${open?'':'none'}"><td style="padding-left:16px;color:var(--muted)">${m.mes}</td><td>${m.ca?fmt(m.ca):"—"}</td><td>${m.tc?pc(m.ca,m.tc):"—"}</td><td>${m.cf?fmt(m.cf):"—"}</td><td>${m.tc?pc(m.cf,m.tc):"—"}</td><td>${m.cr?fmt(m.cr):"—"}</td><td>${m.tc?pc(m.cr,m.tc):"—"}</td><td style="font-weight:600">${fmt(m.tc)}</td><td>${m.tv?`<span class="neg">${fmt(m.tv)}</span>`:"—"}</td><td class="${m.liq>=0?'pos':'neg'}">${fmt(m.liq)}</td></tr>`;});
     });
     tb.innerHTML=head+"<tbody>"+body+"</tbody>";
+    tb.querySelectorAll("tr.real-year").forEach(tr=>{
+      tr.addEventListener("click",()=>{
+        const ano=tr.dataset.ano; const caret=tr.querySelector(".real-caret");
+        const open=caret.textContent==="▾";
+        tb.querySelectorAll("tr.yr-"+ano).forEach(r=>{r.style.display=open?"none":"";});
+        caret.textContent=open?"▸":"▾";
+      });
+    });
   }
 }
 function drawRealizadosCharts(){
@@ -1675,6 +1702,7 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
   const MIG_SEG="tonetto_aportes_mig_seg7000";
   const MIG_CXSE3="tonetto_aportes_mig_cxse3_0703";
   const MIG_SEG2="tonetto_aportes_mig_seg10020";
+  const MIG_TRXF13="tonetto_aportes_mig_trxf1307";
   // Aporte de Renda Fixa de junho/26 (Tesouro Direto+IPCA 2032)
   const RF_2032={id:1750100001,mes:"Jun/26",mesIdx:5,classe:"Renda Fixa",ativo:"Tesouro Direto+IPCA 2032",valor:8607.06};
   // 2º aporte de Renda Fixa em 18/06/26 (Tesouro IPCA+ 2032)
@@ -1696,6 +1724,9 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
   // atualização da Reserva de Emergência em 05/07/26: de R$7.000,00 para R$10.019,98 (+R$3.019,98)
   const SEG_UPD={id:1751900009,mes:"Jul/26",mesIdx:6,classe:"Reserva Emergência",ativo:"RESERVA EMERGÊNCIA",valor:3019.98};
   const temSEGUPD=l=>Array.isArray(l)&&l.some(x=>x.id===1751900009);
+  // aporte TRXF11 em 13/07/26 (20 cotas @ R$91,10)
+  const TRXF11_1307={id:1752400010,mes:"Jul/26",mesIdx:6,classe:"FIIs",ativo:"TRXF11",valor:1822.00};
+  const temTRXF1307=l=>Array.isArray(l)&&l.some(x=>x.id===1752400010);
   try{
     let existing=JSON.parse(localStorage.getItem(KEY)||"[]");
     if(!Array.isArray(existing)) existing=[];
@@ -1728,6 +1759,7 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
         SEG_7000,
         CXSE3_APORTE,
         SEG_UPD,
+        TRXF11_1307,
       ];
       localStorage.setItem(KEY,JSON.stringify(recovered));
       localStorage.setItem(MIG_RF,"1");
@@ -1737,6 +1769,7 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
       localStorage.setItem(MIG_SEG,"1");
       localStorage.setItem(MIG_CXSE3,"1");
       localStorage.setItem(MIG_SEG2,"1");
+      localStorage.setItem(MIG_TRXF13,"1");
       return;
     }
     // Caso 2: já existem lançamentos → migrações únicas: adiciona as RFs se faltarem,
@@ -1775,6 +1808,11 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
       if(!temSEGUPD(cur)){ cur.push(SEG_UPD); localStorage.setItem(KEY,JSON.stringify(cur)); }
       localStorage.setItem(MIG_SEG2,"1");
     }
+    if(!localStorage.getItem(MIG_TRXF13)){
+      let cur=JSON.parse(localStorage.getItem(KEY)||"[]"); if(!Array.isArray(cur)) cur=[];
+      if(!temTRXF1307(cur)){ cur.push(TRXF11_1307); localStorage.setItem(KEY,JSON.stringify(cur)); }
+      localStorage.setItem(MIG_TRXF13,"1");
+    }
   }catch(e){}
 })();
 async function boot(){
@@ -1802,7 +1840,7 @@ if(document.readyState!=="loading")boot();else document.addEventListener("DOMCon
 <script>
 // Auto-reload: verifica a cada 5 min se há nova versão no GitHub Pages
 (function(){
-  var BUILD="20260713T1200";
+  var BUILD="20260713T1630";
   var KEY="tonetto_build";
   try{
     var stored=sessionStorage.getItem(KEY);
