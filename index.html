@@ -633,9 +633,9 @@ const SNAPSHOT = {
 
 /* FATOS_START */
 const FATOS = {
-  updated: "17/07/2026 · 11:58",
+  updated: "17/07/2026 · 12:06",
   itens: [
-    {cat:"alerta", ticker:"HOLDING", titulo:"Reforço na Reserva de Emergência: +R$ 7.000", corpo:"Novo aporte de <b>R$ 7.000,00</b> na <b>Reserva de Emergência</b> (17/07/2026), aplicado a <b>100% do CDI</b> (~14,15% a.a.), com liquidez a partir de 18/07/2026 e vencimento em 16/07/2028. A reserva sobe para <b>R$ 17.019,98</b>. No DY Projetivo, esse valor entra como renda de <b>Renda Fixa</b> (~R$ 82/mês).", data:"17/07/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
+    {cat:"alerta", ticker:"HOLDING", titulo:"Reforço na Reserva de Emergência: +R$ 7.000", corpo:"Novo aporte de <b>R$ 7.000,00</b> na <b>Reserva de Emergência</b> (17/07/2026), aplicado a <b>100% do CDI</b> (~14,15% a.a.), com liquidez a partir de 18/07/2026 e vencimento em 16/07/2028. A reserva sobe para <b>R$ 17.019,98</b> — todo o saldo no mesmo CDB. No DY Projetivo, a reserva inteira passa a entrar como renda de <b>Renda Fixa</b> (~R$ 201/mês).", data:"17/07/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
     {cat:"provento", ticker:"HOLDING", titulo:"Novo aporte em Renda Fixa: 5ª compra do Tesouro IPCA+ 2032", corpo:"Aporte de <b>R$ 3.787,26</b> no <b>Tesouro IPCA+ 2032</b> (17/07/2026), rentabilidade contratada <b>IPCA+ 8,11%</b>, vencimento 15/08/2032 (1,28 título). É a <b>5ª compra</b> do papel — total aplicado em Renda Fixa sobe para <b>R$ 19.765,69</b> em 5 aportes.", data:"17/07/2026", fonte:"https://www.tesourodireto.com.br/"},
     {cat:"noticia", ticker:"HOLDING", titulo:"Patrimônio da holding sobe para R$ 144.093,92", corpo:"Com os aportes no Tesouro IPCA+ 2032 e na Reserva de Emergência, o patrimônio total avança para <b>R$ 144.093,92</b>. Composição: <b>Ações 44,4% · FIIs 30,1% · RF 13,7% · Reserva 11,8%</b>.", data:"17/07/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
     {cat:"macro", ticker:"HOLDING", titulo:"Selic em 14,25% a.a.; próxima decisão do Copom em 04–05/08", corpo:"A Selic segue em <b>14,25% ao ano</b> (Copom de 17/06/2026) e a próxima reunião ocorre em <b>04–05/08/2026</b>, com o mercado ainda dividido sobre novo corte. Com IPCA em 12 meses ~<b>4,7%</b>, travar <b>IPCA+ 8,11%</b> no Tesouro 2032 fixa um retorno real elevado até o vencimento em 2032.", data:"17/07/2026", fonte:"https://agenciabrasil.ebc.com.br/economia/noticia/2026-06/copom-reduz-taxa-selic-para-1425-ao-ano"},
@@ -1456,7 +1456,7 @@ const RF_DATA = {
     {ativo:"Tesouro IPCA+ 2032 · 3ª compra", aplicado:1312.78, taxaReal:8.28, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto · aporte 26/06/2026"},
     {ativo:"Tesouro IPCA+ 2032 · 4ª compra", aplicado:1034.20, taxaReal:8.12, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto · aporte 14/07/2026"},
     {ativo:"Tesouro IPCA+ 2032 · 5ª compra", aplicado:3787.26, taxaReal:8.11, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto · aporte 17/07/2026"},
-    {ativo:"Reserva Emergência", aplicado:7000.00, tipo:"cdi", pctCdi:100, indexador:"100% CDI", venc:"16/07/2028", freq:"No vencimento", fonte:"Reserva de emergência · 100% CDI · aporte 17/07/2026"},
+    {ativo:"Reserva Emergência", aplicado:17019.98, tipo:"cdi", pctCdi:100, indexador:"100% CDI", venc:"16/07/2028", freq:"No vencimento", fonte:"Reserva de emergência · 100% CDI · saldo consolidado (jul/2026)"},
   ]
 };
 function rfYieldAa(a){ if(a.tipo==="cdi"){ return (RF_DATA.cdiAa||0)*((a.pctCdi||100)/100); } const ipca=(RF_DATA.ipca12m||0)/100, real=(a.taxaReal||0)/100; return ((1+ipca)*(1+real)-1)*100; }
@@ -1891,7 +1891,7 @@ if(document.readyState!=="loading")boot();else document.addEventListener("DOMCon
 <script>
 // Auto-reload: verifica a cada 5 min se há nova versão no GitHub Pages
 (function(){
-  var BUILD="20260717T1158";
+  var BUILD="20260717T1206";
   var KEY="tonetto_build";
   try{
     var stored=sessionStorage.getItem(KEY);
