@@ -587,12 +587,12 @@ const SHEET_GIDS = { FIIS:635688916, ACOES:160144042, PROVENTOS:1694282756, PATR
 
 /* SNAPSHOT_START */
 const SNAPSHOT = {
-  updated:"ao vivo · planilha · 17/07/2026 · aporte Tesouro IPCA+ 2032 (5ª compra · R$ 3.787,26)", patrimonio:137093.92, dyHolding:4.86, proventosTotal:6111.31,
+  updated:"ao vivo · planilha · 17/07/2026 · aporte Reserva Emergência (R$ 7.000 · 100% CDI)", patrimonio:144093.92, dyHolding:4.86, proventosTotal:6111.31,
   alloc:[
-    {nome:"Ações BR", valor:64024.09, atual:46.70, ideal:55, delta:11377.57, cor:"var(--acoes)"},
-    {nome:"FIIs", valor:43380.06, atual:31.64, ideal:25, delta:-9106.58, cor:"var(--fiis)"},
-    {nome:"Renda Fixa", valor:19669.79, atual:14.35, ideal:15, delta:894.30, cor:"var(--rf)"},
-    {nome:"Reserva Emergência", valor:10019.98, atual:7.31, ideal:5, delta:-3165.28, cor:"var(--caixa)"},
+    {nome:"Ações BR", valor:64024.09, atual:44.43, ideal:55, delta:15227.57, cor:"var(--acoes)"},
+    {nome:"FIIs", valor:43380.06, atual:30.11, ideal:25, delta:-7356.58, cor:"var(--fiis)"},
+    {nome:"Renda Fixa", valor:19669.79, atual:13.65, ideal:15, delta:1944.30, cor:"var(--rf)"},
+    {nome:"Reserva Emergência", valor:17019.98, atual:11.81, ideal:5, delta:-9815.28, cor:"var(--caixa)"},
     {nome:"Ações US$", valor:0, atual:0, ideal:0, delta:0, cor:"var(--us)"},
   ],
   fiis:[
@@ -616,7 +616,7 @@ const SNAPSHOT = {
     {ativo:"CXSE3",setor:"Bancos",preco:21.80,pm:20.34,teto:23.80,rent:7.18,ms:9.17,qtd:98,valor:2136.40,part:3.34,holding:1.60,vuc:20.34,duc:"03/07/2026",aporte:29},
   ],
   acaoSetorIdeal:{ "Elétrico":25, "Bancos":25, "Mineração":10, "Seguridade":15 },
-  equity:[{mes:"Jan",valor:62300.10},{mes:"Fev",valor:62960.70},{mes:"Mar",valor:65353.29},{mes:"Abr",valor:78593.53},{mes:"Mai",valor:69759.54},{mes:"Jun",valor:120367.47},{mes:"Jul",valor:137093.92}],
+  equity:[{mes:"Jan",valor:62300.10},{mes:"Fev",valor:62960.70},{mes:"Mar",valor:65353.29},{mes:"Abr",valor:78593.53},{mes:"Mai",valor:69759.54},{mes:"Jun",valor:120367.47},{mes:"Jul",valor:144093.92}],
   prov:[
     {mes:"Abr/25",fii:190.91,acao:0},{mes:"Mai/25",fii:203.26,acao:124.16},{mes:"Jun/25",fii:203.32,acao:73.90},
     {mes:"Jul/25",fii:249.20,acao:0.44},{mes:"Ago/25",fii:220.18,acao:299.12},{mes:"Set/25",fii:213.49,acao:117.95},
@@ -633,10 +633,11 @@ const SNAPSHOT = {
 
 /* FATOS_START */
 const FATOS = {
-  updated: "17/07/2026 · 07:46",
+  updated: "17/07/2026 · 11:58",
   itens: [
+    {cat:"alerta", ticker:"HOLDING", titulo:"Reforço na Reserva de Emergência: +R$ 7.000", corpo:"Novo aporte de <b>R$ 7.000,00</b> na <b>Reserva de Emergência</b> (17/07/2026), aplicado a <b>100% do CDI</b> (~14,15% a.a.), com liquidez a partir de 18/07/2026 e vencimento em 16/07/2028. A reserva sobe para <b>R$ 17.019,98</b>. No DY Projetivo, esse valor entra como renda de <b>Renda Fixa</b> (~R$ 82/mês).", data:"17/07/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
     {cat:"provento", ticker:"HOLDING", titulo:"Novo aporte em Renda Fixa: 5ª compra do Tesouro IPCA+ 2032", corpo:"Aporte de <b>R$ 3.787,26</b> no <b>Tesouro IPCA+ 2032</b> (17/07/2026), rentabilidade contratada <b>IPCA+ 8,11%</b>, vencimento 15/08/2032 (1,28 título). É a <b>5ª compra</b> do papel — total aplicado em Renda Fixa sobe para <b>R$ 19.765,69</b> em 5 aportes.", data:"17/07/2026", fonte:"https://www.tesourodireto.com.br/"},
-    {cat:"noticia", ticker:"HOLDING", titulo:"Patrimônio da holding sobe para R$ 137.093,92", corpo:"Com o novo aporte no Tesouro IPCA+ 2032, o patrimônio total avança para <b>R$ 137.093,92</b>. Composição: <b>Ações 46,7% · FIIs 31,6% · RF 14,3% · Reserva 7,3%</b>. A Renda Fixa se aproxima da meta de 15% da carteira — faltam ~<b>R$ 894</b> para o alvo.", data:"17/07/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
+    {cat:"noticia", ticker:"HOLDING", titulo:"Patrimônio da holding sobe para R$ 144.093,92", corpo:"Com os aportes no Tesouro IPCA+ 2032 e na Reserva de Emergência, o patrimônio total avança para <b>R$ 144.093,92</b>. Composição: <b>Ações 44,4% · FIIs 30,1% · RF 13,7% · Reserva 11,8%</b>.", data:"17/07/2026", fonte:"https://docs.google.com/spreadsheets/d/1ZbX-wGNM-WR0X1v-u61nF_Zx2pqbE5VOgabY3EZJfmM"},
     {cat:"macro", ticker:"HOLDING", titulo:"Selic em 14,25% a.a.; próxima decisão do Copom em 04–05/08", corpo:"A Selic segue em <b>14,25% ao ano</b> (Copom de 17/06/2026) e a próxima reunião ocorre em <b>04–05/08/2026</b>, com o mercado ainda dividido sobre novo corte. Com IPCA em 12 meses ~<b>4,7%</b>, travar <b>IPCA+ 8,11%</b> no Tesouro 2032 fixa um retorno real elevado até o vencimento em 2032.", data:"17/07/2026", fonte:"https://agenciabrasil.ebc.com.br/economia/noticia/2026-06/copom-reduz-taxa-selic-para-1425-ao-ano"},
     {cat:"resultado", ticker:"HOLDING", titulo:"Temporada de balanços do 2T26 em andamento", corpo:"A safra de resultados do 2º trimestre de 2026 segue esta e a próxima semana. Entre os papéis da carteira: <b>Vale (VALE3)</b> em 30/07, <b>Itaú (ITUB4)</b> em 04/08 e <b>Banco do Brasil (BBAS3)</b> em 12/08.", data:"15/07/2026", fonte:"https://bpmoney.com.br/mercado/temporada-de-balancos-do-2o-trimestre-comeca-em-14-de-julho-veja-o-calendario/"},
   ]
@@ -1339,7 +1340,7 @@ function setupRegistro(){
 }
 
 /* REAL_START */
-const REALIZADOS_BASE = {"mensalBase":[{"sk":"2024-06","mes":"Jun/24","ano":"2024","ca":0.0,"cf":0.0,"cr":447.6,"tv":1000.0},{"sk":"2024-07","mes":"Jul/24","ano":"2024","ca":4512.83,"cf":5501.43,"cr":0.0,"tv":449.73},{"sk":"2024-08","mes":"Ago/24","ano":"2024","ca":4832.37,"cf":2273.03,"cr":0.0,"tv":0.0},{"sk":"2024-09","mes":"Set/24","ano":"2024","ca":4469.49,"cf":3549.39,"cr":0.0,"tv":0.0},{"sk":"2024-10","mes":"Out/24","ano":"2024","ca":2041.36,"cf":2388.32,"cr":0.0,"tv":0.0},{"sk":"2024-12","mes":"Dez/24","ano":"2024","ca":247.55,"cf":97.94,"cr":0.0,"tv":0.0},{"sk":"2025-01","mes":"Jan/25","ano":"2025","ca":1673.13,"cf":1974.4,"cr":0.0,"tv":0.0},{"sk":"2025-02","mes":"Fev/25","ano":"2025","ca":0.0,"cf":2622.85,"cr":0.0,"tv":0.0},{"sk":"2025-03","mes":"Mar/25","ano":"2025","ca":1696.78,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-04","mes":"Abr/25","ano":"2025","ca":1001.2,"cf":2239.23,"cr":0.0,"tv":0.0},{"sk":"2025-05","mes":"Mai/25","ano":"2025","ca":0.0,"cf":1079.28,"cr":0.0,"tv":0.0},{"sk":"2025-06","mes":"Jun/25","ano":"2025","ca":1230.9,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-07","mes":"Jul/25","ano":"2025","ca":1823.99,"cf":2065.4,"cr":1081.88,"tv":0.0},{"sk":"2025-08","mes":"Ago/25","ano":"2025","ca":729.2,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-09","mes":"Set/25","ano":"2025","ca":2890.9,"cf":1037.22,"cr":0.0,"tv":328.14},{"sk":"2025-10","mes":"Out/25","ano":"2025","ca":120.61,"cf":336.96,"cr":0.0,"tv":0.0},{"sk":"2025-11","mes":"Nov/25","ano":"2025","ca":1656.65,"cf":4067.05,"cr":0.0,"tv":0.0},{"sk":"2025-12","mes":"Dez/25","ano":"2025","ca":168.64,"cf":364.16,"cr":0.0,"tv":0.0},{"sk":"2026-01","mes":"Jan/26","ano":"2026","ca":161.97,"cf":1627.21,"cr":0.0,"tv":0.0},{"sk":"2026-02","mes":"Fev/26","ano":"2026","ca":908.21,"cf":3012.0,"cr":0.0,"tv":8118.5},{"sk":"2026-03","mes":"Mar/26","ano":"2026","ca":11996.6,"cf":98.0,"cr":0.0,"tv":12498.94},{"sk":"2026-04","mes":"Abr/26","ano":"2026","ca":10024.26,"cf":1009.69,"cr":0.0,"tv":3045.76},{"sk":"2026-05","mes":"Mai/26","ano":"2026","ca":164.48,"cf":0.0,"cr":3044.91,"tv":0.0},{"sk":"2026-06","mes":"Jun/26","ano":"2026","ca":18105.77,"cf":8101.62,"cr":13631.45,"cs":7000.0,"tv":0.0},{"sk":"2026-07","mes":"Jul/26","ano":"2026","ca":1993.32,"cf":2187.56,"cr":4821.46,"cs":3019.98,"tv":0.0}],"tickerAno":{"2024":{"AURE3":2231.14,"BBAS3":4409.89,"BBSE3":824.38,"BTLG11":3437.23,"CXSE3":3486.47,"ITUB4":356.73,"KLBN11":375.84,"RECR11":877.58,"TAEE11":995.28,"TRPL4":995.48,"TRXF11":5060.57,"VALE3":2428.39,"XPML11":4434.73},"2025":{"BBAS3":476.97,"BBDC4":1617.49,"BBSE3":1581.55,"CPLE6":1280.29,"CSMG3":191.3,"CXSE3":2799.7,"HGCR11":3443.85,"HGRU11":1507.5,"ISAE4":2089.62,"ITUB4":562.31,"LCA":1081.88,"RBRP11":2174.69,"RBRR11":3004.92,"RECR11":1589.42,"SAPR11":639.52,"TAEE11":752.05,"TRXF11":1010.7,"VALE3":1001.2,"VGIR11":961.92,"VILG11":502.6,"XPML11":1590.95},"2026":{"BBAS3":9770.95,"BBSE3":8923.80,"CDB":3044.91,"CPLE3":92.96,"CXSE3":3314.92,"HGCR11":1352.62,"ISAE4":7648.66,"ITUB4":10332.34,"RBRP11":982.96,"RBRR11":3807.37,"RECR11":3466.14,"SAPR11":1011.75,"TAEE11":8100.55,"TRXF11":6923.40,"VGIR11":1147.67,"XPML11":319.26,"Tesouro Direto+IPCA 2032":18452.91}}};
+const REALIZADOS_BASE = {"mensalBase":[{"sk":"2024-06","mes":"Jun/24","ano":"2024","ca":0.0,"cf":0.0,"cr":447.6,"tv":1000.0},{"sk":"2024-07","mes":"Jul/24","ano":"2024","ca":4512.83,"cf":5501.43,"cr":0.0,"tv":449.73},{"sk":"2024-08","mes":"Ago/24","ano":"2024","ca":4832.37,"cf":2273.03,"cr":0.0,"tv":0.0},{"sk":"2024-09","mes":"Set/24","ano":"2024","ca":4469.49,"cf":3549.39,"cr":0.0,"tv":0.0},{"sk":"2024-10","mes":"Out/24","ano":"2024","ca":2041.36,"cf":2388.32,"cr":0.0,"tv":0.0},{"sk":"2024-12","mes":"Dez/24","ano":"2024","ca":247.55,"cf":97.94,"cr":0.0,"tv":0.0},{"sk":"2025-01","mes":"Jan/25","ano":"2025","ca":1673.13,"cf":1974.4,"cr":0.0,"tv":0.0},{"sk":"2025-02","mes":"Fev/25","ano":"2025","ca":0.0,"cf":2622.85,"cr":0.0,"tv":0.0},{"sk":"2025-03","mes":"Mar/25","ano":"2025","ca":1696.78,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-04","mes":"Abr/25","ano":"2025","ca":1001.2,"cf":2239.23,"cr":0.0,"tv":0.0},{"sk":"2025-05","mes":"Mai/25","ano":"2025","ca":0.0,"cf":1079.28,"cr":0.0,"tv":0.0},{"sk":"2025-06","mes":"Jun/25","ano":"2025","ca":1230.9,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-07","mes":"Jul/25","ano":"2025","ca":1823.99,"cf":2065.4,"cr":1081.88,"tv":0.0},{"sk":"2025-08","mes":"Ago/25","ano":"2025","ca":729.2,"cf":0.0,"cr":0.0,"tv":0.0},{"sk":"2025-09","mes":"Set/25","ano":"2025","ca":2890.9,"cf":1037.22,"cr":0.0,"tv":328.14},{"sk":"2025-10","mes":"Out/25","ano":"2025","ca":120.61,"cf":336.96,"cr":0.0,"tv":0.0},{"sk":"2025-11","mes":"Nov/25","ano":"2025","ca":1656.65,"cf":4067.05,"cr":0.0,"tv":0.0},{"sk":"2025-12","mes":"Dez/25","ano":"2025","ca":168.64,"cf":364.16,"cr":0.0,"tv":0.0},{"sk":"2026-01","mes":"Jan/26","ano":"2026","ca":161.97,"cf":1627.21,"cr":0.0,"tv":0.0},{"sk":"2026-02","mes":"Fev/26","ano":"2026","ca":908.21,"cf":3012.0,"cr":0.0,"tv":8118.5},{"sk":"2026-03","mes":"Mar/26","ano":"2026","ca":11996.6,"cf":98.0,"cr":0.0,"tv":12498.94},{"sk":"2026-04","mes":"Abr/26","ano":"2026","ca":10024.26,"cf":1009.69,"cr":0.0,"tv":3045.76},{"sk":"2026-05","mes":"Mai/26","ano":"2026","ca":164.48,"cf":0.0,"cr":3044.91,"tv":0.0},{"sk":"2026-06","mes":"Jun/26","ano":"2026","ca":18105.77,"cf":8101.62,"cr":13631.45,"cs":7000.0,"tv":0.0},{"sk":"2026-07","mes":"Jul/26","ano":"2026","ca":1993.32,"cf":2187.56,"cr":4821.46,"cs":10019.98,"tv":0.0}],"tickerAno":{"2024":{"AURE3":2231.14,"BBAS3":4409.89,"BBSE3":824.38,"BTLG11":3437.23,"CXSE3":3486.47,"ITUB4":356.73,"KLBN11":375.84,"RECR11":877.58,"TAEE11":995.28,"TRPL4":995.48,"TRXF11":5060.57,"VALE3":2428.39,"XPML11":4434.73},"2025":{"BBAS3":476.97,"BBDC4":1617.49,"BBSE3":1581.55,"CPLE6":1280.29,"CSMG3":191.3,"CXSE3":2799.7,"HGCR11":3443.85,"HGRU11":1507.5,"ISAE4":2089.62,"ITUB4":562.31,"LCA":1081.88,"RBRP11":2174.69,"RBRR11":3004.92,"RECR11":1589.42,"SAPR11":639.52,"TAEE11":752.05,"TRXF11":1010.7,"VALE3":1001.2,"VGIR11":961.92,"VILG11":502.6,"XPML11":1590.95},"2026":{"BBAS3":9770.95,"BBSE3":8923.80,"CDB":3044.91,"CPLE3":92.96,"CXSE3":3314.92,"HGCR11":1352.62,"ISAE4":7648.66,"ITUB4":10332.34,"RBRP11":982.96,"RBRR11":3807.37,"RECR11":3466.14,"SAPR11":1011.75,"TAEE11":8100.55,"TRXF11":6923.40,"VGIR11":1147.67,"XPML11":319.26,"Tesouro Direto+IPCA 2032":18452.91}}};
 let MOVS=[];
 /* REAL_END */
 function parseMovs(rowsArr){
@@ -1446,6 +1447,7 @@ const DY_DATA = {
 const RF_DATA = {
   meta: 500,            // meta de renda mensal em Renda Fixa (R$)
   ipca12m: 4.72,        // IPCA acumulado 12 meses (mai/2026, IBGE)
+  cdiAa: 14.15,         // CDI ao ano ≈ Selic 14,25% − 0,10 (jul/2026)
   fonteIpca: "IBGE",
   atualizado: "17/07/2026",
   ativos: [
@@ -1454,9 +1456,10 @@ const RF_DATA = {
     {ativo:"Tesouro IPCA+ 2032 · 3ª compra", aplicado:1312.78, taxaReal:8.28, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto · aporte 26/06/2026"},
     {ativo:"Tesouro IPCA+ 2032 · 4ª compra", aplicado:1034.20, taxaReal:8.12, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto · aporte 14/07/2026"},
     {ativo:"Tesouro IPCA+ 2032 · 5ª compra", aplicado:3787.26, taxaReal:8.11, indexador:"IPCA+", venc:"15/08/2032", freq:"No vencimento", fonte:"Tesouro Direto · aporte 17/07/2026"},
+    {ativo:"Reserva Emergência", aplicado:7000.00, tipo:"cdi", pctCdi:100, indexador:"100% CDI", venc:"16/07/2028", freq:"No vencimento", fonte:"Reserva de emergência · 100% CDI · aporte 17/07/2026"},
   ]
 };
-function rfYieldAa(a){ const ipca=(RF_DATA.ipca12m||0)/100, real=(a.taxaReal||0)/100; return ((1+ipca)*(1+real)-1)*100; }
+function rfYieldAa(a){ if(a.tipo==="cdi"){ return (RF_DATA.cdiAa||0)*((a.pctCdi||100)/100); } const ipca=(RF_DATA.ipca12m||0)/100, real=(a.taxaReal||0)/100; return ((1+ipca)*(1+real)-1)*100; }
 function rfCompute(){
   const ativos=(RF_DATA.ativos||[]).map(a=>{ const ya=rfYieldAa(a); const rendaAno=a.aplicado*ya/100; return Object.assign({},a,{yieldAa:ya, rendaAno, rendaMes:rendaAno/12}); });
   const totMes=ativos.reduce((s,x)=>s+x.rendaMes,0), totAno=ativos.reduce((s,x)=>s+x.rendaAno,0), aplicado=ativos.reduce((s,x)=>s+x.aplicado,0);
@@ -1710,6 +1713,7 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
   const MIG_VGIR14="tonetto_aportes_mig_vgir1407";
   const MIG_RF_D="tonetto_aportes_mig_rf2032d";
   const MIG_RF_E="tonetto_aportes_mig_rf2032e";
+  const MIG_SEG_1707="tonetto_aportes_mig_seg1707";
   // Aporte de Renda Fixa de junho/26 (Tesouro Direto+IPCA 2032)
   const RF_2032={id:1750100001,mes:"Jun/26",mesIdx:5,classe:"Renda Fixa",ativo:"Tesouro Direto+IPCA 2032",valor:8607.06};
   // 2º aporte de Renda Fixa em 18/06/26 (Tesouro IPCA+ 2032)
@@ -1743,6 +1747,9 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
   // 5º aporte Renda Fixa em 17/07/26 (Tesouro IPCA+ 2032, R$3.787,26 @ IPCA+ 8,11%)
   const RF_2032E={id:1752900013,mes:"Jul/26",mesIdx:6,classe:"Renda Fixa",ativo:"Tesouro IPCA+ 2032 (5º aporte 17/07)",valor:3787.26};
   const temRF2032E=l=>Array.isArray(l)&&l.some(x=>x.id===1752900013);
+  // aporte Reserva de Emergência em 17/07/26 (R$7.000 · 100% CDI)
+  const SEG_1707={id:1752900014,mes:"Jul/26",mesIdx:6,classe:"Reserva Emergência",ativo:"RESERVA EMERGÊNCIA",valor:7000.00};
+  const temSEG1707=l=>Array.isArray(l)&&l.some(x=>x.id===1752900014);
   try{
     let existing=JSON.parse(localStorage.getItem(KEY)||"[]");
     if(!Array.isArray(existing)) existing=[];
@@ -1779,6 +1786,7 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
         VGIR11_1407,
         RF_2032D,
         RF_2032E,
+        SEG_1707,
       ];
       localStorage.setItem(KEY,JSON.stringify(recovered));
       localStorage.setItem(MIG_RF,"1");
@@ -1792,6 +1800,7 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
       localStorage.setItem(MIG_VGIR14,"1");
       localStorage.setItem(MIG_RF_D,"1");
       localStorage.setItem(MIG_RF_E,"1");
+      localStorage.setItem(MIG_SEG_1707,"1");
       return;
     }
     // Caso 2: já existem lançamentos → migrações únicas: adiciona as RFs se faltarem,
@@ -1850,6 +1859,11 @@ function showErr(m){const e=document.getElementById("err");e.textContent=m;e.sty
       if(!temRF2032E(cur)){ cur.push(RF_2032E); localStorage.setItem(KEY,JSON.stringify(cur)); }
       localStorage.setItem(MIG_RF_E,"1");
     }
+    if(!localStorage.getItem(MIG_SEG_1707)){
+      let cur=JSON.parse(localStorage.getItem(KEY)||"[]"); if(!Array.isArray(cur)) cur=[];
+      if(!temSEG1707(cur)){ cur.push(SEG_1707); localStorage.setItem(KEY,JSON.stringify(cur)); }
+      localStorage.setItem(MIG_SEG_1707,"1");
+    }
   }catch(e){}
 })();
 async function boot(){
@@ -1877,7 +1891,7 @@ if(document.readyState!=="loading")boot();else document.addEventListener("DOMCon
 <script>
 // Auto-reload: verifica a cada 5 min se há nova versão no GitHub Pages
 (function(){
-  var BUILD="20260717T0746";
+  var BUILD="20260717T1158";
   var KEY="tonetto_build";
   try{
     var stored=sessionStorage.getItem(KEY);
